@@ -1,0 +1,42 @@
+h1{
+    font-size: 24px
+  }
+  
+    li{
+      font-size: 16px;
+    }
+  
+    th{
+      font-size: 16px;
+    }
+  
+        .bd-placeholder-img {
+          font-size: 1.135rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+  
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+  
+    .plan-card {
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+  
+    .plan-card:hover {
+      transform: scale(1.05);
+      background-color: rgba(63, 161, 65, 0.1);
+    }
+  
+    .plan-card .card-header {
+      transition: background-color 0.3s ease;
+    }
+  
+    .plan-card:hover .card-header {
+      background-color: rgba(63, 161, 65, 0.2);
+    }

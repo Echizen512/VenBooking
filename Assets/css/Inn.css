@@ -1,0 +1,113 @@
+
+
+.main-content {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.sidebar {
+    width: 350px;
+
+    padding: 20px;
+    
+    position: sticky;
+    top: 20px;
+    height: 100%;
+    overflow-y: auto;
+    color: black;
+}
+
+.sidebar h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #f8f9fa;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #adb5bd;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #ffc107;
+}
+
+.recommendation-card {
+background-color: #fff;
+color: white;
+border: 1px solid black; 
+margin-bottom: 1rem;
+border-radius: 8px;
+overflow: hidden;
+transition: transform 0.3s ease;
+}
+
+
+.recommendation-card:hover {
+    transform: scale(1.02);
+}
+
+.recommendation-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.recommendation-card .card-body {
+    padding: 10px;
+}
+
+.recommendation-card .card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.recommendation-card .card-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #333;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #666;
+}
+
+.list-unstyled li {
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
