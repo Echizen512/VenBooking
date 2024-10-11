@@ -1,6 +1,5 @@
 <?php
 include '../config/db.php';
-include './Dashboard.php';
 
 session_start();
 
@@ -79,12 +78,88 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagos Móviles</title>
-    <link href="../Assets/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../Assets/css/CRUD.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-title {
+    font-size: 2.5rem; 
+    font-weight: bold;
+    color: #343a40;
+}
+
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: white; 
+    font-size: 1.5rem; 
+}
+
+.table td {
+    vertical-align: middle; 
+    font-size: 1.2rem; 
+}
+
+.alert {
+    border-radius: 5px;
+    background-color: #fff3cd; 
+    color: #856404; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.text-center {
+    text-align: center; 
+}
+
+.gap-2 {
+    gap: 0.5rem; 
+}
+
+html, body {
+    height: 100%; 
+    margin: 0; 
+}
+
+body {
+    display: flex; 
+    flex-direction: column; 
+}
+
+.container {
+    flex: 1;
+}
+
+.page-footer {
+    background-color: #28a745;
+    color: white; 
+    text-align: center; 
+    padding: 10px 0; 
+}
+
+</style>
+
 <?php include './Header_Admin.php'; ?>
 <div class="container mt-5">
     <div class="card custom-card">
@@ -99,11 +174,11 @@ $result = $stmt->get_result();
                 <table id="paymentsTable" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Cédula</th>
-                        <th>Código Bancario</th>
-                        <th>Número de Teléfono</th>
-                        <th>Posada</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Cédula</th>
+                        <th class="text-center">Código Bancario</th>
+                        <th class="text-center">Número de Teléfono</th>
+                        <th class="text-center">Posada</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -111,11 +186,11 @@ $result = $stmt->get_result();
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>
-                                    <td>{$row['cedula']}</td>
-                                    <td>{$row['bank_code']}</td>
-                                    <td>{$row['phone_number']}</td>
-                                    <td>{$row['inn_name']}</td>
-                                    <td>
+                                    <td class='text-center'>{$row['cedula']}</td>
+                                    <td class='text-center'>{$row['bank_code']}</td>
+                                    <td class='text-center'>{$row['phone_number']}</td>
+                                    <td class='text-center'>{$row['inn_name']}</td>
+                                    <td class='text-center'>
                                         <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal' data-id='{$row['id']}' data-cedula='{$row['cedula']}' data-bank-code='{$row['bank_code']}' data-phone-number='{$row['phone_number']}' style='width: 20px; height: 20px; padding: 0; text-align: center; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: white;'>
                                             <i class='fas fa-edit'></i>
                                         </button>
@@ -215,14 +290,32 @@ $result = $stmt->get_result();
     </div>
 </div>
 
+<?php include './Footer.php'; ?>
 
-<script src="../Assets/js/bootstrap.bundle.min.js"></script>
 <script src="../Assets/js/jquery.min.js"></script>
-<script src="../Assets/js/jquery.dataTables.min.js"></script>
-<script src="../Assets/js/dataTables.bootstrap5.min.js"></script>
+<script src="../Assets/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+
 <script>
-    $(document).ready(function() {
-        $('#paymentsTable').DataTable();
+$(document).ready(function() {
+    $('#paymentsTable').DataTable({
+        "paging": true, // Habilitar paginación
+        "searching": true, // Habilitar búsqueda
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtrado de _MAX_ registros en total)",
+            "search": "Buscar:",
+            "paginate": {
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
 
         // Llenar formulario de edición
         $('#editModal').on('show.bs.modal', function(event) {

@@ -1,19 +1,24 @@
 <?php
-    include '../config/db.php';
-    include './Dashboard.php';
+include '../config/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['state_id'])) {
-    $state_id = $_POST['state_id'];
-    $sql = "SELECT * FROM municipalities WHERE state_id = '$state_id'";
-    $result = $conn->query($sql);
+if (isset($_GET['state_id'])) {
+    $state_id = $_GET['state_id'];
+    $sql = "SELECT id, name FROM municipalities WHERE state_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $state_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $municipalities = array();
 
     if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
+        while ($row = $result->fetch_assoc()) {
+            $municipalities[] = $row;
         }
-    } else {
-        echo "<option value=''>No municipalities found</option>";
     }
+
+    echo json_encode($municipalities);
+    $stmt->close();
 }
 
 $conn->close();

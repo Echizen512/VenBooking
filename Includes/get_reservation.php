@@ -1,6 +1,5 @@
 <?php
 include '../config/db.php';
-include './Dashboard.php';
 
 session_start();
 
@@ -46,63 +45,90 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Reservaciones</title>
-    <link rel="stylesheet" href="../Assets/css/CRUD.css">
     <link href="../Assets/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-        .container {
-            flex: 1;
-        }
-        .card {
-            margin-left: 160px;
-            margin-bottom: 40px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 90%; /* Ajusta el ancho máximo según tus necesidades */
-        }
-        .card-title {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            font-weight: 600;
-            color: #495057;
-        }
-        .form-control {
-            height: auto;
-        }
-        .form-group i {
-            margin-right: 10px;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        .btn-success:hover {
-            background-color: #218838;
-        }
 
-    </style>
+    
 </head>
+
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-title {
+    font-size: 2.5rem; 
+    font-weight: bold;
+    color: #343a40;
+}
+
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #343a40;
+    color: white; 
+    font-size: 1.5rem; 
+}
+
+.table td {
+    vertical-align: middle; 
+    font-size: 1.2rem; 
+}
+
+.alert {
+    border-radius: 5px;
+    background-color: #fff3cd; 
+    color: #856404; 
+    font-weight: bold; 
+    font-size: 1.2rem; 
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.text-center {
+    text-align: center; 
+}
+
+.gap-2 {
+    gap: 0.5rem; 
+}
+
+html, body {
+    height: 100%; 
+    margin: 0; 
+}
+
+body {
+    display: flex; 
+    flex-direction: column; 
+}
+
+.container {
+    flex: 1;
+}
+
+.page-footer {
+    background-color: #28a745;
+    color: white; 
+    text-align: center; 
+    padding: 10px 0; 
+}
+
+</style>
+
 <body>
 <?php include './Header_Admin.php'; ?>
 <div class="container mt-5">
@@ -113,15 +139,15 @@ $conn->close();
                 <table id="reservationsTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th><i class="fas fa-user"></i> Cliente</th>
-                            <th><i class="fas fa-envelope"></i> Correo</th>
-                            <th><i class="fas fa-building"></i> Posada</th>
-                            <th><i class="fas fa-calendar-alt"></i> Fecha de Reservación</th>
-                            <th><i class="fas fa-money-bill"></i> Monto Total</th>
-                            <th><i class="fas fa-info-circle"></i> Estado</th>
-                            <th><i class="fas fa-file-alt"></i> Referencia</th>
-                            <th><i class="fas fa-file-alt"></i> Contacto</th>
-                            <th><i class="fas fa-cogs"></i> Acciones</th>
+                            <th class="text-center"><i class="fas fa-user"></i> Cliente</th>
+                            <th class="text-center"><i class="fas fa-envelope"></i> Correo</th>
+                            <th class="text-center"><i class="fas fa-building"></i> Posada</th>
+                            <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha de Reservación</th>
+                            <th class="text-center"><i class="fas fa-money-bill"></i> Monto Total</th>
+                            <th class="text-center"><i class="fas fa-info-circle"></i> Estado</th>
+                            <th class="text-center"><i class="fas fa-file-alt"></i> Referencia</th>
+                            <th class="text-center"><i class="fas fa-file-alt"></i> Contacto</th>
+                            <th class="text-center"><i class="fas fa-cogs"></i> Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,16 +166,16 @@ $conn->close();
                                 }
 
                                 echo "<tr>
-                                        <td>{$row['user_name']}</td>
-                                        <td>{$row['user_email']}</td>
-                                        <td>{$row['inn_name']}</td>
-                                        <td>{$startDateFormatted} - {$endDateFormatted}</td>
-                                        <td>{$row['monto_total']}</td>
+                                        <td class='text-center'>{$row['user_name']}</td>
+                                        <td class='text-center'>{$row['user_email']}</td>
+                                        <td class='text-center'>{$row['inn_name']}</td>
+                                        <td class='text-center'>{$startDateFormatted} - {$endDateFormatted}</td>
+                                        <td class='text-center'>{$row['monto_total']}</td>
                                         <td style='color: {$statusColor};'>{$row['status']}</td>
-                                        <td>{$row['codigo_referencia']}</td>
-                                        <td>
+                                        <td class='text-center'>{$row['codigo_referencia']}</td>
+                                        <td class='text-center'>
                                         <a href='../chat.php?user_id={$row['user_id']}' class='btn btn-primary' style='color: white;'>Contactar</a></td>
-                                        <td>
+                                        <td class='text-center'>
                                             <div class='text-center'>
                                             <form action='update_reservation_status.php' method='POST' class='d-inline'>
                                                 <input type='hidden' name='id' value='{$row['id']}' />

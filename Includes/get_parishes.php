@@ -1,29 +1,24 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "VenBooking";
+include '../config/db.php';
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+if (isset($_GET['municipality_id'])) {
+    $municipality_id = $_GET['municipality_id'];
+    $sql = "SELECT id, name FROM parishes WHERE municipality_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $municipality_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['municipality_id'])) {
-    $municipality_id = $_POST['municipality_id'];
-    $sql = "SELECT * FROM parishes WHERE municipality_id = '$municipality_id'";
-    $result = $conn->query($sql);
+    $parishes = array();
 
     if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
+        while ($row = $result->fetch_assoc()) {
+            $parishes[] = $row;
         }
-    } else {
-        echo "<option value=''>No parishes found</option>";
     }
+
+    echo json_encode($parishes);
+    $stmt->close();
 }
 
 $conn->close();

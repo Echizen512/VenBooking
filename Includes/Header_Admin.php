@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="top-header-right">
-                        <button id="logout-btn" class="logout-btn">
+                        <button id="logout-btn" class="logout-btn" style="color: white;">
                             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                         </button>
                     </div>
@@ -49,23 +49,23 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../Destinations.php">
-                                        <i class="fas fa-map-marker-alt"></i> Destinos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="../Inns.php">
+                                    <a href="./get_inns.php">
                                         <i class="fas fa-bed"></i> Posadas
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../Memberships.php">
-                                        <i class="fas fa-id-card"></i> Membresías
+                                    <a href="./get_mobile_payment.php">
+                                        <i class="fas fa-bed"></i> Pago Móvil
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../Profile.php">
-                                        <i class="fas fa-user"></i> Perfil
+                                    <a href="./get_transfers.php">
+                                        <i class="fas fa-id-card"></i> Transferencia
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="./get_reservation.php">
+                                        <i class="fas fa-id-card"></i> Transferencia
                                     </a>
                                 </li>
                             </ul>
