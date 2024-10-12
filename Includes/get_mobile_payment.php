@@ -71,7 +71,6 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -84,81 +83,7 @@ $result = $stmt->get_result();
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<style>
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-}
 
-.card {
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.card-title {
-    font-size: 2.5rem; 
-    font-weight: bold;
-    color: #343a40;
-}
-
-.table {
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.table thead th {
-    background-color: #343a40;
-    color: white; 
-    font-size: 1.5rem; 
-}
-
-.table td {
-    vertical-align: middle; 
-    font-size: 1.2rem; 
-}
-
-.alert {
-    border-radius: 5px;
-    background-color: #fff3cd; 
-    color: #856404; 
-    font-weight: bold; 
-    font-size: 1.2rem; 
-}
-
-.mb-3 {
-    margin-bottom: 1.5rem !important;
-}
-
-.text-center {
-    text-align: center; 
-}
-
-.gap-2 {
-    gap: 0.5rem; 
-}
-
-html, body {
-    height: 100%; 
-    margin: 0; 
-}
-
-body {
-    display: flex; 
-    flex-direction: column; 
-}
-
-.container {
-    flex: 1;
-}
-
-.page-footer {
-    background-color: #28a745;
-    color: white; 
-    text-align: center; 
-    padding: 10px 0; 
-}
-
-</style>
 
 <?php include './Header_Admin.php'; ?>
 <div class="container mt-5">
@@ -207,7 +132,6 @@ body {
         </div>
     </div>
 </div>
-
 <!-- Modal para Agregar Pago Móvil -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -292,17 +216,17 @@ body {
 
 <?php include './Footer.php'; ?>
 
-<script src="../Assets/js/jquery.min.js"></script>
-<script src="../Assets/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables -->
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-
 
 <script>
 $(document).ready(function() {
     $('#paymentsTable').DataTable({
-        "paging": true, // Habilitar paginación
-        "searching": true, // Habilitar búsqueda
+        "paging": true,
+        "searching": true,
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por página",
             "zeroRecords": "No se encontraron resultados",
@@ -317,20 +241,20 @@ $(document).ready(function() {
         }
     });
 
-        // Llenar formulario de edición
-        $('#editModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var cedula = button.data('cedula');
-            var bankCode = button.data('bank-code');
-            var phoneNumber = button.data('phone-number');
+    // Llenar formulario de edición
+    $('#editModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var cedula = button.data('cedula');
+        var bankCode = button.data('bank-code');
+        var phoneNumber = button.data('phone-number');
 
-            $('#edit_id').val(id);
-            $('#edit_cedula').val(cedula);
-            $('#edit_bank_code').val(bankCode);
-            $('#edit_phone_number').val(phoneNumber);
-        });
+        $('#edit_id').val(id);
+        $('#edit_cedula').val(cedula);
+        $('#edit_bank_code').val(bankCode);
+        $('#edit_phone_number').val(phoneNumber);
     });
+});
 </script>
 </body>
 </html>

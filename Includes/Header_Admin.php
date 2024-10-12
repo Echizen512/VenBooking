@@ -55,17 +55,17 @@
                                 </li>
                                 <li>
                                     <a href="./get_mobile_payment.php">
-                                        <i class="fas fa-bed"></i> Pago Móvil
+                                        <i class="fas fa-mobile-alt"></i> Pago Móvil
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./get_transfers.php">
-                                        <i class="fas fa-id-card"></i> Transferencia
+                                        <i class="fas fa-money-check-alt"></i> Transferencia
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./get_reservation.php">
-                                        <i class="fas fa-id-card"></i> Transferencia
+                                        <i class="fas fa-calendar-check"></i> Reservas
                                     </a>
                                 </li>
                             </ul>

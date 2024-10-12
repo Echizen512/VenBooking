@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Consulta para obtener la información del usuario incluyendo las nuevas columnas
 $sql_user = "SELECT first_name, last_name, profile_type, email, profile_image_url, banner_image_url, youtube_url, facebook_url, twitter_url, instagram_url FROM Profile WHERE id = ?";
 $stmt_user = $conn->prepare($sql_user);
 
@@ -23,7 +22,7 @@ $result_user = $stmt_user->get_result();
 $user = $result_user->fetch_assoc();
 
 
-
+// Consulta para obtener todas las posadas, sin filtrar por status o block
 $sql = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone,
         s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, 
         c.name AS category_name, i.status, i.block
@@ -32,9 +31,7 @@ $sql = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.
         LEFT JOIN municipalities m ON i.municipality_id = m.id
         LEFT JOIN parishes p ON i.parish_id = p.id
         LEFT JOIN categories c ON i.category_id = c.id
-        WHERE i.user_id = ? AND i.status = 0 AND i.block = 0";
-
-
+        WHERE i.user_id = ?";
 
 $stmt = $conn->prepare($sql);
 
@@ -50,7 +47,6 @@ if ($result === false) {
     die('Error al ejecutar la consulta: ' . $conn->error);
 }
 
-// Obtener el número de clientes (reservaciones confirmadas)
 $sql_clients_count = "SELECT COUNT(*) AS clients_count 
                       FROM reservations r 
                       JOIN inns i ON r.inn_id = i.id 
@@ -60,9 +56,8 @@ $stmt_clients_count->bind_param("i", $user_id);
 $stmt_clients_count->execute();
 $result_clients_count = $stmt_clients_count->get_result();
 $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,9 +74,7 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
     <div class="container">
         <div class="card overflow-hidden">
             <div class="card-body p-0">
-                <!-- Imagen del banner -->
                 <img src="<?php echo htmlspecialchars($user['banner_image_url']); ?>" style="height: 350px; width: 100%;" alt="Banner" class="img-fluid">
-
                 <div class="row align-items-center">
                     <div class="col-lg-4 order-lg-1 order-2">
                         <div class="d-flex align-items-center justify-content-around m-4">
@@ -89,7 +82,6 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                                 <i class="fas fa-hotel fs-1 d-block mb-3"></i>
                                 <h4 class="mb-0 fw-semibold lh-1">
                                     <?php
-                                    // Obtener el número de posadas
                                     $sql_inn_count = "SELECT COUNT(*) AS inn_count FROM inns WHERE user_id = ?";
                                     $stmt_inn_count = $conn->prepare($sql_inn_count);
                                     $stmt_inn_count->bind_param("i", $user_id);
@@ -156,50 +148,38 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                     </div>
                 </div>
 
-                <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
-
-        <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
-        <div class="row justify-content-center mt-5"> 
-            <div class="col-12 text-center">
-                <h2 class="mb-4 text-success" style="font-size: 2.5rem;"> 
-                    <i class="fas fa-hotel"></i> Posadas Activas
-                </h2>
-            </div>
+                <div class="tab-pane fade show active" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
+    <div class="row justify-content-center mt-5"> 
+        <div class="col-12 text-center">
+            <h2 class="mb-4 text-success" style="font-size: 2.5rem;"> <i class="fas fa-hotel"></i> Posadas</h2>
         </div>
-
-        <div class="row justify-content-center">
-    <?php
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id); 
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '<div class="col-sm-6 col-lg-4 d-flex justify-content-center">';
-            echo '<div class="card hover-img text-center" style="width: 30rem; margin: 30px;">';  
-            echo '<div class="card-body p-4 border-bottom">';
-            echo '<img src="'.htmlspecialchars($row["image_url"]).'" alt="Inn Image" class="rounded-circle mb-3">';
-            echo '<h5 class="fw-semibold mb-2">'.htmlspecialchars($row["inn_name"]).'</h5>';
-            echo '<span class="text-muted">'.htmlspecialchars($row["category_name"]).'</span>';
-            echo '</div>';
-            echo '<div class="p-3 d-flex justify-content-center">';
-            echo '<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#viewInnModal" onclick="viewInnDetails('.htmlspecialchars(json_encode($row)).')" style="font-size: 1.2rem; padding: 0.75rem 1.5rem;">';
-            echo '<i class="fas fa-eye" style="margin-right: 0.5rem;"></i> Visualizar';
-            echo '</button>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
+    </div>
+    <div class="row justify-content-center">
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="col-sm-6 col-lg-4 d-flex justify-content-center">';
+                echo '<div class="card hover-img text-center" style="width: 30rem; margin: 30px;">';  
+                echo '<div class="card-body p-4 border-bottom">';
+                echo '<img src="'.htmlspecialchars($row["image_url"]).'" alt="Inn Image" class="rounded-circle mb-3">';
+                echo '<h5 class="fw-semibold mb-2">'.htmlspecialchars($row["inn_name"]).'</h5>';
+                echo '<span class="text-muted">'.htmlspecialchars($row["category_name"]).'</span>';
+                echo '</div>';
+                echo '<div class="p-3 d-flex justify-content-center">';
+                echo '<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#viewInnModal" onclick="viewInnDetails('.htmlspecialchars(json_encode($row)).')" style="font-size: 1.2rem; padding: 0.75rem 1.5rem;">';
+                echo '<i class="fas fa-eye" style="margin-right: 0.5rem;"></i> Visualizar';
+                echo '</button>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+        } else {
+            echo '<div class="col-12 text-center">No hay posadas registradas.</div>';
         }
-    } else {
-        echo '<div class="col-12 text-center">No hay posadas registradas.</div>';
-    }
-    ?>
+        ?>
+    </div>
 </div>
+
 
 <div class="row justify-content-center mt-5">
     <div class="col-12 text-center">

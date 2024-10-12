@@ -215,13 +215,19 @@ body {
                                     </button>";
                                 ?>
                                 <tr>
-                                    <td class="text-center">
-                                        <img src="<?= $row['image_url'] ?>" alt="Imagen de Posada" class="rounded img-thumbnail" style="width: 100px; height: auto;">
+                                <td class="text-center align-middle">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="<?= $row['image_url'] ?>" alt="Imagen de Posada" class="rounded img-thumbnail" style="width: 100px; height: auto;">
+                                        </div>
                                     </td>
                                     <td class="text-center"><?= $row["name"] ?></td>
                                     <td class="text-center"><?= $row["state_name"] ?></td>
                                     <td class="text-center"><?= $row["category_name"] ?></td>
-                                    <td class="text-center"><?= $blockButton ?></td>
+                                    <td class="text-center align-middle">
+                                        <div class="d-flex justify-content-center">
+                                            <?= $blockButton ?>
+                                        </div>
+                                    </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center align-items-center gap-2">
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal"
@@ -325,6 +331,7 @@ body {
                             <!-- Options cargadas dinámicamente -->
                         </select>
                     </div>
+                    <div></div>
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>
             </div>
@@ -336,7 +343,7 @@ body {
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="editModalLabel">Editar Posada</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

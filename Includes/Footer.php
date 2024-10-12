@@ -1,4 +1,4 @@
-<footer class="page-footer">
+<footer class="page-footer bg-success">
     <div class="footer-last-section bg-success">
         <div class="container">
             <p>Copyright 2024 &copy; VenBooking</p>

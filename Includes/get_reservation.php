@@ -205,6 +205,8 @@ body {
     </div>
 </div>
 
+<?php include './Footer.php'; ?>
+
 <script src="../Assets/js/jquery-3.6.0.min.js"></script>
 <script src="../Assets/js/jquery.dataTables.min.js"></script>
 <script src="../Assets/js/dataTables.bootstrap5.min.js"></script>

@@ -9,6 +9,15 @@ if (!isset($_SESSION['user_id'])) {
 
 $inn_id = $_GET['id'];
 
+// Consulta para obtener el nombre de la posada
+$sql_inn = "SELECT name FROM inns WHERE id = ?";
+$stmt_inn = $conn->prepare($sql_inn);
+$stmt_inn->bind_param("i", $inn_id);
+$stmt_inn->execute();
+$stmt_inn->bind_result($inn_name);
+$stmt_inn->fetch();
+$stmt_inn->close();
+
 // Consulta para habitaciones
 $sql_rooms = "SELECT * FROM rooms WHERE inn_id = ?";
 $stmt_rooms = $conn->prepare($sql_rooms);
@@ -187,8 +196,8 @@ if (isset($_POST['toggle_block'])) {
 <?php include './Header_Admin.php'; ?>
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-center" style="font-size: 28px;">
-        <i class="fas fa-home" style="font-size: 28px;"></i> Detalles de la Posada
+<h2 class="mb-4 text-center" style="font-size: 28px;">
+        <i class="fas fa-home" style="font-size: 28px;"></i> <?php echo htmlspecialchars($inn_name); ?>
     </h2>
 
 <!-- Sección de Habitaciones -->
