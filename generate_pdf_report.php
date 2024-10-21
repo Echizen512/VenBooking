@@ -34,7 +34,7 @@ if (isset($_GET['reservation_id'])) {
     if ($reservation) {
         $pdf = new FPDF();
         $pdf->AddPage();
-        
+
         // Encabezado de la factura
         $pdf->SetFont('Arial', 'B', 16);
         $pdf->Cell(0, 10, utf8_decode('FACTURA DE RESERVACIÓN'), 0, 1, 'C');
@@ -42,7 +42,7 @@ if (isset($_GET['reservation_id'])) {
         $pdf->SetFont('Arial', 'I', 10);
         $pdf->Cell(0, 10, 'Fecha: ' . date('d/m/Y'), 0, 1, 'R');
         $pdf->Ln(10);
-        
+
         // Información del cliente
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 10, utf8_decode('Información del Cliente'), 0, 1, 'L');

@@ -13,24 +13,29 @@ $result_inns = $conn->query($sql_inns);
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Posadas</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Assets/css/Prueba.css">
 
 </head>
 
 <body>
-    <?php include './Includes/header.php';?>
+    <?php include './Includes/header.php'; ?>
     <section class="course-listing-page">
         <div class="container">
             <div class="card shadow-sm" style="padding: 20px">
                 <div class="card-body">
                     <div id="filters" class="button-group">
-                        <button class="btn btn-success" data-filter="*" style="color: white;"><i class="fas fa-th" style="margin-right: 8px;"></i> Todos</button>
-                        <button class="btn btn-success" data-filter=".montaña" style="color: white;"><i class="fas fa-mountain" style="margin-right: 8px;"></i> Montaña</button>
-                        <button class="btn btn-success" data-filter=".playa" style="color: white;"><i class="fas fa-umbrella-beach" style="margin-right: 8px;"></i> Playa</button>
-                        <button class="btn btn-success" data-filter=".ciudad" style="color: white;"><i class="fas fa-city" style="margin-right: 8px;"></i> Ciudad</button>
+                        <button class="btn btn-success" data-filter="*" style="color: white;"><i class="fas fa-th"
+                                style="margin-right: 8px;"></i> Todos</button>
+                        <button class="btn btn-success" data-filter=".montaña" style="color: white;"><i
+                                class="fas fa-mountain" style="margin-right: 8px;"></i> Montaña</button>
+                        <button class="btn btn-success" data-filter=".playa" style="color: white;"><i
+                                class="fas fa-umbrella-beach" style="margin-right: 8px;"></i> Playa</button>
+                        <button class="btn btn-success" data-filter=".ciudad" style="color: white;"><i
+                                class="fas fa-city" style="margin-right: 8px;"></i> Ciudad</button>
                     </div>
                 </div>
             </div>
@@ -59,7 +64,7 @@ $result_inns = $conn->query($sql_inns);
                                 </div>
                                 <div class="card-body">
                                     <h2 class="card-title"><i class="fas fa-bed"></i> ' . $row['inn_name'] . '</h2>
-                                    <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] .'</p>
+                                    <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
                                     <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
                                         <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
                                     </a>
@@ -75,6 +80,7 @@ $result_inns = $conn->query($sql_inns);
             </div>
         </div>
     </section>
-    <?php include './Includes/footer.php';?>
+    <?php include './Includes/footer.php'; ?>
 </body>
+
 </html>

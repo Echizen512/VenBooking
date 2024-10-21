@@ -30,34 +30,36 @@ $result_rooms = $conn->query($sql_rooms);
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>VenBooking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/css/all.min.css"> 
+    <link rel="stylesheet" href="./assets/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
 
-<?php 
-include './Includes/Header.php';
-include './Includes/banner.php'; 
-?>
+    <?php
+    include './Includes/Header.php';
+    include './Includes/banner.php';
+    ?>
 
-<div class="page-heading">
-    <div class="container">
-        <h2><i class="fas fa-hotel"></i> Posadas Populares</h2> 
+    <div class="page-heading">
+        <div class="container">
+            <h2><i class="fas fa-hotel"></i> Posadas Populares</h2>
+        </div>
     </div>
-</div>
 
-<section class="course-listing-page">
-    <div class="container">
-        <div class="row">
-            <?php
-            if ($result_inns->num_rows > 0) {
-                while ($row = $result_inns->fetch_assoc()) {
-                    echo '
+    <section class="course-listing-page">
+        <div class="container">
+            <div class="row">
+                <?php
+                if ($result_inns->num_rows > 0) {
+                    while ($row = $result_inns->fetch_assoc()) {
+                        echo '
                     <div class="col-md-5 grid-item" data-category="' . strtolower($row['category_name']) . '">
                         <div class="card custom-card" style="margin-bottom: 30px; margin-right: 55px; height: 450px;">
                             <div class="img-wrap">
@@ -72,23 +74,24 @@ include './Includes/banner.php';
                             </div>
                         </div>
                     </div>';
+                    }
+                } else {
+                    echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
                 }
-            } else {
-                echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
-            }
-            $conn->close();
-            ?>
+                $conn->close();
+                ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<?php 
-include './Includes/Info.php';
-include './Includes/Gallery.php'; 
-include './Includes/Destinations.php';
-include './Includes/VenBoocking.php';
-include './Includes/Footer.php';
-?>
+    <?php
+    include './Includes/Info.php';
+    include './Includes/Gallery.php';
+    include './Includes/Destinations.php';
+    include './Includes/VenBoocking.php';
+    include './Includes/Footer.php';
+    ?>
 
 </body>
+
 </html>

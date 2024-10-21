@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/flexslider.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.rateyo.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.rateyo.css" />
     <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mmenu.all.css" />
     <link rel="stylesheet" type="text/css" href="../inner-page-style.css">
     <link rel="stylesheet" type="text/css" href="../style.css">
@@ -17,6 +18,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
     <div>
         <header class="site-header">
@@ -104,4 +106,5 @@
         });
     </script>
 </body>
+
 </html>

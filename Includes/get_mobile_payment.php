@@ -73,6 +73,7 @@ $result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,35 +83,38 @@ $result = $stmt->get_result();
     <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
 
 
-<?php include './Header_Admin.php'; ?>
-<div class="container mt-5">
-    <div class="card custom-card">
-        <div class="card-body">
-            <h2 class="card-title"><i class="fas fa-mobile-alt"></i> Lista de Pagos Móviles</h2>
-            <div class="table-responsive">
-                <div class="text-right mb-3">
-                    <button class='btn btn-success btn-sm d-inline-flex align-items-center' data-bs-toggle="modal" data-bs-target="#createModal" style="color: white; font-size: 14px;" title='Agregar Pago Móvil'>
-                        <i class='fas fa-plus mr-2' style='color: white;'></i> Agregar Pago Móvil
-                    </button>
-                </div>
-                <table id="paymentsTable" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th class="text-center">Cédula</th>
-                        <th class="text-center">Código Bancario</th>
-                        <th class="text-center">Número de Teléfono</th>
-                        <th class="text-center">Posada</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>
+    <?php include './Header_Admin.php'; ?>
+    <div class="container mt-5">
+        <div class="card custom-card">
+            <div class="card-body">
+                <h2 class="card-title"><i class="fas fa-mobile-alt"></i> Lista de Pagos Móviles</h2>
+                <div class="table-responsive">
+                    <div class="text-right mb-3">
+                        <button class='btn btn-success btn-sm d-inline-flex align-items-center' data-bs-toggle="modal"
+                            data-bs-target="#createModal" style="color: white; font-size: 14px;"
+                            title='Agregar Pago Móvil'>
+                            <i class='fas fa-plus mr-2' style='color: white;'></i> Agregar Pago Móvil
+                        </button>
+                    </div>
+                    <table id="paymentsTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Cédula</th>
+                                <th class="text-center">Código Bancario</th>
+                                <th class="text-center">Número de Teléfono</th>
+                                <th class="text-center">Posada</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>
                                     <td class='text-center'>{$row['cedula']}</td>
                                     <td class='text-center'>{$row['bank_code']}</td>
                                     <td class='text-center'>{$row['phone_number']}</td>
@@ -121,140 +125,143 @@ $result = $stmt->get_result();
                                         </button>
                                     </td>
                                 </tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>No hay pagos móviles registrados.</td></tr>";
-                    }
-                    ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal para Agregar Pago Móvil -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-success">
-                <h5 class="modal-title" id="createModalLabel" style="color: white;">Agregar Pago Móvil</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="createForm" method="POST">
-                    <input type="hidden" name="action" value="create">
-                    <div class="form-group">
-                        <label for="inn_id">Posada</label>
-                        <select name="inn_id" id="inn_id" class="form-control" required>
-                            <?php
-                            $sql_inns = "SELECT id, name FROM inns WHERE user_id = ?";
-                            $stmt_inns = $conn->prepare($sql_inns);
-                            $stmt_inns->bind_param("i", $user_id);
-                            $stmt_inns->execute();
-                            $result_inns = $stmt_inns->get_result();
-
-                            while ($row_inn = $result_inns->fetch_assoc()) {
-                                echo "<option value='{$row_inn['id']}'>{$row_inn['name']}</option>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>No hay pagos móviles registrados.</td></tr>";
                             }
                             ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cedula">Cédula</label>
-                        <input type="text" name="cedula" id="cedula" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bank_code">Código Bancario</label>
-                        <input type="text" name="bank_code" id="bank_code" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone_number">Número de Teléfono</label>
-                        <input type="text" name="phone_number" id="phone_number" class="form-control" required>
-                    </div>
-                    <br>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success" style="display: block; margin: 0 auto;">Agregar Pago Móvil</button>
-                    </div>
-                </form>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- Modal para Agregar Pago Móvil -->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title" id="createModalLabel" style="color: white;">Agregar Pago Móvil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createForm" method="POST">
+                        <input type="hidden" name="action" value="create">
+                        <div class="form-group">
+                            <label for="inn_id">Posada</label>
+                            <select name="inn_id" id="inn_id" class="form-control" required>
+                                <?php
+                                $sql_inns = "SELECT id, name FROM inns WHERE user_id = ?";
+                                $stmt_inns = $conn->prepare($sql_inns);
+                                $stmt_inns->bind_param("i", $user_id);
+                                $stmt_inns->execute();
+                                $result_inns = $stmt_inns->get_result();
 
-<!-- Modal para Editar Pago Móvil -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-success">
-                <h5 class="modal-title" id="editModalLabel" style="color: white;">Editar Pago Móvil</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" method="POST">
-                    <input type="hidden" name="id" id="edit_id">
-                    <input type="hidden" name="action" value="update">
-                    <div class="form-group">
-                        <label for="cedula">Cédula</label>
-                        <input type="text" name="cedula" id="edit_cedula" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bank_code">Código Bancario</label>
-                        <input type="text" name="bank_code" id="edit_bank_code" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone_number">Número de Teléfono</label>
-                        <input type="text" name="phone_number" id="edit_phone_number" class="form-control" required>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-success" style="display: block; margin: 0 auto;">Actualizar Pago Móvil</button>
-
-                </form>
+                                while ($row_inn = $result_inns->fetch_assoc()) {
+                                    echo "<option value='{$row_inn['id']}'>{$row_inn['name']}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cedula">Cédula</label>
+                            <input type="text" name="cedula" id="cedula" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_code">Código Bancario</label>
+                            <input type="text" name="bank_code" id="bank_code" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Número de Teléfono</label>
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success"
+                                style="display: block; margin: 0 auto;">Agregar Pago Móvil</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<?php include './Footer.php'; ?>
+    <!-- Modal para Editar Pago Móvil -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title" id="editModalLabel" style="color: white;">Editar Pago Móvil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="POST">
+                        <input type="hidden" name="id" id="edit_id">
+                        <input type="hidden" name="action" value="update">
+                        <div class="form-group">
+                            <label for="cedula">Cédula</label>
+                            <input type="text" name="cedula" id="edit_cedula" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_code">Código Bancario</label>
+                            <input type="text" name="bank_code" id="edit_bank_code" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Número de Teléfono</label>
+                            <input type="text" name="phone_number" id="edit_phone_number" class="form-control" required>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-success" style="display: block; margin: 0 auto;">Actualizar
+                            Pago Móvil</button>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- DataTables -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script>
-$(document).ready(function() {
-    $('#paymentsTable').DataTable({
-        "paging": true,
-        "searching": true,
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtrado de _MAX_ registros en total)",
-            "search": "Buscar:",
-            "paginate": {
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        }
-    });
+    <?php include './Footer.php'; ?>
 
-    // Llenar formulario de edición
-    $('#editModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget);
-        var id = button.data('id');
-        var cedula = button.data('cedula');
-        var bankCode = button.data('bank-code');
-        var phoneNumber = button.data('phone-number');
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
-        $('#edit_id').val(id);
-        $('#edit_cedula').val(cedula);
-        $('#edit_bank_code').val(bankCode);
-        $('#edit_phone_number').val(phoneNumber);
-    });
-});
-</script>
+    <script>
+        $(document).ready(function () {
+            $('#paymentsTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros en total)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+            // Llenar formulario de edición
+            $('#editModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var cedula = button.data('cedula');
+                var bankCode = button.data('bank-code');
+                var phoneNumber = button.data('phone-number');
+
+                $('#edit_id').val(id);
+                $('#edit_cedula').val(cedula);
+                $('#edit_bank_code').val(bankCode);
+                $('#edit_phone_number').val(phoneNumber);
+            });
+        });
+    </script>
 </body>
+
 </html>

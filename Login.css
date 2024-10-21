@@ -2,7 +2,7 @@ body {
     margin: 0;
     color: #000;
     background: url('./background.jpg') no-repeat center center fixed;
-    background-size: cover; 
+    background-size: cover;
     font: 600 16px/18px 'Open Sans', sans-serif;
 }
 
@@ -12,7 +12,7 @@ body {
     max-width: 600px;
     min-height: 670px;
     position: relative;
-    box-shadow: 0 12px 15px 0 rgba(0,0,0,.24), 0 17px 50px 0 rgba(0,0,0,.19);
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
 
 .login-snip {
@@ -54,7 +54,7 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.login-snip .sign-in:checked + .tab {
+.login-snip .sign-in:checked+.tab {
     border-color: #1161ee;
 }
 
@@ -84,8 +84,10 @@ body {
 }
 
 .login-space .group .button {
-    background: #28a745; /* Verde similar al color Success de Bootstrap */
-    color: white; /* Texto en blanco para contraste */
+    background: #28a745;
+    /* Verde similar al color Success de Bootstrap */
+    color: white;
+    /* Texto en blanco para contraste */
 }
 
 .login-space .group input[data-type="password"] {
@@ -130,19 +132,19 @@ body {
     transform: scale(0) rotate(0);
 }
 
-.login-space .group .check:checked + label .icon {
+.login-space .group .check:checked+label .icon {
     background: #1161ee;
 }
 
-.login-space .group .check:checked + label .icon:before {
+.login-space .group .check:checked+label .icon:before {
     transform: scale(1) rotate(45deg);
 }
 
-.login-space .group .check:checked + label .icon:after {
+.login-space .group .check:checked+label .icon:after {
     transform: scale(1) rotate(-45deg);
 }
 
-.login-snip .sign-in:checked + .tab + .login-space .login {
+.login-snip .sign-in:checked+.tab+.login-space .login {
     transform: rotate(0);
 }
 

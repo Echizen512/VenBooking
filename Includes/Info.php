@@ -9,7 +9,12 @@
         </div>
         <div class="whyus-wrap">
             <h1>Sobre VenBooking</h1>
-            <p itemprop="description" class="text-justify">Descubre VenBooking, tu aplicación web definitiva para el alquiler de posadas, vehículos y paquetes turísticos en Venezuela. VenBooking te ofrece una experiencia de viaje inigualable, facilitando la planificación de tus vacaciones al permitirte reservar alojamientos acogedores, rentar vehículos confiables y elegir entre emocionantes paquetes turísticos, todo en un solo lugar. ¡Embárcate en una aventura inolvidable con VenBooking y disfruta de la belleza y diversidad de Venezuela sin complicaciones!</p>
+            <p itemprop="description" class="text-justify">Descubre VenBooking, tu aplicación web definitiva para el
+                alquiler de posadas, vehículos y paquetes turísticos en Venezuela. VenBooking te ofrece una experiencia
+                de viaje inigualable, facilitando la planificación de tus vacaciones al permitirte reservar alojamientos
+                acogedores, rentar vehículos confiables y elegir entre emocionantes paquetes turísticos, todo en un solo
+                lugar. ¡Embárcate en una aventura inolvidable con VenBooking y disfruta de la belleza y diversidad de
+                Venezuela sin complicaciones!</p>
         </div>
     </div>
 </section>

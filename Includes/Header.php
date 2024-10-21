@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +11,20 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/flexslider.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css"/>
+    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css" />
     <link rel="stylesheet" type="text/css" href="inner-page-style.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-	<link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
+    <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </head>
+
 <body>
     <div>
-    <header class="site-header">
+        <header class="site-header">
             <div class="top-header bg-success">
                 <div class="container">
                     <div class="top-header-left">
@@ -33,11 +35,11 @@
                         </div>
                     </div>
                     <div class="top-header-right">
-                    <a href="#" id="logout-btn">
-                        <button class="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                        </button>
-                    </a>
+                        <a href="#" id="logout-btn">
+                            <button class="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -89,27 +91,28 @@
     </div>
 
     <script>
-    document.getElementById('logout-btn').addEventListener('click', function (e) {
-        e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
+        document.getElementById('logout-btn').addEventListener('click', function (e) {
+            e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
 
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "Estás a punto de cerrar sesión",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirigir al usuario a logout.php si confirma
-                window.location.href = './Includes/logout.php';
-            }
-        })
-    });
-</script>
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Estás a punto de cerrar sesión",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirigir al usuario a logout.php si confirma
+                    window.location.href = './Includes/logout.php';
+                }
+            })
+        });
+    </script>
 
 
 </body>
+
 </html>

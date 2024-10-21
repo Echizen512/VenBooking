@@ -5,7 +5,6 @@
         </div>
     </div>
 </footer>
-	  
 
 <script src="./assets/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="./assets/js/lightbox.js"></script>

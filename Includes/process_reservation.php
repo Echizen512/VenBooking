@@ -6,10 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $payment_method = $_POST['payment_method'];
-    $reference_code = $_POST['reference_code']; // Nuevo campo
+    $reference_code = $_POST['reference_code'];
     $status = 'En Espera';
 
-    // Cálculo del monto total
     $sql_get_amount = "SELECT amount FROM payment_methods WHERE id = ?";
     $stmt = $conn->prepare($sql_get_amount);
     if (!$stmt) {
@@ -21,13 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
-    // Calcular la cantidad de días
     $start = new DateTime($start_date);
     $end = new DateTime($end_date);
     $interval = $start->diff($end);
     $total_days = $interval->days + 1;
 
-    // Calcular el monto total
     $total_amount = $amount * $total_days;
 
     if (isset($_FILES['receipt']) && $_FILES['receipt']['error'] == UPLOAD_ERR_OK) {

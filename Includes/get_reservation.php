@@ -3,13 +3,11 @@ include '../config/db.php';
 
 session_start();
 
-// Verificar si el usuario está autenticado
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Obtener el ID del usuario autenticado
 $user_id = $_SESSION['user_id'];
 
 $sql = "SELECT reservations.id, reservations.inn_id, reservations.start_date, reservations.end_date,
@@ -41,6 +39,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,122 +49,122 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    
+
 </head>
 
 <style>
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-}
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+    }
 
-.card {
-    border-radius: 8px;
-    overflow: hidden;
-}
+    .card {
+        border-radius: 8px;
+        overflow: hidden;
+    }
 
-.card-title {
-    font-size: 2.5rem; 
-    font-weight: bold;
-    color: #343a40;
-}
+    .card-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #343a40;
+    }
 
-.table {
-    border-radius: 8px;
-    overflow: hidden;
-}
+    .table {
+        border-radius: 8px;
+        overflow: hidden;
+    }
 
-.table thead th {
-    background-color: #343a40;
-    color: white; 
-    font-size: 1.5rem; 
-}
+    .table thead th {
+        background-color: #343a40;
+        color: white;
+        font-size: 1.5rem;
+    }
 
-.table td {
-    vertical-align: middle; 
-    font-size: 1.2rem; 
-}
+    .table td {
+        vertical-align: middle;
+        font-size: 1.2rem;
+    }
 
-.alert {
-    border-radius: 5px;
-    background-color: #fff3cd; 
-    color: #856404; 
-    font-weight: bold; 
-    font-size: 1.2rem; 
-}
+    .alert {
+        border-radius: 5px;
+        background-color: #fff3cd;
+        color: #856404;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
 
-.mb-3 {
-    margin-bottom: 1.5rem !important;
-}
+    .mb-3 {
+        margin-bottom: 1.5rem !important;
+    }
 
-.text-center {
-    text-align: center; 
-}
+    .text-center {
+        text-align: center;
+    }
 
-.gap-2 {
-    gap: 0.5rem; 
-}
+    .gap-2 {
+        gap: 0.5rem;
+    }
 
-html, body {
-    height: 100%; 
-    margin: 0; 
-}
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
 
-body {
-    display: flex; 
-    flex-direction: column; 
-}
+    body {
+        display: flex;
+        flex-direction: column;
+    }
 
-.container {
-    flex: 1;
-}
+    .container {
+        flex: 1;
+    }
 
-.page-footer {
-    background-color: #28a745;
-    color: white; 
-    text-align: center; 
-    padding: 10px 0; 
-}
-
+    .page-footer {
+        background-color: #28a745;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+    }
 </style>
 
 <body>
-<?php include './Header_Admin.php'; ?>
-<div class="container mt-5">
-    <div class="card custom-card">
-        <div class="card-body">
-            <h2 class="card-title"><i class="fas fa-calendar-check"></i> Lista de Reservaciones</h2>
-            <div class="table-responsive">
-                <table id="reservationsTable" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th class="text-center"><i class="fas fa-user"></i> Cliente</th>
-                            <th class="text-center"><i class="fas fa-envelope"></i> Correo</th>
-                            <th class="text-center"><i class="fas fa-building"></i> Posada</th>
-                            <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha de Reservación</th>
-                            <th class="text-center"><i class="fas fa-money-bill"></i> Monto Total</th>
-                            <th class="text-center"><i class="fas fa-info-circle"></i> Estado</th>
-                            <th class="text-center"><i class="fas fa-file-alt"></i> Referencia</th>
-                            <th class="text-center"><i class="fas fa-file-alt"></i> Contacto</th>
-                            <th class="text-center"><i class="fas fa-cogs"></i> Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                // Formatear las fechas en el formato día, mes, año
-                                $startDateFormatted = date("d, m, Y", strtotime($row['start_date']));
-                                $endDateFormatted = date("d, m, Y", strtotime($row['end_date']));
+    <?php include './Header_Admin.php'; ?>
+    <div class="container mt-5">
+        <div class="card custom-card">
+            <div class="card-body">
+                <h2 class="card-title"><i class="fas fa-calendar-check"></i> Lista de Reservaciones</h2>
+                <div class="table-responsive">
+                    <table id="reservationsTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center"><i class="fas fa-user"></i> Cliente</th>
+                                <th class="text-center"><i class="fas fa-envelope"></i> Correo</th>
+                                <th class="text-center"><i class="fas fa-building"></i> Posada</th>
+                                <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha de Reservación</th>
+                                <th class="text-center"><i class="fas fa-money-bill"></i> Monto Total</th>
+                                <th class="text-center"><i class="fas fa-info-circle"></i> Estado</th>
+                                <th class="text-center"><i class="fas fa-file-alt"></i> Referencia</th>
+                                <th class="text-center"><i class="fas fa-file-alt"></i> Contacto</th>
+                                <th class="text-center"><i class="fas fa-cogs"></i> Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
 
-                                $statusColor = 'blue'; // Por defecto: En Espera
-                                if ($row['status'] === 'Confirmado') {
-                                    $statusColor = 'green';
-                                } elseif ($row['status'] === 'Cancelado') {
-                                    $statusColor = 'red';
-                                }
+                                    $startDateFormatted = date("d, m, Y", strtotime($row['start_date']));
+                                    $endDateFormatted = date("d, m, Y", strtotime($row['end_date']));
 
-                                echo "<tr>
+                                    $statusColor = 'blue';
+                                    if ($row['status'] === 'Confirmado') {
+                                        $statusColor = 'green';
+                                    } elseif ($row['status'] === 'Cancelado') {
+                                        $statusColor = 'red';
+                                    }
+
+                                    echo "<tr>
                                         <td class='text-center'>{$row['user_name']}</td>
                                         <td class='text-center'>{$row['user_email']}</td>
                                         <td class='text-center'>{$row['inn_name']}</td>
@@ -192,48 +191,49 @@ body {
                                             </div>
                                         </td>
                                     </tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='8'>No se encontraron reservaciones</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='8'>No se encontraron reservaciones</td></tr>";
-                        }
-                        ?>
+                            ?>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<?php include './Footer.php'; ?>
+    <?php include './Footer.php'; ?>
 
-<script src="../Assets/js/jquery-3.6.0.min.js"></script>
-<script src="../Assets/js/jquery.dataTables.min.js"></script>
-<script src="../Assets/js/dataTables.bootstrap5.min.js"></script>
-<script>
-$(document).ready(function () {
-    $('#reservationsTable').DataTable({
-        "paging": true,
-        "lengthMenu": [5, 10, 20],
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "No se encontraron resultados",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtrado de _MAX_ registros totales)",
-            "search": "Buscar:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        }
-    });
-});
-</script>
+    <script src="../Assets/js/jquery-3.6.0.min.js"></script>
+    <script src="../Assets/js/jquery.dataTables.min.js"></script>
+    <script src="../Assets/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#reservationsTable').DataTable({
+                "paging": true,
+                "lengthMenu": [5, 10, 20],
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

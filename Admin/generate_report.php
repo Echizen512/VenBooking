@@ -8,18 +8,18 @@ if (isset($_POST['generate_pdf'])) {
 
     $pdf = new FPDF();
     $pdf->AddPage();
-    
+
     $pdf->SetLeftMargin(20);
     $pdf->SetRightMargin(20);
-    
+
     $pdf->SetFont('Arial', 'B', 16);
-    
-    $pdf->SetFillColor(144, 238, 144); 
-    $pdf->SetTextColor(0, 0, 0); 
+
+    $pdf->SetFillColor(144, 238, 144);
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->SetDrawColor(34, 139, 34);
 
     $pdf->Cell(0, 20, utf8_decode('Reportes Generados'), 0, 1, 'C', true);
-    
+
     $pdf->SetLineWidth(0.5);
     $pdf->Line(20, 30, 190, 30);
     $pdf->Ln(10);
@@ -55,14 +55,14 @@ if (isset($_POST['generate_pdf'])) {
                 if ($fill) {
                     $pdf->SetFillColor($altColor[0], $altColor[1], $altColor[2]);
                 } else {
-                    $pdf->SetFillColor(255, 255, 255); 
+                    $pdf->SetFillColor(255, 255, 255);
                 }
 
                 $pdf->Cell(60, 8, utf8_decode($row['name']), 1, 0, 'L', true);
                 $pdf->Cell(80, 8, utf8_decode($row['first_name'] . ' ' . $row['last_name']), 1, 0, 'L', true);
                 $pdf->Ln(8);
 
-                $fill = !$fill; 
+                $fill = !$fill;
             }
         }
         $pdf->Ln(10);
@@ -112,7 +112,7 @@ if (isset($_POST['generate_pdf'])) {
                 $pdf->Cell(60, 8, utf8_decode($row['payment_method']), 1, 0, 'L', true);
                 $pdf->Ln(8);
 
-                $fill = !$fill;  
+                $fill = !$fill;
             }
         }
     }

@@ -9,15 +9,15 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Verificar si se ha enviado el formulario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recoger datos del formulario
+
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Nuevos campos
+
     $profile_image_url = $_POST['profile_image_url'];
     $banner_image_url = $_POST['banner_image_url'];
     $youtube_url = $_POST['youtube_url'];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $twitter_url = $_POST['twitter_url'];
     $instagram_url = $_POST['instagram_url'];
 
-    // Actualizar información del perfil
+
     if (!empty($password)) {
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
         $sql_update = "UPDATE Profile SET first_name = ?, last_name = ?, email = ?, password = ?, profile_image_url = ?, banner_image_url = ?, youtube_url = ?, facebook_url = ?, twitter_url = ?, instagram_url = ? WHERE id = ?";
