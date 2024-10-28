@@ -9,6 +9,27 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+
+// Obtener el tipo de membresía y el número de posadas existentes
+$sql_membership = "SELECT profile.membership_type, 
+                          COUNT(inns.id) AS inn_count 
+                   FROM profile 
+                   LEFT JOIN inns ON profile.id = inns.user_id 
+                   WHERE profile.id = ?";
+
+$stmt_membership = $conn->prepare($sql_membership);
+$stmt_membership->bind_param("i", $user_id);
+$stmt_membership->execute();
+$result_membership = $stmt_membership->get_result();
+
+if ($result_membership === false) {
+    die('Error al ejecutar la consulta: ' . $conn->error);
+}
+
+$membership_data = $result_membership->fetch_assoc();
+$membership_type = $membership_data['membership_type'];
+$inn_count = $membership_data['inn_count'];
+
 $sql = "SELECT inns.id, inns.name, inns.description, inns.email, inns.phone, inns.block, 
        inns.image_url, inns.state_id, inns.municipality_id, inns.parish_id, inns.category_id,
        states.name AS state_name, municipalities.name AS municipality_name, 
@@ -173,11 +194,17 @@ $conn->close();
     }
 
     .page-footer {
-        background-color: #28a745;
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-    }
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;  /* Mantiene el footer fijo en la parte inferior */
+    left: 0;          /* Alinea el footer a la izquierda */
+    bottom: 0;        /* Fija el footer en la parte inferior de la ventana */
+    width: 100%;      /* Asegura que el footer ocupe todo el ancho de la pantalla */
+    z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
+}
+
 </style>
 
 <body>
@@ -185,13 +212,46 @@ $conn->close();
     <div class="container mt-5">
         <div class="card shadow-sm border-0">
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="card-title"><i class="fas fa-list"></i> Listado de Posadas</h2>
-                    <button type="button" class="btn btn-success btn-sm d-flex align-items-center" data-toggle="modal"
-                        data-target="#posadaModal" title="Crear Posada" style="font-size: 16px;">
-                        <i class="fas fa-plus mr-2"></i> Añadir Posada
-                    </button>
-                </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="card-title"><i class="fas fa-list"></i> Listado de Posadas</h2>
+    <button type="button" class="btn btn-success btn-sm d-flex align-items-center" id="addPosadaButton" title="Crear Posada" style="font-size: 16px;">
+        <i class="fas fa-plus mr-2"></i> Añadir Posada
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('addPosadaButton').addEventListener('click', function() {
+        let membershipType = '<?php echo $membership_type; ?>';
+        let innCount = <?php echo $inn_count; ?>;
+
+        if (membershipType === 'basic' && innCount > 0) {
+            Swal.fire({
+                title: 'Límite alcanzado',
+                text: 'Ya has alcanzado el límite de posadas.',
+                icon: 'warning',
+                confirmButtonText: 'Actualizar Membresía',
+                onClose: () => {
+                    window.location.href = 'Memberships.php'; 
+                }
+            });
+        } else if (membershipType === 'silver' && innCount >= 3) {
+            Swal.fire({
+                title: 'Límite alcanzado',
+                text: 'Ya has alcanzado el límite de 3 posadas.',
+                icon: 'warning',
+                confirmButtonText: 'Actualizar Membresía',
+                onClose: () => {
+                    window.location.href = 'Memberships.php'; // Cambia esto a la URL de tu perfil
+                }
+            });
+        } else {
+            // Redirigir al modal o a la página de creación de posadas
+            $('#posadaModal').modal('show');
+        }
+    });
+</script>
+
 
                 <div class="table-responsive">
                     <?php if ($result->num_rows > 0) { ?>

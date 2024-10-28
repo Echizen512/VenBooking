@@ -64,11 +64,9 @@
                 </h4>
               </div>
               <div class="card-body">
-                <h1 class="card-title pricing-card-title">$150<small class="text-muted fw-light">/mes</small></h1>
+                <h1 class="card-title pricing-card-title" style="font-size: 24px;">$150<small class="text-muted fw-light">/mes</small></h1>
                 <ul class="list-unstyled mt-3 mb-4">
                   <li><i class="fas fa-home"></i> 1 Posada</li>
-                  <li><i class="fas fa-car"></i> 1 Vehículo</li>
-                  <li><i class="fas fa-suitcase-rolling"></i> 1 Paquete Turístico</li>
                 </ul>
                 <!-- Botón PayPal Básico -->
                 <div id="paypal-button-container-basic"></div>
@@ -85,11 +83,9 @@
                 </h4>
               </div>
               <div class="card-body">
-                <h1 class="card-title pricing-card-title">$350<small class="text-muted fw-light">/mes</small></h1>
+                <h1 class="card-title pricing-card-title"  style="font-size: 24px;">$350<small class="text-muted fw-light">/mes</small></h1>
                 <ul class="list-unstyled mt-3 mb-4">
-                  <li><i class="fas fa-home"></i> 2 Posadas</li>
-                  <li><i class="fas fa-car"></i> 2 Vehículos</li>
-                  <li><i class="fas fa-suitcase-rolling"></i> 2 Paquetes Turísticos</li>
+                  <li><i class="fas fa-home"></i> 3 Posadas</li>
                 </ul>
                 <!-- Botón PayPal Plata -->
                 <div id="paypal-button-container-silver"></div>
@@ -106,71 +102,19 @@
                 </h4>
               </div>
               <div class="card-body">
-                <h1 class="card-title pricing-card-title">$400<small class="text-muted fw-light">/mes</small></h1>
+                <h1 class="card-title pricing-card-title"  style="font-size: 24px;">$400<small class="text-muted fw-light">/mes</small></h1>
                 <ul class="list-unstyled mt-3 mb-4">
                   <li><i class="fas fa-home"></i> Sin límite de Posadas</li>
-                  <li><i class="fas fa-car"></i> Sin límite de Vehículos</li>
-                  <li><i class="fas fa-suitcase-rolling"></i> Sin límite de Paquetes Turísticos</li>
                 </ul>
-                <!-- Botón PayPal Oro -->
                 <div id="paypal-button-container-gold"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="card my-4 border-success">
-        <div class="card-header bg-success text-white">
-          <h2 class="text-center" style="font-size: 40px;">Comparación</h2>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table id="comparisonTable" class="table table-striped table-bordered" style="width: 100%;">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Básico</th>
-                  <th>Plata</th>
-                  <th>Oro</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row" class="text-start">Público</th>
-                  <td><i class="fas fa-check text-success"></i></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-start">Privado</th>
-                  <td></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-start">Permisos</th>
-                  <td><i class="fas fa-check text-success"></i></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-start">Compartición</th>
-                  <td></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-start">Seguridad</th>
-                  <td></td>
-                  <td></td>
-                  <td><i class="fas fa-check text-success"></i></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+</div>
+</div>
+<br>
 
       <?php include './Includes/footer.php'; ?>
 

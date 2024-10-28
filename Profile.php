@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql_user = "SELECT first_name, last_name, profile_type, email, profile_image_url, banner_image_url, youtube_url, facebook_url, twitter_url, instagram_url FROM Profile WHERE id = ?";
+$sql_user = "SELECT first_name, last_name, profile_type, email, profile_image_url, banner_image_url, youtube_url, facebook_url, twitter_url, instagram_url, membership_type, membership_start_date, membership_end_date FROM Profile WHERE id = ?";
 $stmt_user = $conn->prepare($sql_user);
 
 if ($stmt_user === false) {
@@ -21,8 +21,14 @@ $stmt_user->execute();
 $result_user = $stmt_user->get_result();
 $user = $result_user->fetch_assoc();
 
+$is_active_membership = false;
+if ($user['profile_type'] === 'Empresa') {
+    $current_date = date('Y-m-d');
+    if (!empty($user['membership_type']) && $user['membership_start_date'] <= $current_date && $user['membership_end_date'] >= $current_date) {
+        $is_active_membership = true;
+    }
+}
 
-// Consulta para obtener todas las posadas, sin filtrar por status o block
 $sql = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone,
         s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, 
         c.name AS category_name, i.status, i.block
@@ -58,7 +64,6 @@ $result_clients_count = $stmt_clients_count->get_result();
 $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,6 +72,7 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
     <title>Perfil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./Assets/css/Perfiles.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -259,15 +265,33 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                 </div>
 
 
-
-                <div class="text-center mt-6">
-                    <div class="btn-group">
-                        <a href="./Includes/get_inns.php" class="btn btn-success" style="color: #ffffff;">Gestionar
-                            Posadas</a>
-                        <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#editProfileModal"><i class="fas fa-edit me-2"></i> Editar Perfil</button>
-                    </div>
-                </div>
+ <!-- Botón Gestionar Posada -->
+        <div class="text-center mt-6">
+            <div class="btn-group">
+                <?php if ($user['profile_type'] === 'Empresa'): ?>
+                    <?php if ($is_active_membership): ?>
+                        <a href="./Includes/get_inns.php" class="btn btn-success" style="color: #ffffff;">Gestionar Posadas</a>
+                    <?php else: ?>
+                        <script>
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Ups, no tienes una Membresía Activa',
+                                text: 'Por favor, adquiere una membresía para gestionar tus posadas.',
+                                confirmButtonText: 'Ir a Membresías',
+                                confirmButtonColor: '#3085d6'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = 'Memberships.php';
+                                }
+                            });
+                        </script>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#editProfileModal"><i class="fas fa-edit me-2"></i> Editar Perfil
+                </button>
+            </div>
+        </div>
 
                 <br><br>
 
