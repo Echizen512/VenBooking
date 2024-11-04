@@ -88,6 +88,83 @@ $result = $stmt->get_result();
 
 
     <?php include './Header_Admin.php'; ?>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background-color: #343a40;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .table td {
+            vertical-align: middle;
+            font-size: 1.2rem;
+        }
+
+        .alert {
+            border-radius: 5px;
+            background-color: #fff3cd;
+            color: #856404;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .page-footer {
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+
     <div class="container mt-5">
         <div class="card custom-card">
             <div class="card-body">

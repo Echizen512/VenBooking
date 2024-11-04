@@ -29,7 +29,7 @@ if ($user['profile_type'] === 'Empresa') {
     }
 }
 
-$sql = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone,
+$sql = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
         s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, 
         c.name AS category_name, i.status, i.block
         FROM inns i
@@ -131,6 +131,7 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                                     <?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']); ?>
                                 </h5>
                                 <p class="mb-0 fs-4"><?php echo htmlspecialchars($user['profile_type']); ?></p>
+                                <p class="mb-0 fs-4 text-muted"><strong>Tipo de Membresía:</strong> <?php echo htmlspecialchars($user['membership_type']); ?></p>
                             </div>
                         </div>
                     </div>
