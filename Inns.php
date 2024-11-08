@@ -1,14 +1,22 @@
 <?php
+
 include './config/db.php';
 
+// Consulta para obtener las posadas, incluyendo la calidad
 $sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
-               s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, i.category_id
-        FROM inns i
-        LEFT JOIN states s ON i.state_id = s.id
-        LEFT JOIN municipalities m ON i.municipality_id = m.id
-        LEFT JOIN parishes p ON i.parish_id = p.id";
+                   s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, i.category_id, 
+                   i.quality
+            FROM inns i
+            LEFT JOIN states s ON i.state_id = s.id
+            LEFT JOIN municipalities m ON i.municipality_id = m.id
+            LEFT JOIN parishes p ON i.parish_id = p.id";
 
+// Verificar si la consulta de las posadas se ejecutó correctamente
 $result_inns = $conn->query($sql_inns);
+if (!$result_inns) {
+    die("Error en la consulta de posadas: " . $conn->error);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +26,44 @@ $result_inns = $conn->query($sql_inns);
     <title>Posadas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Assets/css/Prueba.css">
-
 </head>
+
+<style>
+    /* Estilos previos */
+
+    .filter-btn {
+        height: 50px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        /* Espacio entre botones */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    #filters {
+        display: flex;
+        flex-wrap: wrap;
+        /* Permite que los botones se ajusten a la misma línea */
+        justify-content: space-between;
+        /* Alinea los botones equitativamente */
+    }
+
+    .filter-btn {
+        width: 22%;
+        /* Ajusta los botones para que ocupen un 22% del ancho del contenedor */
+        margin-bottom: 10px;
+        /* Espacio entre los botones */
+    }
+
+    .filter-ubicacion button,
+    .filter-quality button {
+        margin-bottom: 10px;
+        /* Espacio entre los botones */
+    }
+</style>
 
 <body>
     <?php include './Includes/header.php'; ?>
@@ -28,14 +72,30 @@ $result_inns = $conn->query($sql_inns);
             <div class="card shadow-sm" style="padding: 20px">
                 <div class="card-body">
                     <div id="filters" class="button-group">
-                        <button class="btn btn-success" data-filter="*" style="color: white;"><i class="fas fa-th"
-                                style="margin-right: 8px;"></i> Todos</button>
-                        <button class="btn btn-success" data-filter=".montaña" style="color: white;"><i
-                                class="fas fa-mountain" style="margin-right: 8px;"></i> Montaña</button>
-                        <button class="btn btn-success" data-filter=".playa" style="color: white;"><i
-                                class="fas fa-umbrella-beach" style="margin-right: 8px;"></i> Playa</button>
-                        <button class="btn btn-success" data-filter=".ciudad" style="color: white;"><i
-                                class="fas fa-city" style="margin-right: 8px;"></i> Ciudad</button>
+                        <!-- Filtro de ubicaciones y calidad, todos en la misma fila -->
+                        <button class="btn btn-success filter-btn" data-filter="*" style="color: white;">
+                            <i class="fas fa-th" style="margin-right: 8px;"></i> Todos
+                        </button>
+                        <button class="btn btn-success filter-btn" data-filter=".montaña" style="color: white;">
+                            <i class="fas fa-mountain" style="margin-right: 8px;"></i> Montaña
+                        </button>
+                        <button class="btn btn-success filter-btn" data-filter=".playa" style="color: white;">
+                            <i class="fas fa-umbrella-beach" style="margin-right: 8px;"></i> Playa
+                        </button>
+                        <button class="btn btn-success filter-btn" data-filter=".ciudad" style="color: white;">
+                            <i class="fas fa-city" style="margin-right: 8px;"></i> Ciudad
+                        </button>
+
+                        <!-- Filtro de calidad -->
+                        <button class="btn btn-info filter-btn" data-filter=".alta" style="color: white;">
+                            <i class="fas fa-star" style="margin-right: 8px;"></i> Alta
+                        </button>
+                        <button class="btn btn-warning filter-btn" data-filter=".media" style="color: white;">
+                            <i class="fas fa-star-half-alt" style="margin-right: 8px;"></i> Media
+                        </button>
+                        <button class="btn btn-secondary filter-btn" data-filter=".baja" style="color: white;">
+                            <i class="fas fa-star-of-david" style="margin-right: 8px;"></i> Baja
+                        </button>
                     </div>
                 </div>
             </div>
@@ -56,15 +116,28 @@ $result_inns = $conn->query($sql_inns);
                                 $category_class = 'playa';
                                 break;
                         }
+
+                        // Añadir clase de calidad
+                        $quality_class = strtolower($row['quality']);
+
                         echo '
-                        <div class="grid-item ' . $category_class . '" data-category=".' . $category_class . '">
-                            <div class="custom-card">
+                        <div class="grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
+                            <div class="custom-card" style="height: 450px;">
                                 <div class="img-wrap">
                                     <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid">
                                 </div>
                                 <div class="card-body">
                                     <h2 class="card-title"><i class="fas fa-bed"></i> ' . $row['inn_name'] . '</h2>
                                     <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
+                                    
+                                <div class="card-meta">
+                                    <p style="font-size: 14px;"><i class="fas fa-tag"></i> ' . $row['state_name'] . '</p>
+                                    <p style="font-size: 14px;"><i class="fas fa-map-marker-alt"></i> ' . $row['municipality_name'] . '</p>
+                                    <p style="font-size: 14px;"><i class="fas fa-location-arrow"></i> ' . $row['parish_name'] . '</p>
+                                    <p style="font-size: 14px;"><i class="fas fa-star"></i> ' . ucfirst($row['quality']) . '</p>
+                                </div>
+
+                                    <br>
                                     <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
                                         <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
                                     </a>
@@ -80,7 +153,41 @@ $result_inns = $conn->query($sql_inns);
             </div>
         </div>
     </section>
+
     <?php include './Includes/footer.php'; ?>
+
+    <!-- Código JavaScript para filtrar -->
+    <script>
+        // Filtrado por categoría y calidad
+        document.querySelectorAll('.btn[data-filter]').forEach(button => {
+            button.addEventListener('click', function () {
+                let filterValue = this.getAttribute('data-filter');
+                let items = document.querySelectorAll('.grid-item');
+                items.forEach(item => {
+                    if (filterValue === '*' || item.classList.contains(filterValue.replace('.', ''))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Filtrar por calidad con los botones
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                let qualityFilter = this.getAttribute('data-filter');
+                let items = document.querySelectorAll('.grid-item');
+                items.forEach(item => {
+                    if (qualityFilter === '*' || item.classList.contains(qualityFilter.replace('.', ''))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

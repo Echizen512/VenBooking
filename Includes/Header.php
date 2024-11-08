@@ -22,6 +22,7 @@
 
 </head>
 
+
 <body>
     <div>
         <header class="site-header">
@@ -46,7 +47,6 @@
             <div class="main-header">
                 <div class="container">
                     <div class="logo-wrap" itemprop="logo">
-
                     </div>
                     <div class="nav-wrap">
                         <nav class="nav-desktop">
@@ -76,6 +76,7 @@
                                         <i class="fas fa-user"></i> Perfil
                                     </a>
                                 </li>
+
                             </ul>
                         </nav>
                         <div id="bar">

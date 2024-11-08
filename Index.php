@@ -8,7 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
-            s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, c.name AS category_name
+            s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, c.name AS category_name, 
+            i.quality
         FROM inns i
         LEFT JOIN states s ON i.state_id = s.id
         LEFT JOIN municipalities m ON i.municipality_id = m.id
@@ -17,14 +18,6 @@ $sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.emai
         WHERE i.id IN (1, 2, 3)";
 
 $result_inns = $conn->query($sql_inns);
-
-$sql_rooms = "SELECT rooms.id, rooms.room_number, rooms.type, rooms.quality, rooms.image_url, rooms.description, 
-            rooms.price, rooms.capacity, inns.name AS inn_name, inns.image_url AS inn_image_url, 
-            inns.description AS inn_description
-        FROM rooms
-        LEFT JOIN inns ON rooms.inn_id = inns.id";
-
-$result_rooms = $conn->query($sql_rooms);
 
 ?>
 
@@ -59,21 +52,34 @@ $result_rooms = $conn->query($sql_rooms);
                 <?php
                 if ($result_inns->num_rows > 0) {
                     while ($row = $result_inns->fetch_assoc()) {
+                        // Ajustamos la categoría y calidad, si es necesario, para el filtro de clases
+                        $category_class = strtolower(str_replace(' ', '-', $row['category_name']));
+                        $quality_class = strtolower($row['quality']);
+                        
                         echo '
-                    <div class="col-md-5 grid-item" data-category="' . strtolower($row['category_name']) . '">
-                        <div class="card custom-card" style="margin-bottom: 30px; margin-right: 55px; height: 450px;">
-                            <div class="img-wrap">
-                                <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid" style="height: 250px; object-fit: cover;">
+                        <div class="col-md-4 grid-item ' . $category_class . ' ' . $quality_class . '" data-category="' . $category_class . ' ' . $quality_class . '">
+                            <div class="custom-card" style="height: 550px;">
+                                <div class="img-wrap">
+                                    <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid" style="height: 250px; object-fit: cover;">
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="card-title" style="font-size: 16px;"><i class="fas fa-bed"></i> ' . $row['inn_name'] . '</h2>
+                                    <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
+                                    
+                                    <div class="card-meta">
+                                        <p style="font-size: 14px;"><i class="fas fa-tag"></i> ' . $row['state_name'] . '</p>
+                                        <p style="font-size: 14px;"><i class="fas fa-map-marker-alt"></i> ' . $row['municipality_name'] . '</p>
+                                        <p style="font-size: 14px;"><i class="fas fa-location-arrow"></i> ' . $row['parish_name'] . '</p>
+                                        <p style="font-size: 14px;"><i class="fas fa-star"></i> ' . ucfirst($row['quality']) . '</p>
+                                    </div>
+
+                                    <br>
+                                    <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white my-2" style="height: 50px; padding: 10px 20px; font-size: 14px;">
+                                        <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
+                                    </a>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h2 class="card-title" style="font-size: 16px;"><i class="fas fa-bed"></i> ' . $row['inn_name'] . '</h2>
-                                <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
-                                <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white my-2" style="height: 50px; padding: 10px 20px; font-size: 14px;">
-                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
-                                </a>
-                            </div>
-                        </div>
-                    </div>';
+                        </div>';
                     }
                 } else {
                     echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";

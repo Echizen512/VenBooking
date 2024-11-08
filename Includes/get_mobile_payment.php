@@ -103,7 +103,7 @@ $result = $stmt->get_result();
         .card-title {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #343a40;
+            color: rgb(25 135 84);
         }
 
         .table {
@@ -112,7 +112,7 @@ $result = $stmt->get_result();
         }
 
         .table thead th {
-            background-color: #343a40;
+            background-color: rgb(25 135 84);
             color: white;
             font-size: 1.5rem;
         }
@@ -213,6 +213,8 @@ $result = $stmt->get_result();
             </div>
         </div>
     </div>
+
+    <br> <br>
     <!-- Modal para Agregar Pago Móvil -->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -299,9 +301,7 @@ $result = $stmt->get_result();
 
     <?php include './Footer.php'; ?>
 
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 

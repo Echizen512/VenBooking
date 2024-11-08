@@ -117,53 +117,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Reservar Posada</title>
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
 <style>
-    .content-wrapper {
-
-        display: flex;
-        flex-direction: column;
+    body {
+        background-color: #f3f4f6;
     }
 
-    .label {
-        font-size: 14px;
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
 
     .card {
-        border-radius: 15px;
+        border-radius: 20px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
 
     .card-header {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: bold;
-        background-color: #007bff;
+        background-color: #28a745;
+        color: #fff;
     }
 
     .card-body {
-        background-color: #f8f9fa;
+        background-color: #ffffff;
+        padding: 30px;
     }
 
     .form-label {
+        font-size: 1.1rem;
         font-weight: 600;
+        color: #333;
     }
 
     .form-control,
     .form-select {
-        border-radius: 8px;
-        box-shadow: none;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        font-size: 1.1rem;
+        padding: 15px;
     }
 
-    #paymentInfo {
-        margin-top: 15px;
+    .form-group {
+        margin-bottom: 20px;
     }
 
-    .footer {
-        margin-top: auto;
+    .form-group label i {
+        color: #28a745;
+        margin-right: 8px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        font-size: 1.2rem;
+        padding: 10px 30px;
+        font-weight: bold;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
     }
 </style>
 
@@ -177,7 +196,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-8">
                     <div class="card shadow-sm">
                         <div class="card-header bg-success text-white">
-                            <h2 class="text-center mb-0"><i class="fas fa-hotel"></i> Reserva para la Posada</h2>
+                            <h2 class="text-center mb-0" style="font-size: 24px;"><i class="fas fa-hotel"></i> Reserva
+                                para la Posada</h2>
                         </div>
                         <div class="card-body p-4">
                             <form id="reservationForm" method="POST" enctype="multipart/form-data">
@@ -185,24 +205,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <!-- Fecha de Inicio -->
                                 <div class="form-group mb-3">
-                                    <label for="start_date" class="form-label" style="font-size: 14px;"><i
+                                    <label for="start_date" class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-calendar-alt"></i> Fecha de Inicio:</label>
-                                    <input type="date" id="start_date" name="start_date" class="form-control" required>
+                                    <input type="date" id="start_date" name="start_date" style="font-size: 18px;"
+                                        class="form-control" required>
                                 </div>
 
                                 <!-- Fecha de Fin -->
                                 <div class="form-group mb-3">
-                                    <label for="end_date" class="form-label" style="font-size: 14px;"
-                                        style="font-size: 14px;"><i class="fas fa-calendar-alt"></i> Fecha de
+                                    <label for="end_date" class="form-label" style="font-size: 20px;"
+                                        style="font-size: 20px;"><i class="fas fa-calendar-alt"></i> Fecha de
                                         Fin:</label>
-                                    <input type="date" id="end_date" name="end_date" class="form-control" required>
+                                    <input type="date" id="end_date" name="end_date" style="font-size: 18px;"
+                                        class="form-control" required>
                                 </div>
 
                                 <!-- Selección de Habitación -->
                                 <div class="form-group mb-3">
-                                    <label for="room_id" class="form-label" style="font-size: 14px;"><i
+                                    <label for="room_id" class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-door-open"></i> Habitación:</label>
-                                    <select id="room_id" name="room_id" class="form-select" required>
+                                    <select id="room_id" name="room_id" class="form-select"
+                                        style="font-size: 18px; padding: 10px; border-radius: 5px;" required>
                                         <option value="" disabled selected>Seleccionar Habitación</option>
                                         <?php
                                         // Obtener habitaciones disponibles para la posada seleccionada
@@ -222,48 +245,103 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <!-- Método de Pago -->
                                 <div class="form-group mb-3">
-                                    <label for="payment_method" class="form-label" style="font-size: 14px;"><i
-                                            class="fas fa-money-check-alt"></i> Método de Pago:</label>
-                                    <select id="payment_method" name="payment_method" class="form-select" required>
+                                    <label for="payment_method" class="form-label" style="font-size: 22px;">
+                                        <i class="fas fa-money-check-alt"></i> Método de Pago:
+                                    </label>
+                                    <select id="payment_method" name="payment_method" class="form-select mb-2"
+                                        style="font-size: 18px; padding: 10px; border-radius: 5px;" required>
                                         <option value="" disabled selected>Seleccionar Método</option>
                                         <option value="1">Pago Móvil</option>
                                         <option value="2">Transferencia Bancaria</option>
-                                        <option value="3">Efectivo</option>
                                     </select>
                                 </div>
+
 
                                 <!-- Información de Pago (se llena dinámicamente) -->
                                 <div id="paymentInfo"></div>
 
                                 <!-- Comprobante de Pago -->
                                 <div class="form-group mb-3" id="receiptGroup" style="display: none;">
-                                    <label for="receipt" class="form-label" style="font-size: 14px;"><i
+                                    <label for="receipt" class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-receipt"></i> Comprobante de Pago (JPG, PNG, PDF):</label>
                                     <input type="file" id="receipt" name="receipt" class="form-control"
-                                        accept=".jpg,.jpeg,.png,.pdf">
+                                        style="font-size: 18px;" accept=".jpg,.jpeg,.png,.pdf">
                                 </div>
 
                                 <!-- Código de Referencia -->
                                 <div class="form-group mb-3">
-                                    <label for="reference_code" class="form-label" style="font-size: 14px;"><i
+                                    <label for="reference_code" class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-hashtag"></i> Código de Referencia:</label>
                                     <input type="text" id="reference_code" name="reference_code" class="form-control"
-                                        required>
+                                        style="font-size: 18px;" required>
                                 </div>
 
                                 <!-- Monto Total -->
                                 <div class="form-group mb-3">
-                                    <label for="monto_total" class="form-label" style="font-size: 14px;"><i
+                                    <label for="monto_total" class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-dollar-sign"></i> Monto Total:</label>
-                                    <input type="text" id="monto_total" class="form-control" readonly>
+                                    <input type="text" id="monto_total" class="form-control" style="font-size: 18px;"
+                                        readonly>
                                 </div>
+
+                                <!-- Precio en Bolívares -->
+                                <div class="form-group mb-3">
+                                    <label for="monto_bolivares" class="form-label" style="font-size: 20px;"><i
+                                            class="fas fa-money-bill-wave"></i> Precio en Bolívares:</label>
+                                    <input type="text" id="monto_bolivares" class="form-control"
+                                        style="font-size: 18px;" readonly>
+                                </div>
+
+                                <!-- Precio de Reservación (Dólares) - 30% del monto total en dólares -->
+                                <div class="form-group mb-3">
+                                    <label for="precio_reservacion_dolares" class="form-label"
+                                        style="font-size: 20px;"><i class="fas fa-percentage"></i> Precio de Reservación
+                                        (Dólares):</label>
+                                    <input type="text" id="precio_reservacion_dolares" class="form-control"
+                                        style="font-size: 18px;" readonly>
+                                </div>
+
+                                <!-- Precio de Reservación (Bolívares) - 30% del monto total en bolívares -->
+                                <div class="form-group mb-3">
+                                    <label for="precio_reservacion_bolivares" class="form-label"
+                                        style="font-size: 20px;"><i class="fas fa-money-check-alt"></i> Precio de
+                                        Reservación (Bolívares):</label>
+                                    <input type="text" id="precio_reservacion_bolivares" class="form-control"
+                                        style="font-size: 18px;" readonly>
+                                </div>
+
+
+
+                                <style>
+                                    .custom-btn {
+                                        font-size: 14px;
+                                        font-weight: bold;
+                                        padding: 10px 30px;
+                                        background-color: #28a745;
+                                        color: white;
+                                        border: none;
+                                        border-radius: 30px;
+                                        transition: all 0.3s ease;
+                                        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+                                    }
+
+                                    .custom-btn:hover {
+                                        background-color: #218838;
+                                        transform: scale(1.05);
+                                        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+                                    }
+
+                                    .custom-btn:active {
+                                        background-color: #1e7e34;
+                                        transform: scale(1);
+                                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+                                    }
+                                </style>
 
                                 <!-- Botón de Confirmar -->
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-success px-5" style="font-size: 12px;">
-                                        Confirmar Reserva</button>
+                                    <button type="submit" class="btn custom-btn px-5">Confirmar Reserva</button>
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -271,12 +349,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <div>
-            <?php include './Includes/Footer.php'; ?>
-        </div>
-
-
-
+        <?php include './Includes/Footer.php'; ?>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
@@ -301,7 +374,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 });
 
-                // Cargar el precio de la habitación según fechas seleccionadas
+                // Validación de Fechas
+                document.getElementById('start_date').addEventListener('change', function () {
+                    const startDate = new Date(this.value);
+                    const minEndDate = new Date(startDate);
+                    minEndDate.setDate(startDate.getDate() + 1);
+                    document.getElementById('end_date').min = minEndDate.toISOString().split("T")[0];
+                });
+
+
+                // Cargar el precio de la habitación en dólares y calcular en bolívares
                 $('#room_id, #start_date, #end_date').change(function () {
                     var room_id = $('#room_id').val();
                     var startDate = $('#start_date').val();
@@ -317,11 +399,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 end_date: endDate
                             },
                             success: function (data) {
+                                // Mostrar el monto total en dólares
                                 $('#monto_total').val(data);
+
+                                // Llamada a la API de Dólar.com para obtener el promedio
+                                $.ajax({
+                                    url: 'https://ve.dolarapi.com/v1/dolares',
+                                    type: 'GET',
+                                    success: function (response) {
+                                        const dollarRate = parseFloat(response[0].promedio);
+                                        const amountInDollars = parseFloat(data);
+                                        const amountInBolivares = amountInDollars * dollarRate;
+
+                                        // Mostrar el monto en bolívares
+                                        $('#monto_bolivares').val(amountInBolivares.toFixed(2));
+
+                                        // Calcular y mostrar el 30% en dólares y en bolívares
+                                        const reservationPriceDollars = amountInDollars * 0.30;
+                                        const reservationPriceBolivares = amountInBolivares * 0.30;
+
+                                        $('#precio_reservacion_dolares').val(reservationPriceDollars.toFixed(2));
+                                        $('#precio_reservacion_bolivares').val(reservationPriceBolivares.toFixed(2));
+                                    },
+                                    error: function () {
+                                        alert('Error al obtener el tipo de cambio');
+                                    }
+                                });
                             }
                         });
                     }
                 });
+
 
                 // Función para cargar la información de Pago Móvil o Transferencia Bancaria
                 function loadPaymentInfo(paymentMethod) {

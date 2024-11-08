@@ -66,7 +66,7 @@ $conn->close();
     .card-title {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #343a40;
+        color: rgb(25 135 84);
     }
 
     .table {
@@ -75,7 +75,7 @@ $conn->close();
     }
 
     .table thead th {
-        background-color: #343a40;
+        background-color: rgb(25 135 84);
         color: white;
         font-size: 1.5rem;
     }
@@ -134,15 +134,14 @@ $conn->close();
         <div class="card custom-card">
             <div class="card-body">
                 <h2 class="card-title"><i class="fas fa-calendar-check"></i> Lista de Reservaciones</h2>
-                <div class="table-responsive">
+                <div class="table-responsive ">
                     <table id="reservationsTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center"><i class="fas fa-user"></i> Cliente</th>
                                 <th class="text-center"><i class="fas fa-envelope"></i> Correo</th>
                                 <th class="text-center"><i class="fas fa-building"></i> Posada</th>
-                                <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha de Reservación</th>
-                                <th class="text-center"><i class="fas fa-money-bill"></i> Monto Total</th>
+                                <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha</th>
                                 <th class="text-center"><i class="fas fa-info-circle"></i> Estado</th>
                                 <th class="text-center"><i class="fas fa-file-alt"></i> Referencia</th>
                                 <th class="text-center"><i class="fas fa-file-alt"></i> Contacto</th>
@@ -169,7 +168,6 @@ $conn->close();
                                         <td class='text-center'>{$row['user_email']}</td>
                                         <td class='text-center'>{$row['inn_name']}</td>
                                         <td class='text-center'>{$startDateFormatted} - {$endDateFormatted}</td>
-                                        <td class='text-center'>{$row['monto_total']}</td>
                                         <td style='color: {$statusColor};'>{$row['status']}</td>
                                         <td class='text-center'>{$row['codigo_referencia']}</td>
                                         <td class='text-center'>
@@ -203,6 +201,7 @@ $conn->close();
             </div>
         </div>
     </div>
+    <br> <br>
 
     <?php include './Footer.php'; ?>
 

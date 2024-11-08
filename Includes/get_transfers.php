@@ -102,7 +102,7 @@ $result = $stmt->get_result();
         .card-title {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #343a40;
+            color: rgb(25 135 84);
         }
 
         .table {
@@ -111,7 +111,7 @@ $result = $stmt->get_result();
         }
 
         .table thead th {
-            background-color: #343a40;
+            background-color: rgb(25 135 84);
             color: white;
             font-size: 1.5rem;
         }
@@ -299,11 +299,10 @@ $result = $stmt->get_result();
             </div>
         </div>
     </div>
-
+    <br> <br>
     <?php include './Footer.php'; ?>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 

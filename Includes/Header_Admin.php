@@ -16,8 +16,18 @@
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </head>
+
+<style>
+    /* Quitar subrayado en los enlaces del menú */
+    .menu-list a,
+    .dropdown-item {
+        text-decoration: none !important;
+    }
+</style>
 
 <body>
     <div>
@@ -51,24 +61,46 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./get_inns.php">
+                                    <a href="../Destinations.php">
+                                        <i class="fas fa-map-marker-alt"></i> Destinos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Inns.php">
                                         <i class="fas fa-bed"></i> Posadas
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./get_mobile_payment.php">
-                                        <i class="fas fa-mobile-alt"></i> Pago Móvil
+                                    <a href="../Memberships.php">
+                                        <i class="fas fa-id-card"></i> Membresías
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./get_transfers.php">
-                                        <i class="fas fa-money-check-alt"></i> Transferencia
+                                    <a href="../Profile.php">
+                                        <i class="fas fa-user"></i> Perfil
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="./get_reservation.php">
-                                        <i class="fas fa-calendar-check"></i> Reservas
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-cog"></i> Ajustes
                                     </a>
+                                    <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="./get_inns.php"><i class="fas fa-bed mr-2"></i> Posadas</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="./get_mobile_payment.php"><i class="fas fa-mobile-alt mr-2"></i> Pago
+                                                Móvil</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="./get_transfers.php"><i class="fas fa-university mr-2"></i>
+                                                Transferencia</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="./get_reservation.php"><i class="fas fa-calendar-alt mr-2"></i>Reservas</a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </nav>
