@@ -186,20 +186,31 @@ $conn->close();
 </head>
 
 <style>
-
-body {
-    margin: 0;
-    color: #000;
-    background: url('../background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    font: 600 16px/18px 'Open Sans', sans-serif;
-}
-
-
-    .footer {
+    /* Restablecer márgenes y rellenos de la página */
+    html, body {
+        margin: 0;
+        padding: 0;
         width: 100%;
+        height: 100%;
+    }
+
+    /* Asegurarse de que todo el contenido esté dentro de los márgenes de la ventana */
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Estilo del footer */
+    .footer {
+        width: 100%; /* Usa el 100% del ancho de su contenedor */
+        position: relative;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding: 10px 0; /* Agrega algo de padding si lo deseas */
     }
 </style>
+
+
 
 <body>
 
@@ -638,7 +649,7 @@ body {
 </div>
 
 
-        <?php include './Footer.php'; ?>
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

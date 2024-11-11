@@ -253,6 +253,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <option value="" disabled selected>Seleccionar Método</option>
                                         <option value="1">Pago Móvil</option>
                                         <option value="2">Transferencia Bancaria</option>
+                                        <option value="3">Binance</option>
+                                        <option value="4">PayPal</option>
                                     </select>
                                 </div>
 
@@ -364,15 +366,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $('#payment_method').change(function () {
                     var selectedMethod = $(this).val();
                     if (selectedMethod == '1' || selectedMethod == '2') {
+                        // Mostrar el campo de recibo y hacerlo obligatorio
                         $('#receiptGroup').show();
                         $('#receipt').attr('required', true);
                         loadPaymentInfo(selectedMethod);
+                    } else if (selectedMethod == '3' || selectedMethod == '4') { // Agregado para PayPal
+                        // Mostrar el campo de recibo y hacerlo obligatorio
+                        $('#receiptGroup').show();
+                        $('#receipt').attr('required', true);
+                        loadPaymentInfo(selectedMethod); // Si necesitas cargar información específica para Binance o PayPal, puedes hacerlo aquí
                     } else {
+                        // Ocultar el campo de recibo y quitar la obligatoriedad
                         $('#receiptGroup').hide();
                         $('#receipt').removeAttr('required');
                         $('#paymentInfo').empty(); // Limpiar información anterior
                     }
                 });
+
+
 
                 // Validación de Fechas
                 document.getElementById('start_date').addEventListener('change', function () {

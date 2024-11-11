@@ -9,6 +9,10 @@ if (isset($_GET['payment_method']) && isset($_GET['inn_id'])) {
         $query = "SELECT cedula, bank_code, phone_number FROM mobile_payment_info WHERE inn_id = ?";
     } elseif ($payment_method == 2) {
         $query = "SELECT full_name, account_number, bank_code FROM bank_transfer_info WHERE inn_id = ?";
+    } elseif ($payment_method == 3) { // Agregado para Binance
+        $query = "SELECT email FROM binance_transfer_info WHERE inn_id = ?";
+    } elseif ($payment_method == 4) { // Agregado para PayPal
+        $query = "SELECT email FROM paypal_transfer_info WHERE inn_id = ?";
     }
 
     if ($stmt = $conn->prepare($query)) {
@@ -45,6 +49,24 @@ if (isset($_GET['payment_method']) && isset($_GET['inn_id'])) {
                     </div>
                     <div class='form-group'>
                         <label style='font-size: 20px;'>Código Bancario: $bank_code</label>
+                    </div>
+                ";
+            } elseif ($payment_method == 3) { // Lógica para Binance
+                $stmt->bind_result($email);
+                $stmt->fetch();
+
+                echo "
+                    <div class='form-group'>
+                        <label style='font-size: 20px;'>Correo Electrónico: $email</label>
+                    </div>
+                ";
+            } elseif ($payment_method == 4) { // Lógica para PayPal
+                $stmt->bind_result($email);
+                $stmt->fetch();
+
+                echo "
+                    <div class='form-group'>
+                        <label style='font-size: 20px;'>Correo Electrónico: $email</label>
                     </div>
                 ";
             }
