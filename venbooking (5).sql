@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 04:02:59
+-- Tiempo de generación: 11-11-2024 a las 05:27:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -145,7 +145,9 @@ INSERT INTO `audit_log` (`id`, `user_id`, `table_name`, `action`, `affected_id`,
 (101, 7, 'profile', 'INSERT', 7, '2024-10-27 19:15:42', NULL, 'first_name: Nanami, last_name: Kento, email: jmrm19725@gmail.com, profile_type: Turista'),
 (102, 8, 'profile', 'INSERT', 8, '2024-10-27 19:16:45', NULL, 'first_name: Nanami, last_name: Kento, email: jmrm19726@gmail.com, profile_type: Empresa'),
 (103, 6, 'profile', 'UPDATE', 6, '2024-11-04 02:25:30', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
-(104, 6, 'profile', 'UPDATE', 6, '2024-11-04 02:27:13', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa');
+(104, 6, 'profile', 'UPDATE', 6, '2024-11-04 02:27:13', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(105, 6, 'inns', 'UPDATE', 1, '2024-11-07 20:39:08', 'name: Posada Colonia Tovar, status: 1, email: jmrm19722@gmail.com, phone: 04243363970, state_id: 1', 'name: Posada Colonia Tovar, status: 1, email: jmrm19722@gmail.com, phone: 04243363970, state_id: 1'),
+(106, 2, 'inns', 'UPDATE', 2, '2024-11-07 21:02:26', 'name: Posada La Montaña, status: 0, email: info@posadamontana.com, phone: +58 412 3456789, state_id: 1', 'name: Posada La Montaña, status: 0, email: info@posadamontana.com, phone: +58 412 3456789, state_id: 1');
 
 -- --------------------------------------------------------
 
@@ -167,6 +169,25 @@ CREATE TABLE `bank_transfer_info` (
 
 INSERT INTO `bank_transfer_info` (`id`, `inn_id`, `full_name`, `account_number`, `bank_code`) VALUES
 (6, 1, 'Miguel', '1202', '0191');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `binance_transfer_info`
+--
+
+CREATE TABLE `binance_transfer_info` (
+  `id` int(11) NOT NULL,
+  `inn_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `binance_transfer_info`
+--
+
+INSERT INTO `binance_transfer_info` (`id`, `inn_id`, `email`) VALUES
+(1, 1, 'jmrm19722@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -235,20 +256,21 @@ CREATE TABLE `inns` (
   `parish_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `block` tinyint(1) DEFAULT 0
+  `block` tinyint(1) DEFAULT 0,
+  `quality` enum('Alta','Media','Baja') NOT NULL DEFAULT 'Media'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `inns`
 --
 
-INSERT INTO `inns` (`id`, `name`, `description`, `image_url`, `status`, `email`, `phone`, `state_id`, `municipality_id`, `parish_id`, `category_id`, `user_id`, `block`) VALUES
-(1, 'Posada Colonia Tovar', 'Comodidad garantizada', 'https://elviajerofeliz.com/wp-content/uploads/2015/11/colonia-tovar.jpg', 1, 'jmrm19722@gmail.com', '04243363970', 1, 7, 7, 1, 6, 1),
-(2, 'Posada La Montaña', 'Una posada acogedora en las montañas', 'https://bariloche.org/directorio/photos/61/file/36/Posada%20de%20Monta%C3%B1a?size=large', 0, 'info@posadamontana.com', '+58 412 3456789', 1, 1, 1, 1, 2, 0),
-(3, 'Posada El Sol', 'Disfruta del sol y la playa en nuestra posada', 'https://wcm.transat.com/getmedia/e8c1e3f7-f135-4d17-9753-08cac53fd513/Posada-Real-Puerto-Escondido-Aerial-001?width=1400', 0, 'contacto@posadaelsol.com', '+58 416 9876543', 1, 1, 1, 2, 2, 0),
-(4, 'Posada Familiar', 'Un lugar ideal para disfrutar en familia', 'https://i.pinimg.com/originals/63/a3/52/63a3528f9d939451d1da5e36b946a381.jpg', 0, 'reservas@posadafamiliar.com', '+58 414 1234567', 1, 1, 1, 3, 2, 0),
-(5, 'Posada El Descanso', 'Para aquellos que buscan un descanso merecido', 'https://hotelesdemargarita.com/img/posadalamar-08.jpg', 1, 'descanso@posadaeldescanso.com', '+58 426 2345678', 1, 1, 1, 2, NULL, 0),
-(6, 'Posada Vista al Lago', 'Con hermosas vistas al lago', 'https://th.bing.com/th/id/OIP.9Ff-KWJollAV99_0g289SgHaFj?w=1024&h=768&rs=1&pid=ImgDetMain', 1, 'vista@posadavistaallago.com', '+58 412 8765432', 1, 1, 1, 3, NULL, 0);
+INSERT INTO `inns` (`id`, `name`, `description`, `image_url`, `status`, `email`, `phone`, `state_id`, `municipality_id`, `parish_id`, `category_id`, `user_id`, `block`, `quality`) VALUES
+(1, 'Posada Colonia Tovar', 'Comodidad garantizada', 'https://elviajerofeliz.com/wp-content/uploads/2015/11/colonia-tovar.jpg', 1, 'jmrm19722@gmail.com', '04243363970', 1, 7, 7, 1, 6, 1, 'Alta'),
+(2, 'Posada La Montaña', 'Una posada acogedora en las montañas', 'https://bariloche.org/directorio/photos/61/file/36/Posada%20de%20Monta%C3%B1a?size=large', 0, 'info@posadamontana.com', '+58 412 3456789', 1, 1, 1, 1, 2, 0, 'Baja'),
+(3, 'Posada El Sol', 'Disfruta del sol y la playa en nuestra posada', 'https://wcm.transat.com/getmedia/e8c1e3f7-f135-4d17-9753-08cac53fd513/Posada-Real-Puerto-Escondido-Aerial-001?width=1400', 0, 'contacto@posadaelsol.com', '+58 416 9876543', 1, 1, 1, 2, 2, 0, 'Media'),
+(4, 'Posada Familiar', 'Un lugar ideal para disfrutar en familia', 'https://i.pinimg.com/originals/63/a3/52/63a3528f9d939451d1da5e36b946a381.jpg', 0, 'reservas@posadafamiliar.com', '+58 414 1234567', 1, 1, 1, 3, 2, 0, 'Media'),
+(5, 'Posada El Descanso', 'Para aquellos que buscan un descanso merecido', 'https://hotelesdemargarita.com/img/posadalamar-08.jpg', 1, 'descanso@posadaeldescanso.com', '+58 426 2345678', 1, 1, 1, 2, NULL, 0, 'Media'),
+(6, 'Posada Vista al Lago', 'Con hermosas vistas al lago', 'https://th.bing.com/th/id/OIP.9Ff-KWJollAV99_0g289SgHaFj?w=1024&h=768&rs=1&pid=ImgDetMain', 1, 'vista@posadavistaallago.com', '+58 412 8765432', 1, 1, 1, 3, NULL, 0, 'Media');
 
 --
 -- Disparadores `inns`
@@ -387,6 +409,25 @@ INSERT INTO `parishes` (`id`, `municipality_id`, `name`, `status`) VALUES
 (5, 5, 'Central Tacarigua', 1),
 (6, 6, 'Ocumare de La Costa', 1),
 (7, 7, 'Colonia Tovar', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `paypal_transfer_info`
+--
+
+CREATE TABLE `paypal_transfer_info` (
+  `id` int(11) NOT NULL,
+  `inn_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paypal_transfer_info`
+--
+
+INSERT INTO `paypal_transfer_info` (`id`, `inn_id`, `email`) VALUES
+(1, 1, 'jmrm19722@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -660,6 +701,13 @@ ALTER TABLE `bank_transfer_info`
   ADD KEY `inn_id` (`inn_id`);
 
 --
+-- Indices de la tabla `binance_transfer_info`
+--
+ALTER TABLE `binance_transfer_info`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inn_id` (`inn_id`);
+
+--
 -- Indices de la tabla `categories`
 --
 ALTER TABLE `categories`
@@ -719,6 +767,13 @@ ALTER TABLE `parishes`
   ADD KEY `municipality_id` (`municipality_id`);
 
 --
+-- Indices de la tabla `paypal_transfer_info`
+--
+ALTER TABLE `paypal_transfer_info`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `inn_id` (`inn_id`);
+
+--
 -- Indices de la tabla `profile`
 --
 ALTER TABLE `profile`
@@ -766,13 +821,19 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT de la tabla `audit_log`
 --
 ALTER TABLE `audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT de la tabla `bank_transfer_info`
 --
 ALTER TABLE `bank_transfer_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `binance_transfer_info`
+--
+ALTER TABLE `binance_transfer_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -821,6 +882,12 @@ ALTER TABLE `municipalities`
 --
 ALTER TABLE `parishes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `paypal_transfer_info`
+--
+ALTER TABLE `paypal_transfer_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `profile`
@@ -875,6 +942,12 @@ ALTER TABLE `bank_transfer_info`
   ADD CONSTRAINT `bank_transfer_info_ibfk_1` FOREIGN KEY (`inn_id`) REFERENCES `inns` (`id`);
 
 --
+-- Filtros para la tabla `binance_transfer_info`
+--
+ALTER TABLE `binance_transfer_info`
+  ADD CONSTRAINT `binance_transfer_info_ibfk_1` FOREIGN KEY (`inn_id`) REFERENCES `inns` (`id`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `destinations`
 --
 ALTER TABLE `destinations`
@@ -919,6 +992,12 @@ ALTER TABLE `municipalities`
 --
 ALTER TABLE `parishes`
   ADD CONSTRAINT `parishes_ibfk_1` FOREIGN KEY (`municipality_id`) REFERENCES `municipalities` (`id`);
+
+--
+-- Filtros para la tabla `paypal_transfer_info`
+--
+ALTER TABLE `paypal_transfer_info`
+  ADD CONSTRAINT `paypal_transfer_info_ibfk_1` FOREIGN KEY (`inn_id`) REFERENCES `inns` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `rooms`
