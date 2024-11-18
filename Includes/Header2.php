@@ -30,17 +30,18 @@
                 <div class="container">
                     <div class="top-header-left">
                         <div class="top-header-block">
-                            <a href="mailto:VenBooking@gmail.com" style="color:white;" class="text-white" itemprop="email">
+                            <a href="mailto:VenBooking@gmail.com" itemprop="email">
                                 <i class="fas fa-envelope"></i> VenBooking@gmail.com
                             </a>
                         </div>
                     </div>
                     <div class="top-header-right">
-                        <a href="#" id="logout-btn">
-                            <button class="logout-btn">
-                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        <a href="./login.php" id="login-btn">
+                            <button class="login-btn">
+                                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                             </button>
                         </a>
+
                     </div>
                 </div>
             </div>
@@ -66,16 +67,7 @@
                                         <i class="fas fa-bed"></i> Posadas
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="./Profile.php">
-                                        <i class="fas fa-user"></i> Perfil
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./users.php">
-                                        <i class="fas fa-comments"></i> Chat
-                                    </a>
-                                </li>
+
 
                             </ul>
                         </nav>
@@ -91,27 +83,6 @@
         </header>
     </div>
 
-    <script>
-        document.getElementById('logout-btn').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Estás a punto de cerrar sesión",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirigir al usuario a logout.php si confirma
-                    window.location.href = './Includes/logout.php';
-                }
-            })
-        });
-    </script>
 
 
 </body>

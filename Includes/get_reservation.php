@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 
 $sql = "SELECT reservations.id, reservations.inn_id, reservations.start_date, reservations.end_date,
                reservations.payment_method_id, reservations.receipt_path, reservations.codigo_referencia, 
-               reservations.status, reservations.user_id, reservations.monto_total,
+               reservations.status, reservations.user_id,
                profile.first_name AS user_name, profile.email AS user_email, inns.name AS inn_name 
         FROM reservations
         LEFT JOIN profile ON reservations.user_id = profile.id
@@ -53,78 +53,104 @@ $conn->close();
 </head>
 
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
-
-    .card {
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .card-title {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: rgb(25 135 84);
-    }
-
-    .table {
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .table thead th {
-        background-color: rgb(25 135 84);
-        color: white;
-        font-size: 1.5rem;
-    }
-
-    .table td {
-        vertical-align: middle;
-        font-size: 1.2rem;
-    }
-
-    .alert {
-        border-radius: 5px;
-        background-color: #fff3cd;
-        color: #856404;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    .mb-3 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .gap-2 {
-        gap: 0.5rem;
-    }
-
-    html,
-    body {
+    body,
+    html {
         height: 100%;
         margin: 0;
-    }
-
-    body {
         display: flex;
         flex-direction: column;
     }
 
-    .container {
+    .content-wrapper {
         flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 
-    .page-footer {
-        background-color: #28a745;
-        color: white;
+    .custom-card {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 8px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .custom-btn {
+        color: #fff;
+        background-color: rgb(63, 161, 65 / 94%);
+        border-color: rgb(63, 161, 65 / 94%);
+    }
+
+    .custom-btn:hover {
+        background-color: #4caf50;
+        border-color: #4caf50;
+    }
+
+    .container {
+        padding-top: 20px;
+        padding-left: 15%;
+        padding-right: 15px;
+    }
+
+    @media (min-width: 768px) {
+        .container {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    h2.card-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #3fa141;
         text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table th,
+        .table td {
+            font-size: 0.875rem;
+        }
+    }
+
+    .table th i {
+        margin-right: 5px;
+    }
+
+    footer {
         padding: 10px 0;
+        width: 100%;
+        position: relative;
+        bottom: 0;
+        margin-top: auto;
+    }
+
+    .btn-warning {
+        color: #fff;
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-warning:hover {
+        color: #212529;
+        background-color: #e0a800;
+        border-color: #d39e00;
     }
 </style>
 
@@ -203,7 +229,6 @@ $conn->close();
     </div>
     <br> <br>
 
-    <?php include './Footer.php'; ?>
 
     <script src="../Assets/js/jquery-3.6.0.min.js"></script>
     <script src="../Assets/js/jquery.dataTables.min.js"></script>

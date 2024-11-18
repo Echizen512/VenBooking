@@ -56,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     }
 }
 
-// Consultar Pagos Móviles
 $sql = "SELECT mobile_payment_info.id, mobile_payment_info.cedula, mobile_payment_info.bank_code, mobile_payment_info.phone_number, inns.name AS inn_name 
         FROM mobile_payment_info
         LEFT JOIN inns ON mobile_payment_info.inn_id = inns.id
@@ -89,80 +88,112 @@ $result = $stmt->get_result();
 
     <?php include './Header_Admin.php'; ?>
 
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-        }
 
-        .card {
-            border-radius: 8px;
-            overflow: hidden;
-        }
+<style>
+    body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-        .card-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: rgb(25 135 84);
-        }
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 50px; 
+}
 
-        .table {
-            border-radius: 8px;
-            overflow: hidden;
-        }
+footer {
+    padding: 10px 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    text-align: center;
+    margin-top: auto;
+    position: relative; 
+    bottom: 0;
+}
 
-        .table thead th {
-            background-color: rgb(25 135 84);
-            color: white;
-            font-size: 1.5rem;
-        }
+.table-responsive {
+    max-height: 400px; 
+    overflow-y: auto;
+}
 
-        .table td {
-            vertical-align: middle;
-            font-size: 1.2rem;
-        }
+.custom-card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
 
-        .alert {
-            border-radius: 5px;
-            background-color: #fff3cd;
-            color: #856404;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+.custom-btn {
+    color: #fff;
+    background-color: rgb(63, 161, 65 / 94%);
+    border-color: rgb(63, 161, 65 / 94%);
+}
 
-        .mb-3 {
-            margin-bottom: 1.5rem !important;
-        }
+.custom-btn:hover {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
 
-        .text-center {
-            text-align: center;
-        }
+.container {
+    padding-top: 20px;
+    padding-left: 15%;
+    padding-right: 15px;
+}
 
-        .gap-2 {
-            gap: 0.5rem;
-        }
+@media (min-width: 768px) {
+    .container {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-        }
+h2.card-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #3fa141;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        body {
-            display: flex;
-            flex-direction: column;
-        }
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
 
-        .container {
-            flex: 1;
-        }
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
 
-        .page-footer {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .table th, .table td {
+        font-size: 0.875rem;
+    }
+}
+
+.table th i {
+    margin-right: 5px;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-warning:hover {
+    color: #212529;
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
     </style>
 
     <div class="container mt-5">
@@ -170,11 +201,11 @@ $result = $stmt->get_result();
             <div class="card-body">
                 <h2 class="card-title"><i class="fas fa-mobile-alt"></i> Lista de Pagos Móviles</h2>
                 <div class="table-responsive">
-                    <div class="text-right mb-3">
+                    <div class="mb-3" style="text-align: right;">
                         <button class='btn btn-success btn-sm d-inline-flex align-items-center' data-bs-toggle="modal"
                             data-bs-target="#createModal" style="color: white; font-size: 14px;"
                             title='Agregar Pago Móvil'>
-                            <i class='fas fa-plus mr-2' style='color: white;'></i> Agregar Pago Móvil
+                            <i class='fas fa-plus mr-2' style='color: white;'></i> Agregar
                         </button>
                     </div>
                     <table id="paymentsTable" class="table table-bordered table-striped">
@@ -244,15 +275,15 @@ $result = $stmt->get_result();
                         </div>
                         <div class="form-group">
                             <label for="cedula">Cédula</label>
-                            <input type="text" name="cedula" id="cedula" class="form-control" required>
+                            <input type="number" name="cedula" id="cedula" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="bank_code">Código Bancario</label>
-                            <input type="text" name="bank_code" id="bank_code" class="form-control" required>
+                            <input type="number" name="bank_code" id="bank_code" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="phone_number">Número de Teléfono</label>
-                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                            <input type="number" name="phone_number" id="phone_number" class="form-control" required>
                         </div>
                         <br>
                         <div class="text-center">
@@ -279,15 +310,15 @@ $result = $stmt->get_result();
                         <input type="hidden" name="action" value="update">
                         <div class="form-group">
                             <label for="cedula">Cédula</label>
-                            <input type="text" name="cedula" id="edit_cedula" class="form-control" required>
+                            <input type="number" name="cedula" id="edit_cedula" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="bank_code">Código Bancario</label>
-                            <input type="text" name="bank_code" id="edit_bank_code" class="form-control" required>
+                            <input type="number" name="bank_code" id="edit_bank_code" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="phone_number">Número de Teléfono</label>
-                            <input type="text" name="phone_number" id="edit_phone_number" class="form-control" required>
+                            <input type="number" name="phone_number" id="edit_phone_number" class="form-control" required>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success" style="display: block; margin: 0 auto;">Actualizar
@@ -299,7 +330,6 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <?php include './Footer.php'; ?>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>

@@ -15,9 +15,7 @@
 
         .sidebar {
             width: 350px;
-
             padding: 20px;
-
             position: sticky;
             top: 20px;
             height: 100%;
@@ -109,11 +107,6 @@
             color: #666;
         }
 
-        .list-unstyled li {
-            font-size: 0.95rem;
-            color: #888;
-            margin-bottom: 0.5rem;
-        }
 
         h3 {
             font-size: 1.5rem;
@@ -122,10 +115,7 @@
             color: #333;
         }
 
-        .text-white-centered {
-            color: white;
-            text-align: center;
-        }
+
     </style>
 </head>
 
@@ -350,18 +340,32 @@
     }
     ?>
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <?php if ($inn_id): ?>
-                <a href="reservation.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-success"
-                    style="color: white; font-size: 14px;">
-                    <i class="fas fa-calendar-check" style="margin: 5px; font-size: 12px;"></i> Reservar
-                </a>
-            <?php else: ?>
-                <p class="text-danger">ID de la posada no está disponible.</p>
-            <?php endif; ?>
-        </div>
+
+<style>
+    
+</style>
+
+<div class="card mb-3" style="border: none; box-shadow: none;">
+    <div class="card-body text-center" style="padding: 1rem;">
+        <?php if ($inn_id): ?>
+            <!-- Botón de Reservar -->
+            <a href="reservation.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-success"
+                style="color: white; font-size: 14px; padding: 5px 15px; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
+                <i class="fas fa-calendar-check" style="margin-right: 5px; font-size: 16px;"></i> Reservar
+            </a>
+
+            <!-- Botón de Guardar Posada -->
+            <a href="save_inn.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-warning"
+                style="color: white; font-size: 14px; padding: 5px 15px; margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
+                <i class="fas fa-heart" style="margin-right: 5px; font-size: 16px;"></i> Guardar Posada
+            </a>
+        <?php else: ?>
+            <p class="text-danger" style="font-size: 14px;">ID de la posada no está disponible.</p>
+        <?php endif; ?>
     </div>
+</div>
+
+
 
 
 

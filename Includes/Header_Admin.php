@@ -1,142 +1,178 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../assets/css/all.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/lightbox.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/flexslider.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.rateyo.css" />
-    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mmenu.all.css" />
-    <link rel="stylesheet" type="text/css" href="../inner-page-style.css">
-    <link rel="stylesheet" type="text/css" href="../style.css">
-    <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin-top: 60px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            height: calc(100% - 60px);
+            width: 14%;
+            transition: width 0.3s;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 10px 10px 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .main-content {
+            margin-left: 14%;
+            padding: 20px;
+        }
+        .icon {
+            padding-right: 10px;
+        }
+        .header {
+            color: white;
+            padding: 17px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .logout-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilos para los datos del Dólar */
+        .dolar-section {
+            margin-top: 60px;
+            padding: 15px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .dolar-section h5 {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .dolar-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .dolar-section ul li {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .dolar-section ul li i {
+            margin-right: 10px;
+        }
+
+    </style>
 </head>
-
-<style>
-    /* Quitar subrayado en los enlaces del menú */
-    .menu-list a,
-    .dropdown-item {
-        text-decoration: none !important;
-    }
-</style>
-
 <body>
-    <div>
-        <header class="site-header">
-            <div class="top-header bg-success">
-                <div class="container">
-                    <div class="top-header-left">
-                        <div class="top-header-block">
-                            <a href="mailto:VenBooking@gmail.com" itemprop="email">
-                                <i class="fas fa-envelope"></i> VenBooking@gmail.com
-                            </a>
-                        </div>
-                    </div>
-                    <div class="top-header-right">
-                        <button id="logout-btn" class="logout-btn" style="color: white;">
-                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="main-header">
-                <div class="container">
-                    <div class="logo-wrap" itemprop="logo">
-                    </div>
-                    <div class="nav-wrap">
-                        <nav class="nav-desktop">
-                            <ul class="menu-list">
-                                <li>
-                                    <a href="../index.php">
-                                        <i class="fas fa-home"></i> Inicio
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="../Destinations.php">
-                                        <i class="fas fa-map-marker-alt"></i> Destinos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="../Inns.php">
-                                        <i class="fas fa-bed"></i> Posadas
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="../Memberships.php">
-                                        <i class="fas fa-id-card"></i> Membresías
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="../Profile.php">
-                                        <i class="fas fa-user"></i> Perfil
-                                    </a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-cog"></i> Ajustes
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
-                                        <li>
-                                            <a class="dropdown-item" href="./get_inns.php"><i class="fas fa-bed mr-2"></i> Posadas</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./get_mobile_payment.php"><i class="fas fa-mobile-alt mr-2"></i> Pago
-                                                Móvil</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./get_transfers.php"><i class="fas fa-university mr-2"></i>
-                                                Transferencia</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./get_reservation.php"><i class="fas fa-calendar-alt mr-2"></i>Reservas</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div id="bar">
-                            <i class="fas fa-bars"></i>
-                        </div>
-                        <div id="close">
-                            <i class="fas fa-times"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+
+    <div class="header bg-success">
+        <div>
+            <h2 style="font-size: 16px;">VenBooking - Gestión de Posadas</h2>
+        </div>
+        <a href="logout.php">
+            <button class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </a>
     </div>
 
-    <script>
-        document.getElementById('logout-btn').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
+    <div class="sidebar bg-success">
+        <a href="./Inicio.php" style="color: white;">
+            <i class="fas fa-home icon"></i> Inicio
+        </a>
+        <a href="./get_inns.php" style="color: white;">
+            <i class="fas fa-hotel icon"></i> Posadas
+        </a>
+        <a href="./get_mobile_payment.php" style="color: white;">
+            <i class="fas fa-mobile-alt icon"></i> Pago Móvil
+        </a>
+        <a href="./get_transfers.php" style="color: white;">
+            <i class="fas fa-university icon"></i> Transferencia
+        </a>
+        <a href="./get_reservation.php" style="color: white;">
+            <i class="fas fa-calendar-alt icon"></i> Reservas
+        </a>
+        <a href="./get_paypal.php" style="color: white;">
+            <i class="fab fa-paypal icon"></i> PayPal
+        </a>
+        <a href="./get_binance.php" style="color: white;">
+            <i class="fab fa-btc icon"></i> Binance
+        </a>
+        <a href="../Memberships.php" style="color: white;">
+            <i class="fas fa-gift icon"></i> Membresías
+        </a>
+        <a href="./get_reports.php" style="color: white;">
+            <i class="fas fa-file-pdf icon"></i> Reportes PDF
+        </a>
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Estás a punto de cerrar sesión",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Redirigir al usuario a logout.php si confirma
-                    window.location.href = './logout.php';
+        <!-- Datos del Dólar -->
+        <div class="dolar-section">
+            <h5>Datos del Dólar</h5>
+            <ul class="list-unstyled mt-3">
+                <?php
+                $url = "https://ve.dolarapi.com/v1/dolares";
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    "Content-Type: application/json"
+                ]);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                if ($response !== false) {
+                    $data = json_decode($response, true);
+
+                    if ($data !== null) {
+                        echo "<li><i class='fas fa-dollar-sign'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
+                        echo "<li><i class='fas fa-chart-line'></i> Precio: " . $data[0]['promedio'] . " BS</li>";
+                        echo "<li><i class='fas fa-calendar'></i> Fecha: Hoy" . "</li>";
+                    } else {
+                        echo "<li>Error al convertir la respuesta JSON.</li>";
+                    }
+                } else {
+                    echo "<li>Error al obtener los datos de la API.</li>";
                 }
-            });
-        });
-    </script>
-</body>
+                ?>
+            </ul>
+        </div>
+    </div>
 
+    <script src="../Assets/js/jquery-3.6.0.min.js"></script>
+    <script src="../Assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../Assets/js/jquery.dataTables.min.js"></script>
+    <script src="../Assets/js/dataTables.bootstrap5.min.js"></script>
+
+</body>
 </html>

@@ -10,10 +10,11 @@ if (isset($_GET['reservation_id'])) {
                      CASE reservations.payment_method_id
                          WHEN 1 THEN 'Pago Móvil'
                          WHEN 2 THEN 'Transferencia'
-                         WHEN 3 THEN 'Efectivo'
+                         WHEN 3 THEN 'PayPal'
+                         WHEN 4 THEN 'Binance'
                          ELSE 'Desconocido'
                      END AS payment_method,
-                     reservations.codigo_referencia, reservations.status, reservations.monto_total, 
+                     reservations.codigo_referencia, reservations.status, 
                      profile.first_name, profile.last_name, profile.email,
                      inns.name AS inn_name,
                      rooms.id AS room_id, rooms.price AS room_price
@@ -32,6 +33,12 @@ if (isset($_GET['reservation_id'])) {
     $reservation = $result->fetch_assoc();
 
     if ($reservation) {
+        // Calcular el monto total basado en la cantidad de días reservados
+        $start_date = strtotime($reservation['start_date']);
+        $end_date = strtotime($reservation['end_date']);
+        $days_reserved = ceil(($end_date - $start_date) / 86400); // 86400 segundos en un día
+        $total_amount = $days_reserved * $reservation['room_price'];
+
         $pdf = new FPDF();
         $pdf->AddPage();
 
@@ -60,6 +67,7 @@ if (isset($_GET['reservation_id'])) {
         $pdf->Cell(0, 8, utf8_decode('Precio por noche: $') . number_format($reservation['room_price'], 2), 0, 1, 'L');
         $pdf->Cell(0, 8, 'Fecha de inicio: ' . date('d/m/Y', strtotime($reservation['start_date'])), 0, 1, 'L');
         $pdf->Cell(0, 8, 'Fecha de fin: ' . date('d/m/Y', strtotime($reservation['end_date'])), 0, 1, 'L');
+        $pdf->Cell(0, 8, 'Dias reservados: ' . $days_reserved, 0, 1, 'L');
         $pdf->Ln(10);
 
         // Información del pago
@@ -75,7 +83,7 @@ if (isset($_GET['reservation_id'])) {
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 10, 'Monto Total', 0, 1, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(0, 8, 'Total a Pagar: $' . number_format($reservation['monto_total'], 2), 0, 1, 'L');
+        $pdf->Cell(0, 8, 'Total a Pagar: $' . number_format($total_amount, 2), 0, 1, 'L');
         $pdf->Ln(20);
 
         // Footer

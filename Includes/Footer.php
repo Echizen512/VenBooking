@@ -17,14 +17,20 @@
 
             <!-- Columna de enlaces -->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase" style="font-size: 20px; font-weight: bold; letter-spacing: 1px; margin: 10px;">
+                <h5 class="text-uppercase"
+                    style="font-size: 20px; font-weight: bold; letter-spacing: 1px; margin: 10px;">
                     Enlaces Rápidos
                 </h5>
                 <ul class="list-unstyled mt-3">
-                    <li><a href="#!" class="text-white" style="font-size: 18px; text-decoration: none; margin: 10px;">Explorar Destinos</a></li>
-                    <li><a href="#!" class="text-white" style="font-size: 18px; text-decoration: none; margin: 10px;">Acerca de Nosotros</a></li>
-                    <li><a href="#!" class="text-white" style="font-size: 18px; text-decoration: none; margin: 10px;">Contáctanos</a></li>
-                    <li><a href="#!" class="text-white" style="font-size: 18px; text-decoration: none; margin: 10px;">Política de Privacidad</a></li>
+                    <li><a href="#!" class="text-white"
+                            style="font-size: 18px; text-decoration: none; margin: 10px;">Explorar Destinos</a></li>
+                    <li><a href="#!" class="text-white"
+                            style="font-size: 18px; text-decoration: none; margin: 10px;">Acerca de Nosotros</a></li>
+                    <li><a href="#!" class="text-white"
+                            style="font-size: 18px; text-decoration: none; margin: 10px;">Contáctanos</a></li>
+                    <li><a href="#!" class="text-white"
+                            style="font-size: 18px; text-decoration: none; margin: 10px;">Política de Privacidad</a>
+                    </li>
                 </ul>
             </div>
 

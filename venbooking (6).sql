@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2024 a las 05:27:17
+-- Tiempo de generación: 18-11-2024 a las 04:09:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -142,12 +142,21 @@ INSERT INTO `audit_log` (`id`, `user_id`, `table_name`, `action`, `affected_id`,
 (98, 6, 'profile', 'UPDATE', 6, '2024-10-20 00:54:24', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
 (99, 6, 'profile', 'UPDATE', 6, '2024-10-20 00:56:47', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
 (100, 6, 'profile', 'UPDATE', 6, '2024-10-20 01:01:44', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
-(101, 7, 'profile', 'INSERT', 7, '2024-10-27 19:15:42', NULL, 'first_name: Nanami, last_name: Kento, email: jmrm19725@gmail.com, profile_type: Turista'),
-(102, 8, 'profile', 'INSERT', 8, '2024-10-27 19:16:45', NULL, 'first_name: Nanami, last_name: Kento, email: jmrm19726@gmail.com, profile_type: Empresa'),
 (103, 6, 'profile', 'UPDATE', 6, '2024-11-04 02:25:30', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
 (104, 6, 'profile', 'UPDATE', 6, '2024-11-04 02:27:13', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
 (105, 6, 'inns', 'UPDATE', 1, '2024-11-07 20:39:08', 'name: Posada Colonia Tovar, status: 1, email: jmrm19722@gmail.com, phone: 04243363970, state_id: 1', 'name: Posada Colonia Tovar, status: 1, email: jmrm19722@gmail.com, phone: 04243363970, state_id: 1'),
-(106, 2, 'inns', 'UPDATE', 2, '2024-11-07 21:02:26', 'name: Posada La Montaña, status: 0, email: info@posadamontana.com, phone: +58 412 3456789, state_id: 1', 'name: Posada La Montaña, status: 0, email: info@posadamontana.com, phone: +58 412 3456789, state_id: 1');
+(106, 2, 'inns', 'UPDATE', 2, '2024-11-07 21:02:26', 'name: Posada La Montaña, status: 0, email: info@posadamontana.com, phone: +58 412 3456789, state_id: 1', 'name: Posada La Montaña, status: 0, email: info@posadamontana.com, phone: +58 412 3456789, state_id: 1'),
+(107, 6, 'reservations', 'INSERT', 35, '2024-11-16 00:09:05', NULL, NULL),
+(108, 6, 'reservations', 'INSERT', 36, '2024-11-16 00:21:13', NULL, NULL),
+(109, 6, 'reservations', 'INSERT', 37, '2024-11-16 00:59:05', NULL, 'inn_id: 2, start_date: 2024-11-29, end_date: 2024-11-30, payment_method_id: 1, monto_total: 500, status: En Espera'),
+(110, 6, 'reservations', 'INSERT', 38, '2024-11-16 01:02:30', NULL, 'inn_id: 2, start_date: 2024-11-29, end_date: 2024-11-30, payment_method_id: 1, monto_total: 500, status: En Espera'),
+(111, 6, 'reservations', 'INSERT', 39, '2024-11-16 01:02:44', NULL, 'inn_id: 2, start_date: 2024-11-16, end_date: 2024-11-17, payment_method_id: 1, monto_total: 500, status: En Espera'),
+(112, 6, 'reservations', 'INSERT', 40, '2024-11-16 01:07:04', NULL, 'inn_id: 2, start_date: 2024-11-21, end_date: 2024-11-22, payment_method_id: 1, monto_total: 500, status: En Espera'),
+(113, 6, 'reservations', 'INSERT', 41, '2024-11-16 01:52:58', NULL, NULL),
+(114, 6, 'reservations', 'INSERT', 42, '2024-11-16 11:38:16', NULL, 'inn_id: 2, start_date: 2025-02-02, end_date: 2025-02-04, payment_method_id: 1, monto_total: 750, status: En Espera'),
+(115, 6, 'reservations', 'INSERT', 43, '2024-11-16 11:43:48', NULL, 'inn_id: 2, start_date: 2025-02-19, end_date: 2025-02-21, payment_method_id: 1, monto_total: 750, status: En Espera'),
+(120, 4, 'profile', 'UPDATE', 4, '2024-11-18 02:52:24', 'first_name: Nanami, last_name: Kento, email: jmrm19711@gmail.com, profile_type: Empresa', 'first_name: Itadori, last_name: Yuji, email: jmrm19711@gmail.com, profile_type: Empresa'),
+(121, 2, 'profile', 'UPDATE', 2, '2024-11-18 02:52:59', 'first_name: Nanami, last_name: Kento, email: jmrm19722@gmail.com, profile_type: Empresa', 'first_name: Arley, last_name: Dos Santos, email: jmrm19722@gmail.com, profile_type: Empresa');
 
 -- --------------------------------------------------------
 
@@ -462,12 +471,10 @@ CREATE TABLE `profile` (
 
 INSERT INTO `profile` (`id`, `first_name`, `last_name`, `email`, `last_access`, `registration_date`, `profile_type`, `password`, `block`, `profile_image_url`, `banner_image_url`, `youtube_url`, `facebook_url`, `twitter_url`, `instagram_url`, `membership_type`, `membership_start_date`, `membership_end_date`) VALUES
 (1, 'Carlos', 'Escobar', 'carlos@gmail.com', '2024-08-24 18:21:52', '2024-07-14 13:12:11', 'Empresa', '$2y$10$uB0TXSx2fDX1n3wLIZy7N.DO2apo5tEsPP7UNOhgNAzz9kAr6xy0C', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL),
-(2, 'Nanami', 'Kento', 'jmrm19722@gmail.com', '2024-09-23 14:09:00', '2024-08-18 19:04:40', 'Empresa', '$2y$10$AOp2eo9OT17LrkTIqrUbleohQvx2yA0NRNH1BuSW/D4Lp7ryGovTS', 0, 'https://th.bing.com/th/id/OIP.tabNCQDLxYc7x1HqxiUJKQHaHa?rs=1&pid=ImgDetMain', 'https://verdanttraveler.com/wp-content/uploads/2023/12/island-lake-state-recreation-area-1024x585.jpg', 'https://www.youtube.com/', 'https://www.facebook.com/', '', '', 'none', NULL, NULL),
-(4, 'Nanami', 'Kento', 'jmrm19711@gmail.com', '2024-09-21 16:02:49', '2024-09-21 16:02:49', 'Empresa', '$2y$10$i32O6OJyuEu.0IjWi.yybegMuH4GfSL9RBcQn8JhEe8Ok4WYLPOLG', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL),
+(2, 'Arley', 'Dos Santos', 'jmrm19722@gmail.com', '2024-11-18 02:52:59', '2024-08-18 19:04:40', 'Empresa', '$2y$10$AOp2eo9OT17LrkTIqrUbleohQvx2yA0NRNH1BuSW/D4Lp7ryGovTS', 0, 'https://th.bing.com/th/id/OIP.tabNCQDLxYc7x1HqxiUJKQHaHa?rs=1&pid=ImgDetMain', 'https://verdanttraveler.com/wp-content/uploads/2023/12/island-lake-state-recreation-area-1024x585.jpg', 'https://www.youtube.com/', 'https://www.facebook.com/', '', '', 'none', NULL, NULL),
+(4, 'Itadori', 'Yuji', 'jmrm19711@gmail.com', '2024-11-18 02:52:24', '2024-09-21 16:02:49', 'Empresa', '$2y$10$i32O6OJyuEu.0IjWi.yybegMuH4GfSL9RBcQn8JhEe8Ok4WYLPOLG', 0, 'https://pm1.narvii.com/7926/0cbc99c9487af031a844b2112a226af7da79f510r1-1078-1080v2_uhq.jpg', NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL),
 (5, 'Daniela', 'Morgado', 'dani@gmail.com', '2024-09-23 14:08:00', '2024-09-23 05:42:55', 'Empresa', '$2y$10$e0oZR3qgLa44fjjyIgpEGOpHirslt3ahES006vhg6CqqGbPFOOT8.', 0, 'https://th.bing.com/th/id/R.93361146c64f106b65a55a37d5bc5e02?rik=%2fIP5Ld43L78gOQ&pid=ImgRaw&r=0', 'https://www.pincamp.de/magazin/wp-content/uploads/sites/1/resized/2022/07/AdobeStock_71054640-min-min-1029x350-c-default.png', '', '', '', '', 'none', NULL, NULL),
-(6, 'Nanami', 'Kento', 'jmrm19723@gmail.com', '2024-11-04 02:27:13', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://www.looper.com/img/gallery/kento-nanamis-powers-from-jujutsu-kaisen-explained/l-intro-1632713276.jpg', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', '', '', '', '', 'basic', '2024-10-20', '2024-11-20'),
-(7, 'Nanami', 'Kento', 'jmrm19725@gmail.com', '2024-10-27 19:15:42', '2024-10-27 19:15:42', 'Turista', '$2y$10$.sJoSpKt9aw8K3wx7bfMNOoG9lJVp0jwMpI96b5ftFH5txWOS67Mu', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL),
-(8, 'Nanami', 'Kento', 'jmrm19726@gmail.com', '2024-10-27 19:16:45', '2024-10-27 19:16:45', 'Empresa', '$2y$10$pX8kVv.4v7uPm8RkueFKZeoc2CI/ctao9MSw4xtFRzEaQQmsZcgyu', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL);
+(6, 'Nanami', 'Kento', 'jmrm19723@gmail.com', '2024-11-04 02:27:13', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://www.looper.com/img/gallery/kento-nanamis-powers-from-jujutsu-kaisen-explained/l-intro-1632713276.jpg', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', '', '', '', '', 'basic', '2024-10-20', '2024-11-20');
 
 --
 -- Disparadores `profile`
@@ -503,19 +510,24 @@ CREATE TABLE `reservations` (
   `receipt_path` varchar(255) DEFAULT NULL,
   `codigo_referencia` varchar(255) DEFAULT NULL,
   `status` enum('En Espera','Confirmado','Cancelado') DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `monto_total` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `inn_id`, `start_date`, `end_date`, `payment_method_id`, `receipt_path`, `codigo_referencia`, `status`, `user_id`, `monto_total`) VALUES
-(31, 2, '2024-09-12', '2024-09-13', 1, 'uploads/66e1a341a26dc-OIP98.jpg', '1234', 'Confirmado', 2, 500),
-(32, 3, '2024-10-10', '2024-10-09', 3, '', '1234', 'Confirmado', 5, NULL),
-(33, 1, '2024-09-23', '2024-09-24', 3, '', '1234', 'Confirmado', 5, NULL),
-(34, 11, '2024-10-25', '2024-09-23', 1, 'uploads/66f198192366c-Perfil.png', '1234', 'En Espera', 5, NULL);
+INSERT INTO `reservations` (`id`, `inn_id`, `start_date`, `end_date`, `payment_method_id`, `receipt_path`, `codigo_referencia`, `status`, `user_id`) VALUES
+(31, 2, '2024-09-12', '2024-09-13', 1, 'uploads/66e1a341a26dc-OIP98.jpg', '1234', 'Confirmado', 2),
+(32, 3, '2024-10-10', '2024-10-09', 3, '', '1234', 'Confirmado', 5),
+(33, 1, '2024-09-23', '2024-09-24', 3, '', '1234', 'Confirmado', 5),
+(34, 11, '2024-10-25', '2024-09-23', 1, 'uploads/66f198192366c-Perfil.png', '1234', 'En Espera', 5),
+(38, 2, '2024-11-29', '2024-11-30', 1, 'uploads/6737ef26d78fa-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '1', 'En Espera', 6),
+(39, 2, '2024-11-16', '2024-11-17', 1, 'uploads/6737ef347f052-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '213', 'En Espera', 6),
+(40, 2, '2024-11-21', '2024-11-22', 1, 'uploads/6737f03871b6d-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '132', 'En Espera', 6),
+(41, 2, '2024-12-24', '2024-12-26', 1, 'uploads/6737fafa57ba2-8.40.jpg', '123', 'En Espera', 6),
+(42, 2, '2025-02-02', '2025-02-04', 1, 'uploads/6738842881be7-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '1213', 'En Espera', 6),
+(43, 2, '2025-02-19', '2025-02-21', 1, 'uploads/6738857498bd6-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '2313', 'En Espera', 6);
 
 --
 -- Disparadores `reservations`
@@ -565,14 +577,14 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `room_number`, `type`, `quality`, `image_url`, `description`, `price`, `capacity`, `inn_id`, `status`, `block`, `image_url2`, `image_url3`, `image_url4`, `image_url5`) VALUES
-(1, '101', 'Single', 'High', 'https://www.homenayoo.com/wp-content/uploads/2014/09/2216.jpg', 'Una habitación individual con calidad alta', 100.00, 2, 1, 0, 0, NULL, NULL, NULL, NULL),
-(2, '102', 'Doble', 'Alta', 'https://synergy.booking-channel.com/api/hotels/658/medias/90', 'Habitación doble con vista al jardín', 120.00, 2, 1, 0, 0, NULL, NULL, NULL, NULL),
+(1, '101', 'Solo', 'Alta', 'https://www.homenayoo.com/wp-content/uploads/2014/09/2216.jpg', 'Una habitación individual con calidad alta                                            ', 100.00, 2, 1, 0, 0, '', '', '', ''),
+(2, '102', 'Pareja', 'Media', 'https://synergy.booking-channel.com/api/hotels/658/medias/90', 'Habitación doble con vista al jardín                                            ', 120.00, 2, 1, 0, 0, '', '', '', ''),
 (3, '101', 'Suite', 'Premium', 'https://th.bing.com/th/id/R.cb6ace52900dfb55d10c345b6a7855e4?rik=UHIYinqfPKm4lA&riu=http%3a%2f%2fwww.posadaelsolar.es%2fwp-content%2fuploads%2f2013%2f08%2ffotos-posada-118.jpg&ehk=s5PlXIr4unIHMGw%2bciawMBuQ9%2b4zdv2bU7HRJf26Sbo%3d&risl=&pid=ImgRaw&r=0', 'Suite de lujo con vista al mar', 250.00, 2, 2, 0, 0, NULL, NULL, NULL, NULL),
 (4, '102', 'Doble', 'Estándar', 'https://posadalunada.com/wp-content/uploads/cache/images/remote/posadalunada-com/Habitaci%C3%B3n-especial-terraza-Posada-Lunada-1811957839.jpg', 'Habitación doble con balcón', 80.00, 2, 3, 0, 0, NULL, NULL, NULL, NULL),
 (5, '101', 'Suite', 'Superior', 'https://sonnigetoskana.ch/image/dirsep--propertiesdirsep--rawdirsep--3adirsep--3af2012ad62786707cf8f2d30b47ade83cc16d9d4433dotsep--jpg/800/600/0/0/0/0.jpg', 'Suite ejecutiva con jacuzzi', 300.00, 2, 4, 0, 0, NULL, NULL, NULL, NULL),
 (6, '101', 'Suite', 'Premium', 'https://www.casaviduedo.com/wp-content/uploads/2016/05/DSC_0115.jpg', 'Suite presidencial con terraza privada', 500.00, 2, 5, 0, 0, NULL, NULL, NULL, NULL),
 (7, '101', 'Suite', 'Deluxe', 'https://espagnefascinante.fr/images/showid/6751294', 'Suite con vista panorámica', 400.00, 2, 6, 0, 0, NULL, NULL, NULL, NULL),
-(11, '103', 'Single', 'Alta', 'https://amenitiz.com/wp-content/uploads/2022/10/rrcibe846jo71ryoxahw.jpg', 'Una habitación individual con calidad alta', 120.00, 1, 1, 0, 0, 'https://i.pinimg.com/originals/91/c2/f5/91c2f50f025f9730493ee9f310e295ba.jpg', '', '', '');
+(11, '103', 'Solo', 'Media', 'https://amenitiz.com/wp-content/uploads/2022/10/rrcibe846jo71ryoxahw.jpg', 'Una habitación individual con calidad alta                                            ', 120.00, 1, 1, 0, 0, 'https://i.pinimg.com/originals/91/c2/f5/91c2f50f025f9730493ee9f310e295ba.jpg', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -640,6 +652,27 @@ CREATE TABLE `tour_packages` (
 
 INSERT INTO `tour_packages` (`id`, `inn_id`, `name`, `description`, `image_url`, `duration`, `price`, `status`, `block`) VALUES
 (1, 1, 'Paquete Aventura', 'Disfruta de aventuras emocionantes', 'https://static8.depositphotos.com/1301180/801/v/950/depositphotos_8013806-stock-illustration-vip-icon.jpg', 7, 250.00, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_favorite_inns`
+--
+
+CREATE TABLE `user_favorite_inns` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `inn_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `user_favorite_inns`
+--
+
+INSERT INTO `user_favorite_inns` (`id`, `user_id`, `inn_id`, `created_at`) VALUES
+(4, 6, 3, '2024-11-17 01:00:29'),
+(5, 6, 2, '2024-11-17 03:45:22');
 
 -- --------------------------------------------------------
 
@@ -807,6 +840,14 @@ ALTER TABLE `tour_packages`
   ADD KEY `inn_id` (`inn_id`);
 
 --
+-- Indices de la tabla `user_favorite_inns`
+--
+ALTER TABLE `user_favorite_inns`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `inn_id` (`inn_id`);
+
+--
 -- Indices de la tabla `vehicles`
 --
 ALTER TABLE `vehicles`
@@ -821,7 +862,7 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT de la tabla `audit_log`
 --
 ALTER TABLE `audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT de la tabla `bank_transfer_info`
@@ -893,13 +934,13 @@ ALTER TABLE `paypal_transfer_info`
 -- AUTO_INCREMENT de la tabla `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `rooms`
@@ -918,6 +959,12 @@ ALTER TABLE `states`
 --
 ALTER TABLE `tour_packages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `user_favorite_inns`
+--
+ALTER TABLE `user_favorite_inns`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `vehicles`
@@ -1010,6 +1057,13 @@ ALTER TABLE `rooms`
 --
 ALTER TABLE `tour_packages`
   ADD CONSTRAINT `tour_packages_ibfk_1` FOREIGN KEY (`inn_id`) REFERENCES `inns` (`id`);
+
+--
+-- Filtros para la tabla `user_favorite_inns`
+--
+ALTER TABLE `user_favorite_inns`
+  ADD CONSTRAINT `user_favorite_inns_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `profile` (`id`),
+  ADD CONSTRAINT `user_favorite_inns_ibfk_2` FOREIGN KEY (`inn_id`) REFERENCES `inns` (`id`);
 
 --
 -- Filtros para la tabla `vehicles`

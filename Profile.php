@@ -21,47 +21,46 @@ $stmt_user->execute();
 $result_user = $stmt_user->get_result();
 $user = $result_user->fetch_assoc();
 
-$is_active_membership = false;
-if ($user['profile_type'] === 'Empresa') {
-    $current_date = date('Y-m-d');
-    if (!empty($user['membership_type']) && $user['membership_start_date'] <= $current_date && $user['membership_end_date'] >= $current_date) {
-        $is_active_membership = true;
-    }
-}
+$sql_reservations_count = "SELECT COUNT(*) AS reservations_count FROM reservations WHERE user_id = ?";
+$stmt_reservations_count = $conn->prepare($sql_reservations_count);
 
-$sql = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
-        s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, 
-        c.name AS category_name, i.status, i.block
-        FROM inns i
-        LEFT JOIN states s ON i.state_id = s.id
-        LEFT JOIN municipalities m ON i.municipality_id = m.id
-        LEFT JOIN parishes p ON i.parish_id = p.id
-        LEFT JOIN categories c ON i.category_id = c.id
-        WHERE i.user_id = ?";
-
-$stmt = $conn->prepare($sql);
-
-if ($stmt === false) {
+if ($stmt_reservations_count === false) {
     die('Error al preparar la consulta: ' . $conn->error);
 }
 
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt_reservations_count->bind_param("i", $user_id);
+$stmt_reservations_count->execute();
+$result_reservations_count = $stmt_reservations_count->get_result();
+$reservations_count = $result_reservations_count->fetch_assoc()['reservations_count'];
 
-if ($result === false) {
-    die('Error al ejecutar la consulta: ' . $conn->error);
+$sql_favorite_inns_count = "SELECT COUNT(*) AS favorite_inns_count FROM user_favorite_inns WHERE user_id = ?";
+$stmt_favorite_inns_count = $conn->prepare($sql_favorite_inns_count);
+
+if ($stmt_favorite_inns_count === false) {
+    die('Error al preparar la consulta: ' . $conn->error);
 }
 
-$sql_clients_count = "SELECT COUNT(*) AS clients_count 
-                      FROM reservations r 
-                      JOIN inns i ON r.inn_id = i.id 
-                      WHERE i.user_id = ? AND r.status = 'Confirmado'";
-$stmt_clients_count = $conn->prepare($sql_clients_count);
-$stmt_clients_count->bind_param("i", $user_id);
-$stmt_clients_count->execute();
-$result_clients_count = $stmt_clients_count->get_result();
-$clients_count = $result_clients_count->fetch_assoc()['clients_count'];
+$stmt_favorite_inns_count->bind_param("i", $user_id);
+$stmt_favorite_inns_count->execute();
+$result_favorite_inns_count = $stmt_favorite_inns_count->get_result();
+$favorite_inns_count = $result_favorite_inns_count->fetch_assoc()['favorite_inns_count'];
+
+
+$sql_favorite_inns = "SELECT uf.id, i.name AS inn_name, i.description, i.image_url, c.name AS category_name 
+                    FROM user_favorite_inns uf 
+                    JOIN inns i ON uf.inn_id = i.id 
+                    LEFT JOIN categories c ON i.category_id = c.id 
+                    WHERE uf.user_id = ?";
+$stmt_favorite_inns = $conn->prepare($sql_favorite_inns);
+
+if ($stmt_favorite_inns === false) {
+    die('Error al preparar la consulta: ' . $conn->error);
+}
+
+$stmt_favorite_inns->bind_param("i", $user_id);
+$stmt_favorite_inns->execute();
+$result_favorite_inns = $stmt_favorite_inns->get_result();
+
 ?>
 
 <!DOCTYPE html>
@@ -72,14 +71,99 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
     <title>Perfil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./Assets/css/Perfiles.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container.p-4.rounded.shadow-sm.custom-bg {
+        padding: 3rem;
+    }
+
+    .posada-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        width: 24rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .posada-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .posada-img {
+        width: 120px;
+        height: 140px;
+        object-fit: cover;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        margin: 0 auto;
+        display: block;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+        color: #6c757d;
+    }
+
+    .btn-outline-success {
+        border-color: #28a745;
+        color: #28a745;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        padding: 0.8rem 1.6rem;
+        font-size: 1.1rem;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-group .btn {
+        font-size: 1.2rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        margin: 0 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-group .btn:hover {
+        transform: scale(1.05);
+    }
+</style>
 
 <body>
     <?php include './Includes/Header.php'; ?>
-    <div class="container">
-        <div class="card overflow-hidden">
+    <div class="container p-0" style="max-width: 100%">
+        <div class="card overflow-hidden p-0">
             <div class="card-body p-0">
                 <img src="<?php echo htmlspecialchars($user['banner_image_url']); ?>"
                     style="height: 350px; width: 100%;" alt="Banner" class="img-fluid">
@@ -87,33 +171,21 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                     <div class="col-lg-4 order-lg-1 order-2">
                         <div class="d-flex align-items-center justify-content-around m-4">
                             <div class="text-center d-flex flex-column align-items-center">
-                                <i class="fas fa-hotel fs-1 d-block mb-3"></i>
-                                <h4 class="mb-0 fw-semibold lh-1">
-                                    <?php
-                                    $sql_inn_count = "SELECT COUNT(*) AS inn_count FROM inns WHERE user_id = ?";
-                                    $stmt_inn_count = $conn->prepare($sql_inn_count);
-                                    $stmt_inn_count->bind_param("i", $user_id);
-                                    $stmt_inn_count->execute();
-                                    $result_inn_count = $stmt_inn_count->get_result();
-                                    $inn_count = $result_inn_count->fetch_assoc()['inn_count'];
-                                    echo $inn_count;
-                                    ?>
+                                <i class="fas fa-calendar-check fs-1 d-block mb-3"></i>
+                                <h4 class="mb-0 fw-semibold lh-1" style="font-size: 1.5rem;">
+                                    <?php echo $reservations_count; ?>
                                 </h4>
-                                <p class="mb-0 fs-4">Posadas</p>
+                                <p class="mb-0 fs-3">Reservaciones</p>
                             </div>
                             <div class="text-center d-flex flex-column align-items-center">
-                                <i class="fas fa-users fs-1 d-block mb-3"></i>
-                                <h4 class="mb-0 fw-semibold lh-1"><?php echo $clients_count; ?></h4>
-                                <p class="mb-0 fs-4">Clientes</p>
-                            </div>
-                            <div class="text-center d-flex flex-column align-items-center">
-                                <i class="fas fa-star fs-1 d-block mb-3"></i>
-                                <h4 class="mb-0 fw-semibold lh-1">4.9/5</h4>
-                                <p class="mb-0 fs-4">Valoración</p>
+                                <i class="fas fa-heart fs-1 d-block mb-3"></i>
+                                <h4 class="mb-0 fw-semibold lh-1" style="font-size: 1.5rem;">
+                                    <?php echo $favorite_inns_count; ?>
+                                </h4>
+                                <p class="mb-0 fs-3">Posadas Guardadas</p>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-4 mt-n3 order-lg-2 order-1">
                         <div class="mt-n5">
                             <div class="d-flex align-items-center justify-content-center mb-2">
@@ -131,80 +203,39 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                                     <?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']); ?>
                                 </h5>
                                 <p class="mb-0 fs-4"><?php echo htmlspecialchars($user['profile_type']); ?></p>
-                                <p class="mb-0 fs-4 text-muted"><strong>Tipo de Membresía:</strong> <?php echo htmlspecialchars($user['membership_type']); ?></p>
+
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-4 order-last">
-                        <ul
-                            class="list-unstyled d-flex align-items-center justify-content-center justify-content-lg-start my-3 gap-4">
-                            <li class="position-relative">
-                                <a class="text-white d-flex align-items-center justify-content-center bg-primary p-3 fs-3 rounded-circle shadow-lg"
-                                    href="<?php echo htmlspecialchars($user['facebook_url']); ?>" target="_blank"
-                                    style="width: 50px; height: 50px;">
-                                    <i class="fab fa-facebook"></i>
-                                </a>
-                            </li>
-                            <li class="position-relative">
-                                <a class="text-white d-flex align-items-center justify-content-center bg-info p-3 fs-3 rounded-circle shadow-lg"
-                                    href="<?php echo htmlspecialchars($user['twitter_url']); ?>" target="_blank"
-                                    style="width: 50px; height: 50px;">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li class="position-relative">
-                                <a class="text-white d-flex align-items-center justify-content-center bg-danger p-3 fs-3 rounded-circle shadow-lg"
-                                    href="<?php echo htmlspecialchars($user['youtube_url']); ?>" target="_blank"
-                                    style="width: 50px; height: 50px;">
-                                    <i class="fab fa-youtube"></i>
-                                </a>
-                            </li>
-                            <li class="position-relative">
-                                <a class="text-white d-flex align-items-center justify-content-center bg-gradient p-3 fs-3 rounded-circle shadow-lg"
-                                    href="<?php echo htmlspecialchars($user['instagram_url']); ?>" target="_blank"
-                                    style="width: 50px; height: 50px; background-color: #E1306C;">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
 
-                <div class="tab-pane fade show active" id="pills-friends" role="tabpanel"
-                    aria-labelledby="pills-friends-tab" tabindex="0">
-                    <div class="row justify-content-center mt-5">
-                        <div class="col-12 text-center">
-                            <h2 class="mb-4 text-success" style="font-size: 2.5rem;"> <i class="fas fa-hotel"></i>
-                                Posadas</h2>
+
+                <div class="tab-pane fade show active mt-5">
+                    <div class="container p-4 rounded shadow-sm custom-bg">
+                        <div class="row justify-content-center">
+                            <?php
+                            if ($result_favorite_inns->num_rows > 0) {
+                                while ($row = $result_favorite_inns->fetch_assoc()) {
+                                    echo '<div class="col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">';
+                                    echo '<div class="card posada-card border-0 text-center shadow">';
+                                    echo '<div class="card-body position-relative">';
+                                    echo '<img src="' . htmlspecialchars($row["image_url"]) . '" alt="Inn Image" class="posada-img rounded-circle mb-3">';
+                                    echo '<h5 class="card-title text-primary mb-2">' . htmlspecialchars($row["inn_name"]) . '</h5>';
+                                    echo '<p class="card-text text-muted"><i class="fas fa-tags me-1"></i>' . htmlspecialchars($row["category_name"]) . '</p>';
+                                    echo '<a href="inn.php?inn_id=' . $row['id'] . '" class="btn btn-outline-success mt-3" style="color: green;">';
+                                    echo '<i class="fas fa-link me-2"></i> ¡Consultar Reservación!';
+                                    echo '</a>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo '<div class="col-12 text-center">No tienes posadas guardadas.</div>';
+                            }
+                            ?>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo '<div class="col-sm-6 col-lg-4 d-flex justify-content-center">';
-                                echo '<div class="card hover-img text-center" style="width: 30rem; margin: 30px;">';
-                                echo '<div class="card-body p-4 border-bottom">';
-                                echo '<img src="' . htmlspecialchars($row["image_url"]) . '" alt="Inn Image" class="rounded-circle mb-3">';
-                                echo '<h5 class="fw-semibold mb-2">' . htmlspecialchars($row["inn_name"]) . '</h5>';
-                                echo '<span class="text-muted">' . htmlspecialchars($row["category_name"]) . '</span>';
-                                echo '</div>';
-                                echo '<div class="p-3 d-flex justify-content-center">';
-                                echo '<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#viewInnModal" onclick="viewInnDetails(' . htmlspecialchars(json_encode($row)) . ')" style="font-size: 1.2rem; padding: 0.75rem 1.5rem;">';
-                                echo '<i class="fas fa-eye" style="margin-right: 0.5rem;"></i> Visualizar';
-                                echo '</button>';
-                                echo '</div>';
-                                echo '</div>';
-                                echo '</div>';
-                            }
-                        } else {
-                            echo '<div class="col-12 text-center">No hay posadas registradas.</div>';
-                        }
-                        ?>
-                    </div>
                 </div>
-
 
                 <div class="row justify-content-center mt-5">
                     <div class="col-12 text-center">
@@ -217,9 +248,9 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                 <div class="row justify-content-center">
                     <?php
                     $sql_reservations = "SELECT r.id, r.inn_id, r.start_date, r.end_date, r.payment_method_id, r.receipt_path, r.codigo_referencia, r.status, r.user_id, i.name AS inn_name, i.image_url
-                         FROM reservations r
-                         JOIN inns i ON r.inn_id = i.id
-                         WHERE r.user_id = ?";
+                             FROM reservations r
+                             JOIN inns i ON r.inn_id = i.id
+                             WHERE r.user_id = ?";
                     $stmt_reservations = $conn->prepare($sql_reservations);
                     $stmt_reservations->bind_param("i", $user_id);
                     $stmt_reservations->execute();
@@ -243,17 +274,20 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                             // Formatear las fechas
                             $start_date = date('d/m/Y', strtotime($row["start_date"]));
                             $end_date = date('d/m/Y', strtotime($row["end_date"]));
-
-                            echo '<div class="col-sm-6 col-lg-4 d-flex justify-content-center mb-4">';
-                            echo '<div class="card" style="width: 30rem;">';
-                            echo '<img src="' . htmlspecialchars($row["image_url"]) . '" class="card-img-top" alt="Inn Image">';
-                            echo '<div class="card-body">';
-                            echo '<h5 class="card-title text-center font-weight-bold">' . htmlspecialchars($row["inn_name"]) . '</h5>';
-                            echo '<p class="card-text">Desde: ' . htmlspecialchars($start_date) . ' Hasta: ' . htmlspecialchars($end_date) . '</p>';
-                            echo '<p class="badge ' . $status_color . ' text-white">' . $row["status"] . '</p>';
+                            echo '<div class="col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">';
+                            echo '<div class="card posada-card border-0 text-center shadow">';
+                            echo '<div class="card-body position-relative">';
+                            echo '<img src="' . htmlspecialchars($row["image_url"]) . '" alt="Inn Image" class="posada-img rounded-circle mb-3">';
+                            echo '<h5 class="card-title text-primary mb-2">' . htmlspecialchars($row["inn_name"]) . '</h5>';
+                            echo '<p class="card-text"><i class="fas fa-calendar-alt me-1"></i>Desde: ' . htmlspecialchars($start_date) . ' Hasta: ' . htmlspecialchars($end_date) . '</p>';
+                            echo '<p class="badge ' . $status_color . ' text-white">' . htmlspecialchars($row["status"]) . '</p>';
                             echo '<div class="d-flex justify-content-between mt-3">';
-                            echo '<a href="chat.php?user_id=' . htmlspecialchars($row["user_id"]) . '" class="btn btn-primary" style="color: white;">Contactar</a>';
-                            echo '<a href="generate_pdf_report.php?reservation_id=' . htmlspecialchars($row["id"]) . '" class="btn btn-primary" style="color: white;">Ver Factura</a>';
+                            echo '<a href="chat.php?user_id=' . htmlspecialchars($row["user_id"]) . '" class="btn btn-outline-primary" style="color: blue;">';
+                            echo '<i class="fas fa-comments mr-2"></i> Contactar';
+                            echo '</a>';
+                            echo '<a href="generate_pdf_report.php?reservation_id=' . htmlspecialchars($row["id"]) . '" class="btn btn-outline-success" style="color: green;">';
+                            echo '<i class="fas fa-file-pdf mr-2"></i> Ver Factura';
+                            echo '</a>';
                             echo '</div>';
                             echo '</div>';
                             echo '</div>';
@@ -264,188 +298,130 @@ $clients_count = $result_clients_count->fetch_assoc()['clients_count'];
                     }
                     ?>
                 </div>
-
-
- <!-- Botón Gestionar Posada -->
-        <div class="text-center mt-6">
-            <div class="btn-group">
-                <?php if ($user['profile_type'] === 'Empresa'): ?>
-                    <?php if ($is_active_membership): ?>
-                        <a href="./Includes/get_inns.php" class="btn btn-success" style="color: #ffffff;">Gestionar Posadas</a>
-                    <?php else: ?>
-                        <script>
-                            Swal.fire({
-                                icon: 'info',
-                                title: 'Ups, no tienes una Membresía Activa',
-                                text: 'Por favor, adquiere una membresía para gestionar tus posadas.',
-                                confirmButtonText: 'Ir a Membresías',
-                                confirmButtonColor: '#3085d6'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = 'Memberships.php';
-                                }
-                            });
-                        </script>
-                    <?php endif; ?>
-                <?php endif; ?>
-                <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
-                        data-bs-target="#editProfileModal"><i class="fas fa-edit me-2"></i> Editar Perfil
-                </button>
             </div>
-        </div>
 
-                <br><br>
+            <div class="text-center mt-6">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#editProfileModal">
+                        <i class="fas fa-edit"></i> Editar Perfil
+                    </button>
+                </div>
+            </div>
+            <br><br>
+            <?php include './Includes/Footer.php'; ?>
 
-                <?php include './Includes/Footer.php'; ?>
-
-
-                <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form action="./Includes/update_profile.php" method="post">
-                                <div class="modal-body">
-                                    <div class="mb-3 text-left">
-                                        <label for="first_name" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="first_name" name="first_name"
-                                            value="<?php echo htmlspecialchars($user['first_name']); ?>" required>
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="last_name" class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" id="last_name" name="last_name"
-                                            value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            value="<?php echo htmlspecialchars($user['email']); ?>" required>
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="password" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="password" name="password">
-                                        <div class="form-text">Dejar en blanco si no deseas cambiar la contraseña.</div>
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="profile_image_url" class="form-label">URL de la imagen de
-                                            perfil</label>
-                                        <input type="text" class="form-control" id="profile_image_url"
-                                            name="profile_image_url"
-                                            value="<?php echo htmlspecialchars($user['profile_image_url']); ?>">
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="banner_image_url" class="form-label">URL de la imagen de
-                                            banner</label>
-                                        <input type="text" class="form-control" id="banner_image_url"
-                                            name="banner_image_url"
-                                            value="<?php echo htmlspecialchars($user['banner_image_url']); ?>">
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="youtube_url" class="form-label">YouTube URL</label>
-                                        <input type="text" class="form-control" id="youtube_url" name="youtube_url"
-                                            value="<?php echo htmlspecialchars($user['youtube_url']); ?>">
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="facebook_url" class="form-label">Facebook URL</label>
-                                        <input type="text" class="form-control" id="facebook_url" name="facebook_url"
-                                            value="<?php echo htmlspecialchars($user['facebook_url']); ?>">
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="twitter_url" class="form-label">Twitter URL</label>
-                                        <input type="text" class="form-control" id="twitter_url" name="twitter_url"
-                                            value="<?php echo htmlspecialchars($user['twitter_url']); ?>">
-                                    </div>
-                                    <div class="mb-3 text-left">
-                                        <label for="instagram_url" class="form-label">Instagram URL</label>
-                                        <input type="text" class="form-control" id="instagram_url" name="instagram_url"
-                                            value="<?php echo htmlspecialchars($user['instagram_url']); ?>">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-outline-primary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                </div>
-                            </form>
-
-                        </div>
+            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="./Includes/update_profile.php" method="post">
+                <div class="modal-body">
+                    <div class="mb-3 text-left">
+                        <label for="first_name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name"
+                            value="<?php echo htmlspecialchars($user['first_name']); ?>" required>
+                    </div>
+                    <div class="mb-3 text-left">
+                        <label for="last_name" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name"
+                            value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
+                    </div>
+                    <div class="mb-3 text-left">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                            value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                    </div>
+                    <div class="mb-3 text-left">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                        <div class="form-text">Dejar en blanco si no deseas cambiar la contraseña.</div>
+                    </div>
+                    <div class="mb-3 text-left">
+                        <label for="profile_image_url" class="form-label">URL de la imagen de perfil</label>
+                        <input type="text" class="form-control" id="profile_image_url" name="profile_image_url"
+                            value="<?php echo htmlspecialchars($user['profile_image_url']); ?>">
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-                <div class="modal fade" id="viewInnModal" tabindex="-1" aria-labelledby="viewInnModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title fs-3" id="viewInnModalLabel">
-                                    <i class="fas fa-hotel me-3 fs-2"></i>Detalles de la Posada
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                    style="color: black;"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="text-center mb-4">
-                                    <img id="modal-inn-image" src="" class="img-fluid rounded-3" alt="">
-                                </div>
-                                <ul class="list-group list-group-flush fs-5">
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-hotel me-2 fs-4"></i> Nombre:</strong>
-                                        <span id="modal-inn-name"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-align-left me-2 fs-4"></i> Descripción:</strong>
-                                        <span id="modal-inn-description"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-envelope me-2 fs-4"></i> Email:</strong>
-                                        <span id="modal-inn-email"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-phone me-2 fs-4"></i> Teléfono:</strong>
-                                        <span id="modal-inn-phone"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-map-marker-alt me-2 fs-4"></i> Estado:</strong>
-                                        <span id="modal-state-name"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-map-marked-alt me-2 fs-4"></i> Municipio:</strong>
-                                        <span id="modal-municipality-name"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-map-pin me-2 fs-4"></i> Parroquia:</strong>
-                                        <span id="modal-parish-name"></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong><i class="fas fa-tags me-2 fs-4"></i> Categoría:</strong>
-                                        <span id="modal-category-name"></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const editProfileModal = document.getElementById('editProfileModal');
+    const openModalButtons = document.querySelectorAll('.open-edit-profile'); // Asegúrate de usar esta clase en el botón
 
+    openModalButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const userData = JSON.parse(this.getAttribute('data-user'));
+            document.getElementById('first_name').value = userData.first_name;
+            document.getElementById('last_name').value = userData.last_name;
+            document.getElementById('email').value = userData.email;
+            document.getElementById('profile_image_url').value = userData.profile_image_url;
 
+            const modal = new bootstrap.Modal(editProfileModal);
+            modal.show();
+        });
+    });
+});
 
-                    <script
-                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-                    <script>
-                        function viewInnDetails(inn) {
-                            document.getElementById('modal-inn-image').src = inn.image_url;
-                            document.getElementById('modal-inn-name').innerText = inn.inn_name;
-                            document.getElementById('modal-inn-description').innerText = inn.description;
-                            document.getElementById('modal-inn-email').innerText = inn.email;
-                            document.getElementById('modal-inn-phone').innerText = inn.phone;
-                            document.getElementById('modal-state-name').innerText = inn.state_name;
-                            document.getElementById('modal-municipality-name').innerText = inn.municipality_name;
-                            document.getElementById('modal-parish-name').innerText = inn.parish_name;
-                            document.getElementById('modal-category-name').innerText = inn.category_name;
-                        }
-                    </script>
+</script>
+
+            <style>
+                .custom-modal {
+                    border-radius: 12px;
+                    padding: 1rem;
+                    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+                    background-color: #fdfdfd;
+                }
+
+                .custom-modal .modal-header {
+                    border-bottom: none;
+                    padding-bottom: 0.5rem;
+                }
+
+                .custom-modal .btn-close {
+                    padding: 0.5rem;
+                }
+
+                .custom-modal .modal-body {
+                    padding-top: 0;
+                }
+
+                .custom-modal .modal-title {
+                    font-size: 1.75rem;
+                }
+
+                .modal-item {
+                    padding: 0.5rem 0;
+                    font-size: 1rem;
+                }
+
+                .modal-item strong {
+                    color: #343a40;
+                }
+
+                .modal-item i {
+                    color: #6c757d;
+                }
+
+                #modal-inn-image {
+                    max-width: 100%;
+                    max-height: 300px;
+                    border-radius: 10px;
+                    object-fit: cover;
+                    margin-bottom: 1rem;
+                }
+            </style>
 
 
 

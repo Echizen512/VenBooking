@@ -126,85 +126,104 @@ $conn->close();
 </head>
 
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-    .card {
-        border-radius: 8px;
-        overflow: hidden;
-    }
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-    .card-title {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: rgb(25 135 84);
-    }
+.custom-card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
 
-    .table {
-        border-radius: 8px;
-        overflow: hidden;
-    }
+.custom-btn {
+    color: #fff;
+    background-color: rgb(63, 161, 65 / 94%);
+    border-color: rgb(63, 161, 65 / 94%);
+}
 
-    .table thead th {
-        background-color: rgb(25 135 84);
-        color: white;
-        font-size: 1.5rem;
-    }
+.custom-btn:hover {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
 
-    .table td {
-        vertical-align: middle;
-        font-size: 1.2rem;
-    }
+.container {
+    padding-top: 20px;
+    padding-left: 15%;
+    padding-right: 15px;
+}
 
-    .alert {
-        border-radius: 5px;
-        background-color: #fff3cd;
-        color: #856404;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    .mb-3 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .gap-2 {
-        gap: 0.5rem;
-    }
-
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-    }
-
-    body {
-        display: flex;
-        flex-direction: column;
-    }
-
+@media (min-width: 768px) {
     .container {
-        flex: 1;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
+}
 
-    .page-footer {
-        background-color: #28a745;
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        z-index: 1000;
+h2.card-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #3fa141;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
     }
+    .table th, .table td {
+        font-size: 0.875rem;
+    }
+}
+
+.table th i {
+    margin-right: 5px;
+}
+
+footer {
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    margin-top: auto; 
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-warning:hover {
+    color: #212529;
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
 </style>
+
+
 
 <body>
     <?php include './Header_Admin.php'; ?>
@@ -478,7 +497,6 @@ $conn->close();
     </div>
     <br> <br>
 
-    <?php include './Footer.php'; ?>
 
 
     <script>

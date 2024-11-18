@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
                         title: 'Registro Exitoso',
                         text: 'Tu cuenta ha sido creada exitosamente.'
                     }).then(function() {
-                        window.location = 'index.php';
+                        window.location = 'login.php';
                     });
                 });
             </script>";
@@ -79,26 +79,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT id, password FROM Profile WHERE email = ?";
-
+    // Consulta para obtener el perfil del usuario
+    $sql = "SELECT id, password, profile_type FROM Profile WHERE email = ?";
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $hashed_password);
+            $stmt->bind_result($id, $hashed_password, $profile_type);
             $stmt->fetch();
             if (password_verify($password, $hashed_password)) {
                 session_start();
                 $_SESSION["user_id"] = $id;
+
+                // Redirección según el tipo de perfil
+                if ($profile_type === "Empresa") {
+                    $redirect_url = 'Includes/Inicio.php';
+                } else {
+                    $redirect_url = 'index.php';
+                }
+
                 echo "<script>
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Inicio de Sesión Exitoso'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = '$redirect_url';
                         });
                     });
                 </script>";
@@ -173,7 +181,6 @@ $conn->close();
                                 </div>
                                 <div class="group">
                                     <input id="check" type="checkbox" class="check" checked>
-                                    <label for="check"><span class="icon"></span> Mantenerme conectado</label>
                                 </div>
                                 <div class="group">
                                     <input type="submit" name="login" class="button" style="background: #28a745;"
@@ -188,33 +195,40 @@ $conn->close();
                         <div class="sign-up-form">
                             <form method="POST" action="">
                                 <div class="group">
-                                    <label for="first_name" class="label"><i class="fas fa-user"></i> Nombre *</label>
+                                    <label for="first_name" class="label"><i class="fas fa-user"></i> Nombre</label>
                                     <input id="first_name" name="first_name" type="text" class="input"
-                                        placeholder="Ingresa tu nombre" required>
+                                        placeholder="Ingresa tu nombre" required pattern="^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$"
+                                        title="El nombre solo puede contener letras (mayúsculas, minúsculas), espacios y acentos.">
                                 </div>
                                 <div class="group">
-                                    <label for="last_name" class="label"><i class="fas fa-user"></i> Apellido *</label>
+                                    <label for="last_name" class="label"><i class="fas fa-user"></i> Apellido</label>
                                     <input id="last_name" name="last_name" type="text" class="input"
-                                        placeholder="Ingresa tu apellido" required>
+                                        placeholder="Ingresa tu apellido" required pattern="^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$"
+                                        title="El apellido solo puede contener letras (mayúsculas, minúsculas), espacios y acentos.">
                                 </div>
+
                                 <div class="group">
                                     <label for="email" class="label"><i class="fas fa-envelope"></i> Correo Electrónico
-                                        *</label>
-                                    <input id="email" name="email" type="text" class="input"
-                                        placeholder="Ingresa tu correo electrónico" required>
+                                        </label>
+                                    <input id="email" name="email" type="email" class="input"
+                                        placeholder="Ingresa tu correo electrónico" required
+                                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                        title="Por favor, ingresa un correo electrónico válido (ejemplo@dominio.com)">
                                 </div>
+
                                 <div class="group">
                                     <label for="profile_type" class="label"><i class="fas fa-user-tag"></i> Tipo de
-                                        Perfil *</label>
+                                        Perfil</label>
                                     <select name="profile_type" id="profile_type" class="input"
                                         style="padding-left: 2.7rem;" required>
-                                        <option value="" disabled selected>Tipo de Perfil *</option>
+                                        <option value="" disabled selected>Seleccionar Tipo</option>
                                         <option value="Turista">Turista</option>
                                         <option value="Empresa">Empresa</option>
                                     </select>
                                 </div>
                                 <div class="group">
-                                    <label for="pass" class="label"><i class="fas fa-lock"></i> Contraseña *</label>
+                                    <label for="pass" class="label"><i class="fas fa-lock"></i> Contraseña.</label>
+                                    <label for="pass" class="label">(Debe contener mínimo seis caracteres. Entre ellos mayúsculas, minúsculas y números)</label>
                                     <input id="pass" name="password" type="password" class="input"
                                         placeholder="Crea tu contraseña" required>
                                 </div>
@@ -234,11 +248,13 @@ $conn->close();
 </html>
 
 
+
+
 <style>
     body {
         margin: 0;
         color: #000;
-        background: url('./background.jpg') no-repeat center center fixed;
+        background: url('./login.jpg') no-repeat center center fixed;
         background-size: cover;
         font: 600 16px/18px 'Open Sans', sans-serif;
     }
@@ -248,7 +264,7 @@ $conn->close();
         width: 100%;
         margin: auto;
         max-width: 600px;
-        min-height: 670px;
+        min-height: 690px;
         position: relative;
         box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
     }

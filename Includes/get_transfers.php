@@ -80,7 +80,7 @@ $result = $stmt->get_result();
     <title>Transferencias Bancarias</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./../Assets/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -89,79 +89,101 @@ $result = $stmt->get_result();
     <?php include './Header_Admin.php'; ?>
 
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-        }
+      body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
 
-        .card {
-            border-radius: 8px;
-            overflow: hidden;
-        }
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-        .card-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: rgb(25 135 84);
-        }
+.custom-card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
 
-        .table {
-            border-radius: 8px;
-            overflow: hidden;
-        }
+.custom-btn {
+    color: #fff;
+    background-color: rgb(63, 161, 65 / 94%);
+    border-color: rgb(63, 161, 65 / 94%);
+}
 
-        .table thead th {
-            background-color: rgb(25 135 84);
-            color: white;
-            font-size: 1.5rem;
-        }
+.custom-btn:hover {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
 
-        .table td {
-            vertical-align: middle;
-            font-size: 1.2rem;
-        }
+.container {
+    padding-top: 20px;
+    padding-left: 15%;
+    padding-right: 15px;
+}
 
-        .alert {
-            border-radius: 5px;
-            background-color: #fff3cd;
-            color: #856404;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+@media (min-width: 768px) {
+    .container {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 
-        .mb-3 {
-            margin-bottom: 1.5rem !important;
-        }
+h2.card-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #3fa141;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .text-center {
-            text-align: center;
-        }
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
 
-        .gap-2 {
-            gap: 0.5rem;
-        }
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
 
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-        }
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .table th, .table td {
+        font-size: 0.875rem;
+    }
+}
 
-        body {
-            display: flex;
-            flex-direction: column;
-        }
+.table th i {
+    margin-right: 5px;
+}
 
-        .container {
-            flex: 1;
-        }
+footer {
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    margin-top: auto; 
+}
 
-        .page-footer {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
+.btn-warning {
+    color: #fff;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-warning:hover {
+    color: #212529;
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
     </style>
 
     <div class="container mt-5">
@@ -169,11 +191,11 @@ $result = $stmt->get_result();
             <div class="card-body">
                 <h2 class="card-title"><i class="fas fa-money-check-alt"></i> Lista de Transferencias Bancarias</h2>
                 <div class="table-responsive">
-                    <div class="text-right mb-3">
+                <div class="mb-3" style="text-align: right;">
                         <button class='btn btn-success btn-sm d-inline-flex align-items-center' data-bs-toggle="modal"
                             data-bs-target="#createModal" style="color: white; font-size: 14px;"
                             title='Agregar Transferencia Bancaria'>
-                            <i class='fas fa-plus mr-2' style='color: white;'></i> Agregar Transferencia Bancaria
+                            <i class='fas fa-plus mr-3' style='color: white;'></i> Agregar
                         </button>
                     </div>
                     <table id="transfersTable" class="table table-bordered table-striped">
@@ -247,11 +269,11 @@ $result = $stmt->get_result();
                         </div>
                         <div class="form-group">
                             <label for="account_number">Número de Cuenta</label>
-                            <input type="text" name="account_number" id="account_number" class="form-control" required>
+                            <input type="number" name="account_number" id="account_number" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="bank_code">Código Bancario</label>
-                            <input type="text" name="bank_code" id="bank_code" class="form-control" required>
+                            <input type="number" name="bank_code" id="bank_code" class="form-control" required>
                         </div>
                         <br>
                         <div class="text-center">
@@ -282,12 +304,12 @@ $result = $stmt->get_result();
                         </div>
                         <div class="form-group">
                             <label for="edit_account_number">Número de Cuenta</label>
-                            <input type="text" name="account_number" id="edit_account_number" class="form-control"
+                            <input type="number" name="account_number" id="edit_account_number" class="form-control"
                                 required>
                         </div>
                         <div class="form-group">
                             <label for="edit_bank_code">Código Bancario</label>
-                            <input type="text" name="bank_code" id="edit_bank_code" class="form-control" required>
+                            <input type="number" name="bank_code" id="edit_bank_code" class="form-control" required>
                         </div>
                         <br>
                         <div class="text-center">
@@ -300,7 +322,7 @@ $result = $stmt->get_result();
         </div>
     </div>
     <br> <br>
-    <?php include './Footer.php'; ?>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -326,6 +348,35 @@ $result = $stmt->get_result();
             });
         });
     </script>
+
+
+<script>
+    // Función para validar el nombre completo
+    function validateFullName(fullName) {
+        const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/; // Solo letras, espacios y caracteres latinos
+        return regex.test(fullName);
+    }
+
+    // Validar el formulario al intentar enviarlo
+    document.getElementById('createForm').addEventListener('submit', function (e) {
+        const fullNameInput = document.getElementById('full_name');
+        const fullName = fullNameInput.value.trim();
+
+        if (!validateFullName(fullName)) {
+            e.preventDefault(); // Detener el envío del formulario
+            Swal.fire({
+                icon: 'error',
+                title: 'Nombre inválido',
+                text: 'El Nombre Completo solo puede contener letras y espacios.',
+                confirmButtonText: 'Entendido'
+            });
+
+            // Resaltar el campo inválido
+            fullNameInput.focus();
+        }
+    });
+</script>
+
 
 </body>
 

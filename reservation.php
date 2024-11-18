@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $end_date = $_POST['end_date'];
     $payment_method = $_POST['payment_method'];
     $reference_code = $_POST['reference_code']; // Código de referencia
-    $total_amount = $_POST['total_amount']; // Monto total
+
     $status = 'En Espera';
     $receipt_path = '';
 
@@ -40,10 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar tipo de archivo permitido
         $allowed_types = array('image/jpeg', 'image/png', 'application/pdf');
         if (!in_array($file_type, $allowed_types)) {
-            echo "<script>
-                alert('Tipo de archivo no permitido.');
-                window.location.href = 'reservation.php?inn_id=" . urlencode($inn_id) . "';
-            </script>";
+            $_SESSION['swal_message'] = [
+                'icon' => 'error',
+                'title' => 'Tipo de archivo no permitido',
+                'text' => 'Por favor sube un archivo de tipo JPEG, PNG o PDF.',
+                'redirect' => 'reservation.php?inn_id=' . urlencode($inn_id)
+            ];
+            header("Location: reservation.php?inn_id=" . urlencode($inn_id));
             exit;
         }
 
@@ -51,10 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($file_tmp_name, $file_path)) {
             $receipt_path = 'uploads/' . $unique_file_name;
         } else {
-            echo "<script>
-                alert('Error al cargar el archivo.');
-                window.location.href = 'reservation.php?inn_id=" . urlencode($inn_id) . "';
-            </script>";
+            $_SESSION['swal_message'] = [
+                'icon' => 'error',
+                'title' => 'Error al cargar el archivo',
+                'text' => 'Hubo un problema al cargar el archivo. Intenta nuevamente.',
+                'redirect' => 'reservation.php?inn_id=' . urlencode($inn_id)
+            ];
+            header("Location: reservation.php?inn_id=" . urlencode($inn_id));
             exit;
         }
     }
@@ -72,38 +78,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result_check = $stmt->get_result();
 
     if ($result_check->num_rows > 0) {
-        echo "<script>
-            alert('Las fechas seleccionadas no están disponibles.');
-            window.location.href = 'reservation.php?inn_id=" . urlencode($inn_id) . "';
-        </script>";
+        $_SESSION['swal_message'] = [
+            'icon' => 'error',
+            'title' => 'Fechas no disponibles',
+            'text' => 'Las fechas seleccionadas no están disponibles para la reserva.',
+            'redirect' => 'reservation.php?inn_id=' . urlencode($inn_id)
+        ];
+        header("Location: reservation.php?inn_id=" . urlencode($inn_id));
         exit;
     }
 
     // Insertar la reserva
-    $sql_insert_reservation = "INSERT INTO reservations (inn_id, start_date, end_date, payment_method_id, receipt_path, status, user_id, codigo_referencia, monto_total)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql_insert_reservation = "INSERT INTO reservations (inn_id, start_date, end_date, payment_method_id, receipt_path, status, user_id, codigo_referencia)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql_insert_reservation);
     if (!$stmt) {
         die("Error en la preparación de la consulta de inserción: " . $conn->error);
     }
-    $stmt->bind_param('issssssss', $inn_id, $start_date, $end_date, $payment_method, $receipt_path, $status, $user_id, $reference_code, $total_amount);
+    $stmt->bind_param('isssssss', $inn_id, $start_date, $end_date, $payment_method, $receipt_path, $status, $user_id, $reference_code);
 
     if ($stmt->execute()) {
-        echo "<script>
-            alert('Reserva confirmada exitosamente.');
-            window.location.href = 'Inns.php';
-        </script>";
+        $_SESSION['swal_message'] = [
+            'icon' => 'success',
+            'title' => 'Reserva confirmada',
+            'text' => 'La reserva se ha confirmado exitosamente.',
+            'redirect' => 'Inns.php'
+        ];
+        header("Location: Inns.php");
+        exit;
     } else {
-        echo "<script>
-            alert('Error al confirmar la reserva: " . $stmt->error . "');
-            window.location.href = 'reservation.php?inn_id=" . urlencode($inn_id) . "';
-        </script>";
+        $_SESSION['swal_message'] = [
+            'icon' => 'error',
+            'title' => 'Error al confirmar la reserva',
+            'text' => 'Hubo un error al confirmar la reserva: ' . $stmt->error,
+            'redirect' => 'reservation.php?inn_id=' . urlencode($inn_id)
+        ];
+        header("Location: reservation.php?inn_id=" . urlencode($inn_id));
+        exit;
     }
 
     $stmt->close();
 }
 
 ?>
+
+
 
 
 
@@ -120,71 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
-
-<style>
-    body {
-        background-color: #f3f4f6;
-    }
-
-    .content-wrapper {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    .card {
-        border-radius: 20px;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .card-header {
-        font-size: 2rem;
-        font-weight: bold;
-        background-color: #28a745;
-        color: #fff;
-    }
-
-    .card-body {
-        background-color: #ffffff;
-        padding: 30px;
-    }
-
-    .form-label {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #333;
-    }
-
-    .form-control,
-    .form-select {
-        border-radius: 10px;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-        font-size: 1.1rem;
-        padding: 15px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label i {
-        color: #28a745;
-        margin-right: 8px;
-    }
-
-    .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        font-size: 1.2rem;
-        padding: 10px 30px;
-        font-weight: bold;
-    }
-
-    .btn-success:hover {
-        background-color: #218838;
-    }
-</style>
 
 <body>
 
@@ -280,10 +234,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <!-- Monto Total -->
                                 <div class="form-group mb-3">
-                                    <label for="monto_total" class="form-label" style="font-size: 20px;"><i
+                                    <label  class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-dollar-sign"></i> Monto Total:</label>
-                                    <input type="text" id="monto_total" class="form-control" style="font-size: 18px;"
-                                        readonly>
+                                            <!-- Actualización del input monto_total -->
+<input type="text" id="monto_total" class="form-control" style="font-size: 18px;" readonly>
+
                                 </div>
 
                                 <!-- Precio en Bolívares -->
@@ -311,8 +266,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" id="precio_reservacion_bolivares" class="form-control"
                                         style="font-size: 18px;" readonly>
                                 </div>
-
-
 
                                 <style>
                                     .custom-btn {
@@ -355,8 +308,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <script>
+<script>
+    $(document).ready(function() {
+        // Verifica si hay mensaje en la sesión y muestra el Swal correspondiente
+        <?php if (isset($_SESSION['swal_message'])): ?>
+            Swal.fire({
+                icon: '<?php echo $_SESSION['swal_message']['icon']; ?>',
+                title: '<?php echo $_SESSION['swal_message']['title']; ?>',
+                text: '<?php echo $_SESSION['swal_message']['text']; ?>'
+            }).then(() => {
+                window.location.href = '<?php echo $_SESSION['swal_message']['redirect']; ?>';
+            });
+            <?php unset($_SESSION['swal_message']); ?>
+        <?php endif; ?>
+
+    });
+</script>
+
+<script>
             $(document).ready(function () {
                 let today = new Date().toISOString().split('T')[0];
                 $('#start_date').attr('min', today);

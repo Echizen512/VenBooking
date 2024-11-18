@@ -6,6 +6,10 @@ if (isset($_SESSION['user_id'])) {
 } else {
     include './Includes/Header2.php';
 }
+// Verificar si se ha enviado un estado en la URL
+$state_id = isset($_GET['state']) ? $_GET['state'] : '';
+
+// Consulta para obtener las posadas, filtrando por estado si se proporciona uno
 $sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
                    s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, i.category_id, 
                    i.quality
@@ -13,43 +17,58 @@ $sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.emai
             LEFT JOIN states s ON i.state_id = s.id
             LEFT JOIN municipalities m ON i.municipality_id = m.id
             LEFT JOIN parishes p ON i.parish_id = p.id";
+if ($state_id && $state_id != 'all') {
+    $sql_inns .= " WHERE i.state_id = '$state_id'";
+}
+
+// Verificar si la consulta de las posadas se ejecutó correctamente
 $result_inns = $conn->query($sql_inns);
 if (!$result_inns) {
     die("Error en la consulta de posadas: " . $conn->error);
 }
 ?>
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Posadas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Assets/css/Prueba.css">
 </head>
+
 <style>
+    /* Estilos previos */
+
     .filter-btn {
         height: 50px;
         border-radius: 5px;
         margin-bottom: 10px;
+        /* Espacio entre botones */
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 16px;
         font-weight: bold;
     }
+
     #filters {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
+
     .filter-btn {
         width: 22%;
         margin-bottom: 10px;
     }
+
     .filter-ubicacion button,
     .filter-quality button {
         margin-bottom: 10px;
     }
 </style>
+
 <body>
     <section class="course-listing-page">
         <div class="container">
@@ -68,6 +87,7 @@ if (!$result_inns) {
                         <button class="btn btn-success filter-btn" data-filter=".ciudad" style="color: white;">
                             <i class="fas fa-city" style="margin-right: 8px;"></i> Ciudad
                         </button>
+                        <!-- Filtro de calidad -->
                         <button class="btn btn-info filter-btn" data-filter=".alta" style="color: white;">
                             <i class="fas fa-star" style="margin-right: 8px;"></i> Alta
                         </button>
@@ -80,6 +100,7 @@ if (!$result_inns) {
                     </div>
                 </div>
             </div>
+
             <div class="grid" id="cGrid">
                 <?php
                 if ($result_inns->num_rows > 0) {
@@ -96,7 +117,10 @@ if (!$result_inns) {
                                 $category_class = 'playa';
                                 break;
                         }
+
+                        // Añadir clase de calidad
                         $quality_class = strtolower($row['quality']);
+
                         echo '
                         <div class="grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
                             <div class="custom-card" style="height: 450px;">
@@ -113,6 +137,8 @@ if (!$result_inns) {
                                         <p style="font-size: 14px;"><i class="fas fa-star"></i> ' . ucfirst($row['quality']) . '</p>
                                     </div>
                                     <br>';
+                        
+                        // Mostrar botón basado en la sesión
                         if (isset($_SESSION['user_id'])) {
                             echo '
                                 <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
@@ -124,6 +150,7 @@ if (!$result_inns) {
                                     <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
                                 </button>';
                         }
+
                         echo '
                                 </div>
                             </div>
@@ -182,5 +209,8 @@ if (!$result_inns) {
             });
         });
     </script>
+
+
 </body>
+
 </html>
