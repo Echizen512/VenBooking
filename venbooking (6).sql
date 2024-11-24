@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-11-2024 a las 04:09:02
+-- Tiempo de generación: 24-11-2024 a las 02:56:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -156,7 +156,13 @@ INSERT INTO `audit_log` (`id`, `user_id`, `table_name`, `action`, `affected_id`,
 (114, 6, 'reservations', 'INSERT', 42, '2024-11-16 11:38:16', NULL, 'inn_id: 2, start_date: 2025-02-02, end_date: 2025-02-04, payment_method_id: 1, monto_total: 750, status: En Espera'),
 (115, 6, 'reservations', 'INSERT', 43, '2024-11-16 11:43:48', NULL, 'inn_id: 2, start_date: 2025-02-19, end_date: 2025-02-21, payment_method_id: 1, monto_total: 750, status: En Espera'),
 (120, 4, 'profile', 'UPDATE', 4, '2024-11-18 02:52:24', 'first_name: Nanami, last_name: Kento, email: jmrm19711@gmail.com, profile_type: Empresa', 'first_name: Itadori, last_name: Yuji, email: jmrm19711@gmail.com, profile_type: Empresa'),
-(121, 2, 'profile', 'UPDATE', 2, '2024-11-18 02:52:59', 'first_name: Nanami, last_name: Kento, email: jmrm19722@gmail.com, profile_type: Empresa', 'first_name: Arley, last_name: Dos Santos, email: jmrm19722@gmail.com, profile_type: Empresa');
+(121, 2, 'profile', 'UPDATE', 2, '2024-11-18 02:52:59', 'first_name: Nanami, last_name: Kento, email: jmrm19722@gmail.com, profile_type: Empresa', 'first_name: Arley, last_name: Dos Santos, email: jmrm19722@gmail.com, profile_type: Empresa'),
+(122, 6, 'profile', 'UPDATE', 6, '2024-11-23 10:23:52', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanamis, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(123, 6, 'profile', 'UPDATE', 6, '2024-11-24 01:29:29', 'first_name: Nanamis, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(124, 6, 'profile', 'UPDATE', 6, '2024-11-24 01:31:35', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanamis, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(125, 6, 'profile', 'UPDATE', 6, '2024-11-24 01:52:07', 'first_name: Nanamis, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(126, 6, 'profile', 'UPDATE', 6, '2024-11-24 01:53:21', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanamis, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(127, 6, 'profile', 'UPDATE', 6, '2024-11-24 01:53:33', 'first_name: Nanamis, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa');
 
 -- --------------------------------------------------------
 
@@ -456,10 +462,6 @@ CREATE TABLE `profile` (
   `block` tinyint(1) DEFAULT 0,
   `profile_image_url` varchar(255) DEFAULT NULL,
   `banner_image_url` varchar(255) DEFAULT NULL,
-  `youtube_url` varchar(255) DEFAULT NULL,
-  `facebook_url` varchar(255) DEFAULT NULL,
-  `twitter_url` varchar(255) DEFAULT NULL,
-  `instagram_url` varchar(255) DEFAULT NULL,
   `membership_type` enum('basic','silver','gold','none') DEFAULT 'none',
   `membership_start_date` date DEFAULT NULL,
   `membership_end_date` date DEFAULT NULL
@@ -469,12 +471,12 @@ CREATE TABLE `profile` (
 -- Volcado de datos para la tabla `profile`
 --
 
-INSERT INTO `profile` (`id`, `first_name`, `last_name`, `email`, `last_access`, `registration_date`, `profile_type`, `password`, `block`, `profile_image_url`, `banner_image_url`, `youtube_url`, `facebook_url`, `twitter_url`, `instagram_url`, `membership_type`, `membership_start_date`, `membership_end_date`) VALUES
-(1, 'Carlos', 'Escobar', 'carlos@gmail.com', '2024-08-24 18:21:52', '2024-07-14 13:12:11', 'Empresa', '$2y$10$uB0TXSx2fDX1n3wLIZy7N.DO2apo5tEsPP7UNOhgNAzz9kAr6xy0C', 0, NULL, NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL),
-(2, 'Arley', 'Dos Santos', 'jmrm19722@gmail.com', '2024-11-18 02:52:59', '2024-08-18 19:04:40', 'Empresa', '$2y$10$AOp2eo9OT17LrkTIqrUbleohQvx2yA0NRNH1BuSW/D4Lp7ryGovTS', 0, 'https://th.bing.com/th/id/OIP.tabNCQDLxYc7x1HqxiUJKQHaHa?rs=1&pid=ImgDetMain', 'https://verdanttraveler.com/wp-content/uploads/2023/12/island-lake-state-recreation-area-1024x585.jpg', 'https://www.youtube.com/', 'https://www.facebook.com/', '', '', 'none', NULL, NULL),
-(4, 'Itadori', 'Yuji', 'jmrm19711@gmail.com', '2024-11-18 02:52:24', '2024-09-21 16:02:49', 'Empresa', '$2y$10$i32O6OJyuEu.0IjWi.yybegMuH4GfSL9RBcQn8JhEe8Ok4WYLPOLG', 0, 'https://pm1.narvii.com/7926/0cbc99c9487af031a844b2112a226af7da79f510r1-1078-1080v2_uhq.jpg', NULL, NULL, NULL, NULL, NULL, 'none', NULL, NULL),
-(5, 'Daniela', 'Morgado', 'dani@gmail.com', '2024-09-23 14:08:00', '2024-09-23 05:42:55', 'Empresa', '$2y$10$e0oZR3qgLa44fjjyIgpEGOpHirslt3ahES006vhg6CqqGbPFOOT8.', 0, 'https://th.bing.com/th/id/R.93361146c64f106b65a55a37d5bc5e02?rik=%2fIP5Ld43L78gOQ&pid=ImgRaw&r=0', 'https://www.pincamp.de/magazin/wp-content/uploads/sites/1/resized/2022/07/AdobeStock_71054640-min-min-1029x350-c-default.png', '', '', '', '', 'none', NULL, NULL),
-(6, 'Nanami', 'Kento', 'jmrm19723@gmail.com', '2024-11-04 02:27:13', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://www.looper.com/img/gallery/kento-nanamis-powers-from-jujutsu-kaisen-explained/l-intro-1632713276.jpg', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', '', '', '', '', 'basic', '2024-10-20', '2024-11-20');
+INSERT INTO `profile` (`id`, `first_name`, `last_name`, `email`, `last_access`, `registration_date`, `profile_type`, `password`, `block`, `profile_image_url`, `banner_image_url`, `membership_type`, `membership_start_date`, `membership_end_date`) VALUES
+(1, 'Carlos', 'Escobar', 'carlos@gmail.com', '2024-08-24 18:21:52', '2024-07-14 13:12:11', 'Empresa', '$2y$10$uB0TXSx2fDX1n3wLIZy7N.DO2apo5tEsPP7UNOhgNAzz9kAr6xy0C', 0, NULL, NULL, 'none', NULL, NULL),
+(2, 'Arley', 'Dos Santos', 'jmrm19722@gmail.com', '2024-11-18 02:52:59', '2024-08-18 19:04:40', 'Empresa', '$2y$10$AOp2eo9OT17LrkTIqrUbleohQvx2yA0NRNH1BuSW/D4Lp7ryGovTS', 0, 'https://th.bing.com/th/id/OIP.tabNCQDLxYc7x1HqxiUJKQHaHa?rs=1&pid=ImgDetMain', 'https://verdanttraveler.com/wp-content/uploads/2023/12/island-lake-state-recreation-area-1024x585.jpg', 'none', NULL, NULL),
+(4, 'Itadori', 'Yuji', 'jmrm19711@gmail.com', '2024-11-18 02:52:24', '2024-09-21 16:02:49', 'Empresa', '$2y$10$i32O6OJyuEu.0IjWi.yybegMuH4GfSL9RBcQn8JhEe8Ok4WYLPOLG', 0, 'https://pm1.narvii.com/7926/0cbc99c9487af031a844b2112a226af7da79f510r1-1078-1080v2_uhq.jpg', NULL, 'none', NULL, NULL),
+(5, 'Daniela', 'Morgado', 'dani@gmail.com', '2024-09-23 14:08:00', '2024-09-23 05:42:55', 'Empresa', '$2y$10$e0oZR3qgLa44fjjyIgpEGOpHirslt3ahES006vhg6CqqGbPFOOT8.', 0, 'https://th.bing.com/th/id/R.93361146c64f106b65a55a37d5bc5e02?rik=%2fIP5Ld43L78gOQ&pid=ImgRaw&r=0', 'https://www.pincamp.de/magazin/wp-content/uploads/sites/1/resized/2022/07/AdobeStock_71054640-min-min-1029x350-c-default.png', 'none', NULL, NULL),
+(6, 'Nanami', 'Kento', 'jmrm19723@gmail.com', '2024-11-24 01:53:33', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://www.looper.com/img/gallery/kento-nanamis-powers-from-jujutsu-kaisen-explained/l-intro-1632713276.jpg', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', 'basic', '2024-10-20', '2024-11-20');
 
 --
 -- Disparadores `profile`
@@ -862,7 +864,7 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT de la tabla `audit_log`
 --
 ALTER TABLE `audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT de la tabla `bank_transfer_info`

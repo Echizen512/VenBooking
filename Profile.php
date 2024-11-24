@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql_user = "SELECT first_name, last_name, profile_type, email, profile_image_url, banner_image_url, youtube_url, facebook_url, twitter_url, instagram_url, membership_type, membership_start_date, membership_end_date FROM Profile WHERE id = ?";
+$sql_user = "SELECT first_name, last_name, profile_type, email, profile_image_url, banner_image_url, membership_type, membership_start_date, membership_end_date FROM Profile WHERE id = ?";
 $stmt_user = $conn->prepare($sql_user);
 
 if ($stmt_user === false) {
@@ -345,6 +345,11 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                         <input type="text" class="form-control" id="profile_image_url" name="profile_image_url"
                             value="<?php echo htmlspecialchars($user['profile_image_url']); ?>">
                     </div>
+                    <div class="mb-3 text-left">
+                        <label for="banner_image_url" class="form-label">URL del banner</label>
+                        <input type="text" class="form-control" id="banner_image_url" name="banner_image_url"
+                            value="<?php echo htmlspecialchars($user['banner_image_url']); ?>">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Guardar Cambios</button>
@@ -354,6 +359,7 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
         </div>
     </div>
 </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

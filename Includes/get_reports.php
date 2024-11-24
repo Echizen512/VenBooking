@@ -1,19 +1,10 @@
-<?php 
-// Incluye el archivo de cabecera
-
-
-// Inicia la sesión si no se ha iniciado
+<?php
 session_start();
-
-// Verifica si el usuario está logueado
 if (!isset($_SESSION['user_id'])) {
-    // Si el usuario no está logueado, redirigir o mostrar un mensaje de error
     die("Acceso denegado. Inicia sesión.");
-
-    
 }
 
-include('Header_Admin.php'); 
+include('Header_Admin.php');
 
 ?>
 
@@ -30,22 +21,19 @@ include('Header_Admin.php');
 </head>
 
 <style>
-    /* Aumenta el margen superior para mover el formulario más hacia abajo */
     .container {
-        margin-top: 80px; /* Aumenta el margen superior */
+        margin-top: 90px;
     }
 
-    /* Ajustes adicionales para el botón */
     .btn {
-        width: auto; /* Hace que el botón no ocupe todo el ancho */
-        margin: 0 auto; /* Centra el botón */
-        display: block; /* Hace que el botón se comporte como un bloque */
+        width: auto;
+        margin: 0 auto;
+        display: block;
     }
 </style>
 
 <body>
     <div class="container">
-        <!-- Espacio considerable para el dashboard -->
         <div class="row justify-content-end">
             <div class="col-md-8">
                 <div class="card shadow-lg">
@@ -58,30 +46,20 @@ include('Header_Admin.php');
                                 <label for="inns" class="form-label">Seleccione las Posadas</label>
                                 <select class="form-select" id="inns" name="inns[]" multiple>
                                     <?php
-                                    // Conexión a la base de datos
                                     include '../config/db.php';
-
-                                    // Obtiene el user_id de la sesión
                                     $user_id = $_SESSION['user_id'];
-
-                                    // Consulta SQL para obtener las posadas del usuario logueado
                                     $query = "SELECT id, name FROM inns WHERE user_id = ?";
                                     $stmt = $conn->prepare($query);
-                                    $stmt->bind_param("i", $user_id);  // Vincula el user_id al parámetro de la consulta
+                                    $stmt->bind_param("i", $user_id);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
-
-                                    // Verifica si hay posadas disponibles para este usuario
                                     if ($result->num_rows > 0) {
-                                        // Muestra las posadas en el select
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<option value='{$row['id']}'>{$row['name']}</option>";
                                         }
                                     } else {
                                         echo "<option disabled>No se encontraron posadas para este usuario.</option>";
                                     }
-
-                                    // Cierra la conexión
                                     $stmt->close();
                                     ?>
                                 </select>
@@ -89,15 +67,38 @@ include('Header_Admin.php');
                             <div class="mb-3">
                                 <label for="reports" class="form-label">Seleccione los Reportes</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reports[]" value="1" id="report1">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="1"
+                                        id="report1">
                                     <label class="form-check-label" for="report1">
                                         Reporte 1: Usuarios Registrados por Posada
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reports[]" value="2" id="report2">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="2"
+                                        id="report2">
                                     <label class="form-check-label" for="report2">
                                         Reporte 2: Reservaciones por Posada
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="3"
+                                        id="report3">
+                                    <label class="form-check-label" for="report3">
+                                        Reporte 3: Métodos de Pago Registrados por Posada
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="4"
+                                        id="report4">
+                                    <label class="form-check-label" for="report4">
+                                        Reporte 4: Habitaciones Registradas por Posada
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="5"
+                                        id="report5">
+                                    <label class="form-check-label" for="report5">
+                                        Reporte 5: Vehículos Registrados por Posada
                                     </label>
                                 </div>
                             </div>
@@ -111,5 +112,4 @@ include('Header_Admin.php');
         </div>
     </div>
 </body>
-
 </html>

@@ -68,6 +68,31 @@ while ($row = $result_clientes->fetch_assoc()) {
     $data_clientes[$row['posada']] = $row['clientes'];
 }
 
+
+$query_profile = "SELECT first_name, last_name, email, membership_type, profile_image_url, banner_image_url FROM Profile WHERE id = ?";
+$stmt = $conn->prepare($query_profile);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+    $first_name = $user['first_name'];
+    $last_name = $user['last_name'];
+    $email = $user['email'];
+    $membership_type = $user['membership_type'];
+    $profile_image_url = $user['profile_image_url'];
+    $banner_image_url = $user['banner_image_url'];
+} else {
+    $first_name = "Usuario";
+    $last_name = "Desconocido";
+    $email = "Desconocido";
+    $membership_type = "Sin membresía";
+    $profile_image_url = "../Assets/img/default-profile.png";
+    $banner_image_url = "Desconocido";
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +108,8 @@ while ($row = $result_clientes->fetch_assoc()) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             display: flex;
@@ -97,68 +123,68 @@ while ($row = $result_clientes->fetch_assoc()) {
         }
 
         .container {
-            padding: 10px; /* Reduce el padding general */
+            padding: 10px;
             margin: auto;
-            max-width: 95%; /* Asegura que el contenido no sea demasiado ancho */
-            margin-left: 250px; /* Desplaza más hacia la derecha */
+            max-width: 95%;
+            margin-left: 250px;
         }
 
         .row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start; /* Alinea las cards hacia la izquierda */
-            gap: 10px; /* Espaciado menor entre las cards */
+            justify-content: flex-start;
+            gap: 10px;
         }
 
         .card {
             flex: 1;
-            min-width: 150px; /* Reduce el tamaño mínimo */
-            max-width: 200px; /* Limita el tamaño máximo */
+            min-width: 150px;
+            max-width: 200px;
             background: #fff;
-            border-radius: 8px; /* Bordes más pequeños */
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduce la sombra */
-            padding: 10px; /* Reduce el padding interno */
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
             text-align: center;
         }
 
         .card i {
-            font-size: 1.5rem; /* Reduce el tamaño del ícono */
+            font-size: 1.5rem;
             margin-bottom: 5px;
             color: #3fa141;
         }
 
         .card h3 {
-            font-size: 1rem; /* Reduce el tamaño del texto */
+            font-size: 1rem;
             margin: 5px 0;
             color: #333;
         }
 
         .card p {
-            font-size: 0.8rem; /* Reduce el tamaño del texto */
+            font-size: 0.8rem;
             color: #666;
         }
 
         .chart-row {
             display: flex;
-            justify-content: flex-start; /* Alinea las gráficas al principio */
+            justify-content: flex-start;
             margin-top: 20px;
-            gap: 0; /* Elimina el espacio entre las gráficas */
+            gap: 0;
         }
 
         .chart-container {
             flex: 1;
-            max-width: 250px; /* Ajusta el tamaño de las gráficas */
+            max-width: 250px;
             background: #fff;
-            border-radius: 8px; /* Bordes más pequeños */
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduce la sombra */
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             padding: 0px;
             text-align: center;
         }
 
         .chart-title {
             text-align: center;
-            margin-bottom: 5px; /* Reduce el margen inferior */
-            font-size: 1.2rem; /* Reduce el tamaño del título */
+            margin-bottom: 5px;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #3fa141;
         }
@@ -167,20 +193,85 @@ while ($row = $result_clientes->fetch_assoc()) {
         footer {
             text-align: center;
             color: #666;
-            padding: 5px 0; /* Reduce el padding en el footer */
+            padding: 5px 0;
             width: 100%;
             margin-top: auto;
         }
+
+        .profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 80%;
+}
+
+.profile-image-container img {
+    border: 3px solid #ddd;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-info {
+    margin-top: 10px; /* Añade un espacio consistente */
+}
+
+
+.profile-info h5 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.profile-info p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.profile-form {
+    flex: 1;
+    margin-left: 30px;
+}
+
+.profile-form .form-control {
+    width: 100%;
+}
+
+.profile-form label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.profile-form .btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.profile-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra imagen, nombre y membresía */
+    max-width: 200px; /* Ajusta el ancho si es necesario */
+}
+
+
+
     </style>
 </head>
 
-<body>
+<>
     <?php include './Header_Admin.php'; ?>
 
     <div class="content-wrapper">
         <div class="container">
             <div class="row">
-                <!-- Cards -->
                 <div class="card">
                     <i class="fas fa-hotel"></i>
                     <h3><?php echo $total_posadas; ?></h3>
@@ -209,7 +300,6 @@ while ($row = $result_clientes->fetch_assoc()) {
             </div>
 
             <div class="chart-row">
-                <!-- Gráficas -->
                 <div class="chart-container" style="margin: 15px;">
                     <div class="chart-title">Habitaciones por Posada</div>
                     <canvas id="habitacionesChart"></canvas>
@@ -222,12 +312,83 @@ while ($row = $result_clientes->fetch_assoc()) {
         </div>
     </div>
 
+    <div class="container mt-5">
+    <div class="profile-container">
+        <!-- Sección izquierda: Información del usuario -->
+        <div class="profile-left">
+            <div class="profile-image-container">
+                <img src="<?php echo $profile_image_url ?? '../Assets/img/default-profile.png'; ?>" alt="Foto de Perfil">
+            </div>
+            <div class="profile-info text-center">
+                <h5><?php echo $first_name . ' ' . $last_name; ?></h5>
+                <p class="text-muted">
+                    <?php
+                        // Verificar el tipo de membresía y aplicar el texto y color correspondiente
+                        if ($membership_type == 'basic') {
+                            echo '<span style="color: #cd7f32;">Básico</span>';  // Color bronce
+                        } elseif ($membership_type == 'silver') {
+                            echo '<span style="color: silver;">Plata</span>';  // Color plata
+                        } elseif ($membership_type == 'gold') {
+                            echo '<span style="color: gold;">Oro</span>';  // Color dorado
+                        } else {
+                            echo 'Membresía no definida';  // En caso de que el tipo no sea ninguno de los anteriores
+                        }
+                    ?>
+                </p>
+            </div>
+        </div>
+
+
+
+
+        <!-- Sección derecha: Formulario de edición -->
+        <div class="profile-form">
+            <form action="update_profile.php" method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="first_name" class="form-label">Nombre</label>
+                        <input type="text" name="first_name" id="first_name" class="form-control"
+                            value="<?php echo $first_name; ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_name" class="form-label">Apellido</label>
+                        <input type="text" name="last_name" id="last_name" class="form-control"
+                            value="<?php echo $last_name; ?>" required>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" name="email" id="email" class="form-control"
+                        value="<?php echo $email ?? ''; ?>" required>
+                </div>
+                <div class="mt-3">
+                    <label for="password" class="form-label">Contraseña (Opcional)</label>
+                    <input type="password" name="password" id="password" class="form-control">
+                </div>
+                <div class="mt-3">
+                    <label for="profile_image_url" class="form-label">URL de Imagen de Perfil</label>
+                    <input type="text" name="profile_image_url" id="profile_image_url" class="form-control"
+                        value="<?php echo $profile_image_url; ?>">
+                </div>
+                <div class="mt-3">
+                    <label for="banner_image_url" class="form-label">URL de Banner</label>
+                    <input type="text" name="banner_image_url" id="banner_image_url" class="form-control"
+                        value="<?php echo $banner_image_url ?? ''; ?>">
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <footer>
         <p style="text-align: center; color: #666;">© 2024 Dashboard. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // Datos para las gráficas
         const habitacionesData = {
             labels: <?php echo json_encode(array_keys($data_habitaciones)); ?>,
             datasets: [{
@@ -246,7 +407,6 @@ while ($row = $result_clientes->fetch_assoc()) {
             }]
         };
 
-        // Configuración de las gráficas
         const config = (data) => ({
             type: 'pie',
             data: data,
@@ -260,10 +420,9 @@ while ($row = $result_clientes->fetch_assoc()) {
             }
         });
 
-        // Renderizar las gráficas
         new Chart(document.getElementById('habitacionesChart').getContext('2d'), config(habitacionesData));
-        
         new Chart(document.getElementById('clientesChart').getContext('2d'), config(clientesData));
     </script>
-</body>
+    </body>
+
 </html>
