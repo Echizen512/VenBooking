@@ -2,11 +2,11 @@
 session_start();
 include './config/db.php';
 
-// Habilitar el informe de errores
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Verificar conexión a la base de datos
+
 if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
-    // Verificar si los datos están presentes
+    
     if (empty($_GET['membership_type']) || empty($_GET['amount'])) {
         echo "Datos de la membresía no válidos.";
         exit;
@@ -43,19 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $stmt->bind_param("sssi", $membershipType, $purchaseDate, $expirationDate, $userId);
         $stmt->execute();
 
-        // Almacenar mensaje de éxito en la sesión
+        
         $_SESSION['message'] = "Membresía adquirida con éxito!";
-        $_SESSION['message_type'] = "success"; // Puedes usarlo para clasificar el tipo de mensaje
+        $_SESSION['message_type'] = "success"; 
     } else {
-        // Almacenar mensaje de error en la sesión
+        
         $_SESSION['message'] = "Error al procesar la compra: " . $stmt->error;
-        $_SESSION['message_type'] = "error"; // Clasificación del mensaje de error
+        $_SESSION['message_type'] = "error"; 
     }
 
     $stmt->close();
     $conn->close();
 
-    // Redirigir a la página de membresías
+    
     header('Location: memberships.php');
     exit();
 }

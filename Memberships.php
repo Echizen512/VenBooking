@@ -1,33 +1,25 @@
 <?php
-// Iniciar la sesión solo si no está activa
+
 if (session_status() == PHP_SESSION_NONE) {
-    session_start(); // Evitar "session_start(): Ignoring session_start() because a session is already active"
+    session_start();
 }
 
-// Comprobar si hay una sesión activa y un user_id
 if (isset($_SESSION['user_id'])) {
-    // Comprobar si 'profile_type' está en la sesión, si no, obtenerlo desde la base de datos
     if (isset($_SESSION['profile_type'])) {
-        $profile_type = $_SESSION['profile_type']; // Usar el valor de la sesión si existe
+        $profile_type = $_SESSION['profile_type'];
     } else {
-        // Obtener el perfil de la base de datos si 'profile_type' no está en la sesión
-        include './config/db.php'; // Incluir la conexión a la base de datos
+        include './config/db.php';
         $user_id = $_SESSION['user_id'];
-        
-        // Consulta para obtener el profile_type del usuario con mysqli
         $query = "SELECT profile_type FROM profile WHERE id = ?";
-        $stmt = $conn->prepare($query); // Usamos la conexión $conn que es de mysqli
-        $stmt->bind_param("i", $user_id); // Ligamos el parámetro como entero
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
-        $result = $stmt->get_result(); // Obtener los resultados
-        $user = $result->fetch_assoc(); // Obtener el usuario como un array asociativo
-
-        // Comprobar si se encontró el usuario y asignar profile_type a la sesión
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
         if ($user) {
-            $_SESSION['profile_type'] = $user['profile_type']; // Asignar el valor de profile_type a la sesión
-            $profile_type = $_SESSION['profile_type']; // Asignar a la variable
+            $_SESSION['profile_type'] = $user['profile_type'];
+            $profile_type = $_SESSION['profile_type'];
         } else {
-            // Si no se encontró el usuario, manejar el error de alguna forma
             $_SESSION['message'] = 'Usuario no encontrado';
             $_SESSION['message_type'] = 'error';
             header('Location: login.php');
@@ -35,24 +27,23 @@ if (isset($_SESSION['user_id'])) {
         }
     }
 
-    // Incluir el encabezado adecuado según el valor de 'profile_type'
     if ($profile_type == 'Empresa') {
-        include './Includes/Header3.php'; // Incluir Header3.php si profile_type es "Empresa"
+        include './Includes/Header3.php';
     } else {
-        include './Includes/Header.php'; // Incluir Header.php si hay sesión activa y no es "Empresa"
+        include './Includes/Header.php';
     }
 } else {
-    include './Includes/Header2.php'; // Incluir Header2.php si no hay sesión activa
-}
-// Iniciar la sesión solo si no está activa
-if (session_status() == PHP_SESSION_NONE) {
-  session_start(); // Evitar "session_start(): Ignoring session_start() because a session is already active"
+    include './Includes/Header2.php';
 }
 
-// Comprobar si hay una sesión activa y un user_id
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+
 if (!isset($_SESSION['user_id'])) {
-  // Si no hay sesión activa, lanzar alerta y redirigir a login.php
-  echo '<script>
+
+    echo '<script>
       Swal.fire({
           title: "Debes iniciar sesión",
           text: "Para comprar una membresía, por favor, inicia sesión.",
@@ -60,11 +51,11 @@ if (!isset($_SESSION['user_id'])) {
           confirmButtonText: "Ir al Login"
       }).then((result) => {
           if (result.isConfirmed) {
-              window.location.href = "Login.php"; // Redirige al login
+              window.location.href = "Login.php"; 
           }
       });
   </script>';
-  exit; // Detener el script para evitar que se cargue el contenido de membresías
+    exit;
 }
 
 ?>
@@ -125,7 +116,7 @@ if (!isset($_SESSION['user_id'])) {
               </h4>
             </div>
             <div class="card-body">
-              <h1 class="card-title pricing-card-title" style="font-size: 24px;">$150<small class="text-muted fw-light">/mes</small></h1>
+              <h1 class="card-title pricing-card-title" style="font-size: 24px;">$50<small class="text-muted fw-light">/mes</small></h1>
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> 1 Posada</li>
               </ul>
@@ -144,7 +135,7 @@ if (!isset($_SESSION['user_id'])) {
               </h4>
             </div>
             <div class="card-body">
-              <h1 class="card-title pricing-card-title" style="font-size: 24px;">$350<small class="text-muted fw-light">/mes</small></h1>
+              <h1 class="card-title pricing-card-title" style="font-size: 24px;">$75<small class="text-muted fw-light">/mes</small></h1>
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> 3 Posadas</li>
               </ul>
@@ -163,7 +154,7 @@ if (!isset($_SESSION['user_id'])) {
               </h4>
             </div>
             <div class="card-body">
-              <h1 class="card-title pricing-card-title" style="font-size: 24px;">$400<small class="text-muted fw-light">/mes</small></h1>
+              <h1 class="card-title pricing-card-title" style="font-size: 24px;">$100<small class="text-muted fw-light">/mes</small></h1>
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> Sin límite de Posadas</li>
               </ul>
@@ -193,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '150.00' // Precio del plan básico
+            value: '50.00' // Precio del plan básico
           }
         }]
       });
@@ -201,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
     onApprove: function (data, actions) {
       return actions.order.capture().then(function (details) {
         const membershipType = 'basic'; // Cambia según el plan
-        const amount = '150.00'; // Cambia según el monto real
+        const amount = '50.00'; // Cambia según el monto real
         window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
@@ -221,14 +212,16 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '350.00' // Precio del plan Plata
+            value: '75.00' // Precio del plan Plata
           }
         }]
       });
     },
     onApprove: function (data, actions) {
       return actions.order.capture().then(function (details) {
-        window.location.href = 'process_paypal.php?membership=silver&payment_status=completed&order_id=' + data.orderID;
+        const membershipType = 'silver'; // Cambia según el plan
+        const amount = '75.00'; // Cambia según el monto real
+        window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
     onError: function (err) {
@@ -248,14 +241,16 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '400.00' // Precio del plan Oro
+            value: '100.00' // Precio del plan Oro
           }
         }]
       });
     },
     onApprove: function (data, actions) {
       return actions.order.capture().then(function (details) {
-        window.location.href = 'process_paypal.php?membership=gold&payment_status=completed&order_id=' + data.orderID;
+        const membershipType = 'gold'; // Cambia según el plan
+        const amount = '100.00'; // Cambia según el monto real
+        window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
     onError: function (err) {
