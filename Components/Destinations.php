@@ -1,6 +1,6 @@
 <section class="page-heading" style="margin: 30px;">
     <div class="container">
-        <h2><i class="fas fa-map-marker-alt"></i> Destinos Populares</h2>
+        <h2><i class="fas fa-map-marker-alt text-danger"></i> Destinos Populares</h2>
     </div>
 </section>
 

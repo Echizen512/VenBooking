@@ -53,11 +53,10 @@ $conn->close();
                 <thead>
                 <tr class="text-center">
                     <th><i class="fas fa-id-badge"></i> ID</th>
-                    <th><i class="fas fa-door-closed"></i> Número de Habitación</th>
+                    <th><i class="fas fa-door-closed"></i> Número</th>
                     <th><i class="fas fa-bed"></i> Tipo</th>
                     <th><i class="fas fa-star"></i> Calidad</th>
                     <th><i class="fas fa-image"></i> Imagen</th>
-                    <th><i class="fas fa-file-alt"></i> Descripción</th>
                     <th><i class="fas fa-dollar-sign"></i> Precio</th>
                     <th><i class="fas fa-users"></i> Capacidad</th>
                     <th><i class="fas fa-hotel"></i> ID de Posada</th>
@@ -77,8 +76,7 @@ $conn->close();
                                 <td class='text-center'>{$row['room_number']}</td>
                                 <td class='text-center'>{$row['type']}</td>
                                 <td class='text-center'>{$row['quality']}</td>
-                                <td><img src='{$row['image_url']}' alt='Imagen de la Habitación' style='width: 100px;'></td> <!-- Muestra la imagen -->
-                                <td class='text-center'>{$row['description']}</td>
+                                <td><img src='{$row['image_url']}' alt='Imagen de la Habitación' style='width: 100px;'></td> 
                                 <td class='text-center'>{$row['price']}</td>
                                 <td class='text-center'>{$row['capacity']}</td>
                                 <td class='text-center'>{$row['inn_id']}</td>

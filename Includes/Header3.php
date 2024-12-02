@@ -25,20 +25,20 @@
 
 <body>
     <div>
-        <header class="site-header">
+    <header class="site-header">
             <div class="top-header bg-success">
                 <div class="container">
                     <div class="top-header-left">
                         <div class="top-header-block">
-                            <a href="mailto:VenBooking@gmail.com" itemprop="email">
-                                <i class="fas fa-envelope"></i> VenBooking@gmail.com
+                            <a href="mailto:venbooking@gmail.com" style="color:white;" class="text-white" itemprop="email">
+                                <i class="fas fa-envelope text-warning"></i> Soporte Técnico: venbooking@gmail.com
                             </a>
                         </div>
                     </div>
                     <div class="top-header-right">
                         <a href="#" id="logout-btn">
                             <button class="logout-btn">
-                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
                             </button>
                         </a>
                     </div>
@@ -53,7 +53,7 @@
                             <ul class="menu-list">
                                 <li>
                                     <a href="./Includes/Inicio.php">
-                                        <i class="fas fa-cogs"></i> Volver al Panel de Control
+                                        <i class="fas fa-cogs text-primary"></i> Volver al Panel de Control
                                     </a>
                                 </li>
 
@@ -74,7 +74,7 @@
 
     <script>
         document.getElementById('logout-btn').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
+            e.preventDefault(); 
 
             Swal.fire({
                 title: '¿Estás seguro?',
@@ -87,7 +87,6 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Redirigir al usuario a logout.php si confirma
                     window.location.href = './Includes/logout.php';
                 }
             })

@@ -1,0 +1,127 @@
+
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .container.p-4.rounded.shadow-sm.custom-bg {
+        padding: 3rem;
+    }
+
+    .posada-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        width: 24rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .posada-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .posada-img {
+        width: 120px;
+        height: 140px;
+        object-fit: cover;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+        margin: 0 auto;
+        display: block;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+        color: #6c757d;
+    }
+
+    .btn-outline-success {
+        border-color: #28a745;
+        color: #28a745;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        padding: 0.8rem 1.6rem;
+        font-size: 1.1rem;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-group .btn {
+        font-size: 1.2rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        margin: 0 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-group .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .custom-modal {
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        background-color: #fdfdfd;
+    }
+
+    .custom-modal .modal-header {
+        border-bottom: none;
+        padding-bottom: 0.5rem;
+    }
+
+    .custom-modal .btn-close {
+        padding: 0.5rem;
+    }
+
+    .custom-modal .modal-body {
+        padding-top: 0;
+    }
+
+    .custom-modal .modal-title {
+        font-size: 1.75rem;
+    }
+
+    .modal-item {
+        padding: 0.5rem 0;
+        font-size: 1rem;
+    }
+
+    .modal-item strong {
+        color: #343a40;
+    }
+
+    .modal-item i {
+        color: #6c757d;
+    }
+
+    #modal-inn-image {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+    }

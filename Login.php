@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $profile_type = $_POST['profile_type'];
     $password = $_POST['password'];
 
-    // Validación de la contraseña
     if (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{6,}$/', $password)) {
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -26,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
         exit();
     }
 
-    // Verificar si el correo ya existe
     $check_email = $conn->prepare("SELECT id FROM Profile WHERE email = ?");
     $check_email->bind_param("s", $email);
     $check_email->execute();
@@ -48,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     }
     $check_email->close();
 
-    // Insertar los datos
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO Profile (first_name, last_name, email, profile_type, password) VALUES (?, ?, ?, ?, ?)";
 
@@ -79,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Consulta para obtener el perfil del usuario
     $sql = "SELECT id, password, profile_type FROM Profile WHERE email = ?";
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("s", $email);
@@ -93,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
                 session_start();
                 $_SESSION["user_id"] = $id;
 
-                // Redirección según el tipo de perfil
                 if ($profile_type === "Empresa") {
                     $redirect_url = 'Includes/Inicio.php';
                 } else {
@@ -152,6 +147,7 @@ $conn->close();
     <link rel="stylesheet" href="./Assets/css/Login.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="./Assets/css/Register.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -243,209 +239,6 @@ $conn->close();
             </div>
         </div>
     </div>
+
 </body>
-
 </html>
-
-
-
-
-<style>
-    body {
-        margin: 0;
-        color: #000;
-        background: url('./login.jpg') no-repeat center center fixed;
-        background-size: cover;
-        font: 600 16px/18px 'Open Sans', sans-serif;
-    }
-
-
-    .login-box {
-        width: 100%;
-        margin: auto;
-        max-width: 600px;
-        min-height: 690px;
-        position: relative;
-        box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
-    }
-
-    .login-snip {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        padding: 90px 70px 50px 70px;
-        background: #f5f6f4;
-    }
-
-    .login-snip .login,
-    .login-snip .sign-up-form {
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        transform: rotateY(180deg);
-        backface-visibility: hidden;
-        transition: all .4s linear;
-    }
-
-    .login-snip .sign-in,
-    .login-snip .sign-up,
-    .login-space .group .check {
-        display: none;
-    }
-
-    .login-snip .tab,
-    .login-space .group .label,
-    .login-space .group .button {
-        text-transform: uppercase;
-    }
-
-    .login-snip .tab {
-        font-size: 22px;
-        margin-right: 15px;
-        padding-bottom: 5px;
-        margin: 0 15px 10px 0;
-        display: inline-block;
-        border-bottom: 2px solid transparent;
-    }
-
-    .login-snip .sign-in:checked+.tab,
-    .login-snip .sign-up:checked+.tab {
-        border-color: #1161ee;
-    }
-
-    .login-space {
-        min-height: 345px;
-        position: relative;
-        perspective: 1000px;
-        transform-style: preserve-3d;
-    }
-
-    .login-space .group {
-        margin-bottom: 15px;
-    }
-
-    .login-space .group .label,
-    .login-space .group .input,
-    .login-space .group .button {
-        width: 100%;
-        display: block;
-    }
-
-    .login-space .group .input,
-    .login-space .group .button {
-        border: none;
-        padding: 15px 20px;
-        border-radius: 25px;
-
-    }
-
-    .login-space .group .button {
-        /* Verde similar al color Success de Bootstrap */
-        color: white;
-        /* Texto en blanco para contraste */
-    }
-
-    .login-space .group input[data-type="password"] {
-        -text-security: circle;
-        -webkit-text-security: circle;
-    }
-
-    .login-space .group .label {
-        color: #000;
-        font-size: 12px;
-    }
-
-    .login-space .group .button {
-        background: #1161ee;
-    }
-
-    .login-space .group label .icon {
-        width: 15px;
-        height: 15px;
-        border-radius: 2px;
-        position: relative;
-        display: inline-block;
-        background: rgba(255, 255, 255, .1);
-    }
-
-    .login-space .group label .icon:before,
-    .login-space .group label .icon:after {
-        content: '';
-        width: 10px;
-        height: 2px;
-        background: #fff;
-        position: absolute;
-        transition: all .2s ease-in-out 0s;
-    }
-
-    .login-space .group label .icon:before {
-        left: 3px;
-        width: 5px;
-        bottom: 6px;
-        transform: scale(0) rotate(0);
-    }
-
-    .login-space .group label .icon:after {
-        top: 6px;
-        right: 0;
-        transform: scale(0) rotate(0);
-    }
-
-    .login-space .group .check:checked+label .icon {
-        background: #1161ee;
-    }
-
-    .login-space .group .check:checked+label .icon:before {
-        transform: scale(1) rotate(45deg);
-    }
-
-    .login-space .group .check:checked+label .icon:after {
-        transform: scale(1) rotate(-45deg);
-    }
-
-    .login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
-        transform: rotate(0);
-    }
-
-    .login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
-        transform: rotate(0);
-    }
-
-    *,
-    :after,
-    :before {
-        box-sizing: border-box;
-    }
-
-    .clearfix:after,
-    .clearfix:before {
-        content: '';
-        display: table;
-    }
-
-    .clearfix:after {
-        clear: both;
-        display: block;
-    }
-
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    .hr {
-        height: 2px;
-        margin: 60px 0 50px 0;
-        background: rgba(255, 255, 255, .2);
-    }
-
-    .foot {
-        text-align: center;
-    }
-
-    ::placeholder {
-        color: #b3b3b3;
-    }
-</style>

@@ -45,7 +45,6 @@ $stmt_favorite_inns_count->execute();
 $result_favorite_inns_count = $stmt_favorite_inns_count->get_result();
 $favorite_inns_count = $result_favorite_inns_count->fetch_assoc()['favorite_inns_count'];
 
-
 $sql_favorite_inns = "SELECT uf.id, i.name AS inn_name, i.description, i.image_url, c.name AS category_name 
                     FROM user_favorite_inns uf 
                     JOIN inns i ON uf.inn_id = i.id 
@@ -72,93 +71,10 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./Assets/css/Perfiles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./Assets/css/Profile.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
-<style>
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .container.p-4.rounded.shadow-sm.custom-bg {
-        padding: 3rem;
-    }
-
-    .posada-card {
-        background-color: #ffffff;
-        border-radius: 15px;
-        width: 24rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .posada-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .posada-img {
-        width: 120px;
-        height: 140px;
-        object-fit: cover;
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-        margin: 0 auto;
-        display: block;
-    }
-
-    .card-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .card-text {
-        font-size: 1.1rem;
-        color: #6c757d;
-    }
-
-    .btn-outline-success {
-        border-color: #28a745;
-        color: #28a745;
-        transition: all 0.3s ease;
-        font-weight: bold;
-        padding: 0.8rem 1.6rem;
-        font-size: 1.1rem;
-        display: block;
-        margin: 0 auto;
-    }
-
-    .btn-outline-success:hover {
-        background-color: #28a745;
-        color: #fff;
-    }
-
-    .btn-group .btn {
-        font-size: 1.2rem;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        margin: 0 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .btn-group .btn:hover {
-        transform: scale(1.05);
-    }
-</style>
 
 <body>
     <?php include './Includes/Header.php'; ?>
@@ -203,7 +119,6 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                                     <?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']); ?>
                                 </h5>
                                 <p class="mb-0 fs-4"><?php echo htmlspecialchars($user['profile_type']); ?></p>
-
                             </div>
                         </div>
                     </div>
@@ -261,17 +176,16 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                             $status_color = '';
                             switch ($row['status']) {
                                 case 'En Espera':
-                                    $status_color = 'bg-primary'; // Azul
+                                    $status_color = 'bg-primary'; 
                                     break;
                                 case 'Confirmado':
-                                    $status_color = 'bg-success'; // Verde
+                                    $status_color = 'bg-success';
                                     break;
                                 case 'Cancelado':
-                                    $status_color = 'bg-danger'; // Rojo
+                                    $status_color = 'bg-danger'; 
                                     break;
                             }
 
-                            // Formatear las fechas
                             $start_date = date('d/m/Y', strtotime($row["start_date"]));
                             $end_date = date('d/m/Y', strtotime($row["end_date"]));
                             echo '<div class="col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">';
@@ -382,55 +296,5 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
 
 </script>
 
-            <style>
-                .custom-modal {
-                    border-radius: 12px;
-                    padding: 1rem;
-                    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
-                    background-color: #fdfdfd;
-                }
-
-                .custom-modal .modal-header {
-                    border-bottom: none;
-                    padding-bottom: 0.5rem;
-                }
-
-                .custom-modal .btn-close {
-                    padding: 0.5rem;
-                }
-
-                .custom-modal .modal-body {
-                    padding-top: 0;
-                }
-
-                .custom-modal .modal-title {
-                    font-size: 1.75rem;
-                }
-
-                .modal-item {
-                    padding: 0.5rem 0;
-                    font-size: 1rem;
-                }
-
-                .modal-item strong {
-                    color: #343a40;
-                }
-
-                .modal-item i {
-                    color: #6c757d;
-                }
-
-                #modal-inn-image {
-                    max-width: 100%;
-                    max-height: 300px;
-                    border-radius: 10px;
-                    object-fit: cover;
-                    margin-bottom: 1rem;
-                }
-            </style>
-
-
-
 </body>
-
 </html>

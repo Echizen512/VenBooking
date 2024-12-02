@@ -1,6 +1,6 @@
 <section class="page-heading" style="margin: 40px;">
     <div class="container">
-        <h2><i class="fas fa-image"></i> Venezuela</h2>
+        <h2><i class="fas fa-image text-primary"></i> Venezuela</h2>
     </div>
 </section>
 <br>

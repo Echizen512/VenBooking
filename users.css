@@ -13,10 +13,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: url('./background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #243ea9;
   padding: 0 10px;
 }
 
@@ -135,6 +132,7 @@ body {
 }
 
 
+/* Users List CSS Start */
 .users {
   padding: 25px 30px;
 }
@@ -280,6 +278,7 @@ body {
   color: #ccc;
 }
 
+/* Chat Area CSS Start */
 .chat-area header {
   display: flex;
   align-items: center;
@@ -405,6 +404,7 @@ body {
   pointer-events: auto;
 }
 
+/* Responive media query */
 @media screen and (max-width: 450px) {
 
   .form,

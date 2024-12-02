@@ -10,7 +10,6 @@ if (!isset($_SESSION["user_id"])) {
 
 <?php
 include '../config/db.php';
-include './Includes/Dashboard.php';
 
 session_start();
 

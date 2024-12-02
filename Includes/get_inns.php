@@ -31,9 +31,9 @@ $membership_type = $membership_data['membership_type'];
 $inn_count = $membership_data['inn_count'];
 
 $sql = "SELECT inns.id, inns.name, inns.description, inns.email, inns.phone, inns.block, 
-       inns.image_url, inns.state_id, inns.municipality_id, inns.parish_id, inns.category_id,
-       states.name AS state_name, municipalities.name AS municipality_name, 
-       parishes.name AS parish_name, categories.name AS category_name
+        inns.image_url, inns.state_id, inns.municipality_id, inns.parish_id, inns.category_id,
+        states.name AS state_name, municipalities.name AS municipality_name, 
+        parishes.name AS parish_name, categories.name AS category_name
 FROM inns
 LEFT JOIN states ON inns.state_id = states.id
 LEFT JOIN municipalities ON inns.municipality_id = municipalities.id
@@ -54,9 +54,11 @@ if ($result === false) {
     die('Error al ejecutar la consulta: ' . $conn->error);
 }
 
+$message = null; // Variable para el mensaje
+$messageType = null; // Variable para el tipo de alerta
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
     if ($_POST['action'] == "create") {
-        // Crear nueva posada
         $name = $_POST['name'];
         $description = $_POST['description'];
         $image_url = $_POST['image_url'];
@@ -67,21 +69,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         $parish_id = $_POST['parish'];
         $category_id = $_POST['category'];
         $user_id = $_SESSION['user_id'];
+        $quality = $_POST['quality'];
 
-        $sql = "INSERT INTO inns (name, description, image_url, email, phone, state_id, municipality_id, parish_id, category_id, user_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO inns (name, description, image_url, email, phone, state_id, municipality_id, parish_id, category_id, user_id, quality)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssiisii", $name, $description, $image_url, $email, $phone, $state_id, $municipality_id, $parish_id, $category_id, $user_id);
+        $stmt->bind_param("sssssiisiis", $name, $description, $image_url, $email, $phone, $state_id, $municipality_id, $parish_id, $category_id, $user_id, $quality);
 
         if ($stmt->execute()) {
-            header("Location: get_inns.php");
-            exit();
+            $message = "Posada creada correctamente.";
+            $messageType = "success"; // Define el tipo de alerta
         } else {
-            echo "Error: " . $stmt->error;
+            $message = "Hubo un problema al crear la posada: " . $stmt->error;
+            $messageType = "error";
         }
     } elseif ($_POST['action'] == "edit") {
-        // Editar posada
         $id = $_POST['id'];
         $name = $_POST['name'];
         $description = $_POST['description'];
@@ -92,16 +95,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         $municipality_id = $_POST['municipality'];
         $parish_id = $_POST['parish'];
         $category_id = $_POST['category'];
+        $quality = $_POST['quality'];
 
-        $sql = "UPDATE inns SET name=?, description=?, image_url=?, email=?, phone=?, state_id=?, municipality_id=?, parish_id=?, category_id=? WHERE id=?";
+        $sql = "UPDATE inns SET name=?, description=?, image_url=?, email=?, phone=?, state_id=?, municipality_id=?, parish_id=?, category_id=?, quality=? WHERE id=?";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssiisii", $name, $description, $image_url, $email, $phone, $state_id, $municipality_id, $parish_id, $category_id, $id);
+        $stmt->bind_param("sssssiisisi", $name, $description, $image_url, $email, $phone, $state_id, $municipality_id, $parish_id, $category_id, $quality, $id);
 
         if ($stmt->execute()) {
-            echo "<script>alert('Posada actualizada correctamente.');</script>";
+            $message = "Posada actualizada correctamente.";
+            $messageType = "success";
         } else {
-            echo "<script>alert('Error al actualizar la posada: " . $stmt->error . "');</script>";
+            $message = "Hubo un problema al actualizar la posada: " . $stmt->error;
+            $messageType = "error";
         }
     }
 }
@@ -117,124 +123,32 @@ $conn->close();
     <link rel="stylesheet" href="../Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../Assets/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../Assets/css/CRUD.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+
 </head>
-
-<style>
-body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.content-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.custom-card {
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 8px;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-.custom-btn {
-    color: #fff;
-    background-color: rgb(63, 161, 65 / 94%);
-    border-color: rgb(63, 161, 65 / 94%);
-}
-
-.custom-btn:hover {
-    background-color: #4caf50;
-    border-color: #4caf50;
-}
-
-.container {
-    padding-top: 20px;
-    padding-left: 15%;
-    padding-right: 15px;
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-h2.card-title {
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #3fa141;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.table th, .table td {
-    vertical-align: middle;
-    text-align: center;
-}
-
-.table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-}
-
-@media (max-width: 768px) {
-    .table-responsive {
-        overflow-x: auto;
-    }
-    .table th, .table td {
-        font-size: 0.875rem;
-    }
-}
-
-.table th i {
-    margin-right: 5px;
-}
-
-footer {
-    padding: 10px 0;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    margin-top: auto; 
-}
-
-.btn-warning {
-    color: #fff;
-    background-color: #ffc107;
-    border-color: #ffc107;
-}
-
-.btn-warning:hover {
-    color: #212529;
-    background-color: #e0a800;
-    border-color: #d39e00;
-}
-</style>
-
 
 
 <body>
     <?php include './Header_Admin.php'; ?>
     <div class="container mt-5">
-        <div class="card shadow-sm border-0">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2 class="card-title"><i class="fas fa-list"></i> Listado de Posadas</h2>
-                    <button type="button" class="btn btn-success btn-sm d-flex align-items-center" id="addPosadaButton"
-                        title="Crear Posada" style="font-size: 16px;">
-                        <i class="fas fa-plus mr-2"></i> Añadir Posada
+    <div class="card custom-card">
+        <div class="card-body">
+            <h2 class="card-title">
+                <i class="fas fa-hotel me-2 text-info"></i> Listado de Posadas
+            </h2>
+                <div class="d-flex justify-content-end mb-3">
+                    <button type="button" 
+                            class="btn btn-success btn-sm d-inline-flex align-items-center" 
+                            id="addPosadaButton" 
+                            title="Crear Posada" 
+                            style="font-size: 16px;">
+                        <i class="fas fa-plus me-2"></i> Añadir Posada
                     </button>
                 </div>
 
@@ -261,11 +175,10 @@ footer {
                                 icon: 'warning',
                                 confirmButtonText: 'Actualizar Membresía',
                                 onClose: () => {
-                                    window.location.href = 'Memberships.php'; // Cambia esto a la URL de tu perfil
+                                    window.location.href = '../Memberships.php';
                                 }
                             });
                         } else {
-                            // Redirigir al modal o a la página de creación de posadas
                             $('#posadaModal').modal('show');
                         }
                     });
@@ -288,12 +201,12 @@ footer {
                             <tbody>
                                 <?php while ($row = $result->fetch_assoc()) {
                                     $blockButton = $row["block"]
-                                        ? "<button class='btn btn-danger btn-sm d-flex align-items-center justify-content-center' style='width: 120px;' data-id='" . $row["id"] . "' data-block='0'>
-                                        <i class='fas fa-lock mr-2'></i> Bloqueado
-                                    </button>"
-                                        : "<button class='btn btn-success btn-sm d-flex align-items-center justify-content-center' style='width: 120px;' data-id='" . $row["id"] . "' data-block='1'>
-                                        <i class='fas fa-lock-open mr-2'></i> Activo
-                                    </button>";
+                                        ? "<button class='btn btn-danger btn-sm d-flex align-items-center justify-content-center me-2' style='width: 120px;' data-id='" . $row["id"] . "' data-block='0'>
+                                            <i class='fas fa-lock me-2'></i> Bloqueado
+                                        </button>"
+                                        : "<button class='btn btn-success btn-sm d-flex align-items-center justify-content-center me-2' style='width: 120px;' data-id='" . $row["id"] . "' data-block='1'>
+                                            <i class='fas fa-lock-open me-2'></i> Activo
+                                        </button>";
                                     ?>
                                     <tr>
                                         <td class="text-center align-middle">
@@ -365,6 +278,7 @@ footer {
                 </div>
                 <div class="modal-body">
                     <form method="post" action="">
+                        <input type="hidden" name="action" value="create">
                         <div class="form-group">
                             <label for="name" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="name" name="name" required>
@@ -390,32 +304,41 @@ footer {
                             <label for="state" class="form-label">Estado</label>
                             <select class="form-control" id="state" name="state" required>
                                 <option value="">Seleccione un estado</option>
-                                <!-- Options cargadas dinámicamente -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="municipality" class="form-label">Municipio</label>
                             <select class="form-control" id="municipality" name="municipality" required>
                                 <option value="">Seleccione un municipio</option>
-                                <!-- Options cargadas dinámicamente -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="parish" class="form-label">Parroquia</label>
                             <select class="form-control" id="parish" name="parish" required>
                                 <option value="">Seleccione una parroquia</option>
-                                <!-- Options cargadas dinámicamente -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="category" class="form-label">Categoría</label>
                             <select class="form-control" id="category" name="category" required>
                                 <option value="">Seleccione una categoría</option>
-                                <!-- Options cargadas dinámicamente -->
                             </select>
                         </div>
-                        <div></div>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                        <div class="form-group">
+                            <label for="quality" class="form-label">Calidad</label>
+                            <select class="form-control" name="quality" id="quality" required>
+                                <option value="">Seleccione una calidad</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
+                            </select>
+                        </div>
+
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -437,7 +360,6 @@ footer {
                     <form method="post" action="">
                         <input type="hidden" id="edit-id" name="id">
                         <input type="hidden" name="action" value="edit">
-
                         <div class="form-group">
                             <label for="edit-name" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="edit-name" name="name" required>
@@ -463,33 +385,39 @@ footer {
                             <label for="edit-state" class="form-label">Estado</label>
                             <select class="form-control" id="edit-state" name="state" required>
                                 <option value="">Seleccione un estado</option>
-                                <!-- Opciones dinámicas -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="edit-municipality" class="form-label">Municipio</label>
                             <select class="form-control" id="edit-municipality" name="municipality" required>
                                 <option value="">Seleccione un municipio</option>
-                                <!-- Opciones dinámicas -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="edit-parish" class="form-label">Parroquia</label>
                             <select class="form-control" id="edit-parish" name="parish" required>
                                 <option value="">Seleccione una parroquia</option>
-                                <!-- Opciones dinámicas -->
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="edit-category" class="form-label">Categoría</label>
                             <select class="form-control" id="edit-category" name="category" required>
                                 <option value="">Seleccione una categoría</option>
-                                <!-- Opciones dinámicas -->
                             </select>
                         </div>
-
-
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <div class="form-group">
+                            <label for="quality" class="form-label">Calidad</label>
+                            <select class="form-control" name="quality" id="edit-quality" required>
+                                <option value="">Seleccione una calidad</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -497,44 +425,108 @@ footer {
     </div>
     <br> <br>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            <?php if ($message): ?>
+                Swal.fire({
+                    title: '<?php echo $messageType === "success" ? "Éxito" : "Error"; ?>',
+                    text: '<?php echo $message; ?>',
+                    icon: '<?php echo $messageType; ?>',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        <?php if ($messageType === "success"): ?>
+                            window.location.href = 'get_inns.php';
+                        <?php endif; ?>
+                    }
+                });
+            <?php endif; ?>
+        });
+    </script>
 
+    <script>
+
+        $(document).ready(function () {
+            $('#editModal').on('show.bs.modal', function (event) {
+                const button = $(event.relatedTarget);
+                const stateId = button.data('state_id');
+                const municipalityId = button.data('municipality_id');
+                const parishId = button.data('parish_id');
+
+                loadStates(function () {
+                    $('#edit-state').val(stateId);
+                    loadMunicipalities(stateId, function () {
+                        $('#edit-municipality').val(municipalityId);
+                        loadParishes(municipalityId, function () {
+                            $('#edit-parish').val(parishId);
+                        });
+                    });
+                });
+            });
+
+            $('#edit-state').on('change', function () {
+                const stateId = $(this).val();
+                loadMunicipalities(stateId, function () {
+                    $('#edit-municipality').val('');
+                    $('#edit-parish').html('<option value="">Seleccione una parroquia</option>');
+                });
+            });
+
+            $('#edit-municipality').on('change', function () {
+                const municipalityId = $(this).val();
+                loadParishes(municipalityId);
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#innsTable').on('click', '.btn-primary[data-target="#editModal"]', function () {
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                const description = $(this).data('description');
+                const email = $(this).data('email');
+                const phone = $(this).data('phone');
+                const imageUrl = $(this).data('image_url');
+                const stateId = $(this).data('state_id');
+                const municipalityId = $(this).data('municipality_id');
+                const parishId = $(this).data('parish_id');
+                const categoryId = $(this).data('category_id');
+                const quality = $(this).data('quality');
+                $('#edit-id').val(id);
+                $('#edit-name').val(name);
+                $('#edit-description').val(description);
+                $('#edit-email').val(email);
+                $('#edit-phone').val(phone);
+                $('#edit-image_url').val(imageUrl);
+                $('#edit-state').val(stateId);
+                $('#edit-municipality').val(municipalityId);
+                $('#edit-parish').val(parishId);
+                $('#edit-category').val(categoryId);
+                $('#edit-quality').val(quality);
+                $('#editModal').modal('show');
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
             $('#innsTable').DataTable();
             loadStates();
             loadCategories();
-
             $('.btn-edit').on('click', function () {
                 populateEditModal($(this));
             });
-
             $('#state').on('change', function () {
                 loadMunicipalities($(this).val());
                 resetParishes();
             });
-
             $('#municipality').on('change', function () {
                 loadParishes($(this).val());
             });
-
             $('.toggle-block').on('click', function () {
                 toggleBlock($(this));
             });
         });
-
-        function loadStates() {
-            $.ajax({
-                url: 'get_states.php',
-                method: 'GET',
-                success: function (data) {
-                    handleLoadResponse(data, '#state', 'No se encontraron estados');
-                },
-                error: function () {
-                    showAlert('No se pudo cargar los estados');
-                }
-            });
-        }
 
         function loadCategories() {
             $.ajax({
@@ -618,7 +610,6 @@ footer {
             $('#edit-email').val(button.data('email'));
             $('#edit-phone').val(button.data('phone'));
             $('#edit-image_url').val(button.data('image_url'));
-
             loadStates(function () {
                 $('#edit-state').val(button.data('state_id'));
                 loadMunicipalities(button.data('state_id'), function () {
@@ -628,12 +619,10 @@ footer {
                     });
                 });
             });
-
             loadCategories(function () {
                 $('#edit-category').val(button.data('category_id'));
             });
         }
-
         function loadStates(callback) {
             $.ajax({
                 url: 'get_states.php',

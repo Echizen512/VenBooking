@@ -1,0 +1,151 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: 10px;
+    margin: auto;
+    max-width: 95%;
+    margin-left: 250px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.card {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+}
+
+.card i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    color: #3fa141;
+}
+
+.card h3 {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #333;
+}
+
+.card p {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.chart-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    gap: 0;
+}
+
+.chart-container {
+    flex: 1;
+    max-width: 250px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    text-align: center;
+}
+
+.chart-title {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    color: #666;
+    padding: 5px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.profile-container {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+background: #fff;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+padding: 20px;
+max-width: 80%;
+}
+
+.profile-image-container img {
+border: 3px solid #ddd;
+width: 120px;
+height: 120px;
+object-fit: cover;
+border-radius: 50%;
+}
+
+.profile-info {
+margin-top: 10px;
+}
+
+
+.profile-info h5 {
+margin: 0;
+font-size: 1.25rem;
+font-weight: bold;
+}
+
+.profile-info p {
+margin: 5px 0 0;
+color: #666;
+}
+
+.profile-form {
+flex: 1;
+margin-left: 30px;
+}
+
+.profile-form .form-control {
+width: 100%;
+}
+
+.profile-form label {
+font-weight: 600;
+font-size: 0.9rem;
+margin-bottom: 5px;
+}
+
+.profile-form .btn {
+width: 100%;
+padding: 10px;
+font-size: 1rem;
+}
+
+.profile-left {
+display: flex;
+flex-direction: column;
+align-items: center;
+max-width: 200px;
+}

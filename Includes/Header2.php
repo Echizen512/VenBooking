@@ -30,19 +30,20 @@
                 <div class="container">
                     <div class="top-header-left">
                         <div class="top-header-block">
-                            <a href="mailto:VenBooking@gmail.com" itemprop="email">
-                                <i class="fas fa-envelope"></i> VenBooking@gmail.com
+                            <a href="mailto:venbooking@gmail.com" style="color:white;" class="text-white"
+                                itemprop="email">
+                                <i class="fas fa-envelope text-warning"></i> Soporte Técnico: venbooking@gmail.com
                             </a>
                         </div>
                     </div>
                     <div class="top-header-right">
                         <a href="./login.php" id="login-btn">
                             <button class="login-btn">
-                                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                                <i class="fas fa-sign-in-alt text-info"></i> Iniciar Sesión
                             </button>
                         </a>
-
                     </div>
+
                 </div>
             </div>
             <div class="main-header">
@@ -54,17 +55,17 @@
                             <ul class="menu-list">
                                 <li>
                                     <a href="./index.php">
-                                        <i class="fas fa-home"></i> Inicio
+                                        <i class="fas fa-home text-success"></i> Inicio
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./Destinations.php">
-                                        <i class="fas fa-map-marker-alt"></i> Destinos
+                                        <i class="fas fa-map-marker-alt text-primary"></i> Destinos
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./Inns.php">
-                                        <i class="fas fa-bed"></i> Posadas
+                                        <i class="fas fa-bed text-danger"></i> Posadas
                                     </a>
                                 </li>
 

@@ -72,23 +72,21 @@
         </div>
         <a href="logout.php">
     <button class="logout-btn">
-        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
     </button>
         </a>
     </div>
 
 
     <div class="sidebar bg-success">
-        <a href="./get_inn.php" style="color: white;"><i class="fas fa-hotel icon" style="color: white;"></i>Posadas</a>
-        <a href="./get_rooms.php" style="color: white;"><i class="fas fa-bed icon" style="color: white;"></i>Habitaciones</a>
-        <a href="./get_vehicles.php" style="color: white;"><i class="fas fa-car icon" style="color: white;"></i>Vehículos</a>
-        <a href="./get_package.php" style="color: white;"><i class="fas fa-suitcase icon" style="color: white;"></i>Paquetes</a>
-        <a href="./get_states.php" style="color: white;"><i class="fas fa-map-marker-alt icon"></i> Estados</a>
-        <a href="./get_municipalities.php" style="color: white;"><i class="fas fa-city icon"></i>Municipios</a>
-        <a href="./get_parishes.php" style="color: white;"><i class="fas fa-compass icon"></i> Parroquias</a>
-        <a href="./chart.php" style="color: white;"><i class="fas fa-chart-line icon"></i> Gráficas</a>
-        <a href="./report.php" style="color: white;"><i class="fas fa-file-alt icon"></i> Reportes</a>
-        <a href="./audit_log.php"  style="color: white;"><i class="fas fa-file-alt icon"></i>  Auditoría</a>
+        <a href="./get_inn.php" style="color: white;"><i class="fas fa-hotel icon text-info"></i>Posadas</a>
+        <a href="./get_vehicles.php" style="color: white;"><i class="fas fa-car icon text-danger"></i>Vehículos</a>
+        <a href="./get_rooms.php" style="color: white;"><i class="fas fa-bed icon" style="color: #90ffbc;"></i>Habitaciones</a>
+        <a href="./get_states.php" style="color: white;"><i class="fas fa-map-marker-alt icon text-danger"></i> Estados</a>
+        <a href="./get_municipalities.php" style="color: white;"><i class="fas fa-city icon text-info"></i>Municipios</a>
+        <a href="./get_parishes.php" style="color: white;"><i class="fas fa-compass icon text-warning"></i> Parroquias</a>
+        <a href="./report.php" style="color: white;"><i class="fas fa-file-alt icon text-danger"></i> Reportes</a>
+        <a href="./audit_log.php"  style="color: white;"><i class="fas fa-file-alt icon text-info"></i>  Auditoría</a>
     </div>
 
     <script src="../Assets/js/jquery-3.6.0.min.js"></script>

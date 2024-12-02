@@ -107,7 +107,6 @@ if (!isset($_SESSION['user_id'])) {
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        <!-- Plan Básico -->
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm plan-card">
             <div class="card-header py-3 bg-light">
@@ -120,13 +119,11 @@ if (!isset($_SESSION['user_id'])) {
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> 1 Posada</li>
               </ul>
-              <!-- Botón PayPal Básico -->
               <div id="paypal-button-container-basic"></div>
             </div>
           </div>
         </div>
 
-        <!-- Plan Plata -->
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm plan-card">
             <div class="card-header py-3 bg-light">
@@ -139,13 +136,11 @@ if (!isset($_SESSION['user_id'])) {
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> 3 Posadas</li>
               </ul>
-              <!-- Botón PayPal Plata -->
               <div id="paypal-button-container-silver"></div>
             </div>
           </div>
         </div>
 
-        <!-- Plan Oro -->
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm plan-card">
             <div class="card-header py-3 bg-success text-white">
@@ -172,7 +167,7 @@ if (!isset($_SESSION['user_id'])) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // PayPal Buttons para el plan Básico
+  
   paypal.Buttons({
     style: {
       layout: 'vertical',
@@ -184,15 +179,15 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '50.00' // Precio del plan básico
+            value: '50.00' 
           }
         }]
       });
     },
     onApprove: function (data, actions) {
       return actions.order.capture().then(function (details) {
-        const membershipType = 'basic'; // Cambia según el plan
-        const amount = '50.00'; // Cambia según el monto real
+        const membershipType = 'basic'; 
+        const amount = '50.00'; 
         window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
@@ -212,15 +207,15 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '75.00' // Precio del plan Plata
+            value: '75.00' 
           }
         }]
       });
     },
     onApprove: function (data, actions) {
       return actions.order.capture().then(function (details) {
-        const membershipType = 'silver'; // Cambia según el plan
-        const amount = '75.00'; // Cambia según el monto real
+        const membershipType = 'silver'; 
+        const amount = '75.00'; 
         window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
@@ -229,27 +224,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }).render('#paypal-button-container-silver');
 
-  // PayPal Buttons para el plan Oro
+  
   paypal.Buttons({
     style: {
-      layout: 'vertical', // Puedes cambiar a 'horizontal' si prefieres
-      color: 'blue', // Cambia el color a azul
-      shape: 'rect', // Puede ser 'rect' o 'pill'
-      label: 'paypal' // Cambia la etiqueta (puede ser 'checkout', 'pay', etc.)
+      layout: 'vertical', 
+      color: 'blue', 
+      shape: 'rect', 
+      label: 'paypal' 
     },
     createOrder: function (data, actions) {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '100.00' // Precio del plan Oro
+            value: '100.00' 
           }
         }]
       });
     },
     onApprove: function (data, actions) {
       return actions.order.capture().then(function (details) {
-        const membershipType = 'gold'; // Cambia según el plan
-        const amount = '100.00'; // Cambia según el monto real
+        const membershipType = 'gold'; 
+        const amount = '100.00'; 
         window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },

@@ -100,41 +100,41 @@
         </div>
         <a href="logout.php">
             <button class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
             </button>
         </a>
     </div>
 
     <div class="sidebar bg-success">
-        <a href="./Inicio.php" style="color: white;">
-            <i class="fas fa-home icon"></i> Inicio
-        </a>
-        <a href="./get_inns.php" style="color: white;">
-            <i class="fas fa-hotel icon"></i> Posadas
-        </a>
-        <a href="./get_mobile_payment.php" style="color: white;">
-            <i class="fas fa-mobile-alt icon"></i> Pago Móvil
-        </a>
-        <a href="./get_transfers.php" style="color: white;">
-            <i class="fas fa-university icon"></i> Transferencia
-        </a>
-        <a href="./get_reservation.php" style="color: white;">
-            <i class="fas fa-calendar-alt icon"></i> Reservas
-        </a>
-        <a href="./get_paypal.php" style="color: white;">
-            <i class="fab fa-paypal icon"></i> PayPal
-        </a>
-        <a href="./get_binance.php" style="color: white;">
-            <i class="fab fa-btc icon"></i> Binance
-        </a>
-        <a href="../Memberships.php" style="color: white;">
-            <i class="fas fa-gift icon"></i> Membresías
-        </a>
-        <a href="./get_reports.php" style="color: white;">
-            <i class="fas fa-file-pdf icon"></i> Reportes PDF
-        </a>
+    <a href="./Inicio.php" style="color: white;">
+        <i class="fas fa-home me-2" style="color: #90ffbc;"></i> Inicio
+    </a>
+    <a href="./get_inns.php" style="color: white;">
+        <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas
+    </a>
+    <a href="./get_mobile_payment.php" style="color: white;">
+        <i class="fas fa-mobile-alt me-2" style="color: #17a2b8;"></i> Pago Móvil
+    </a>
+    <a href="./get_transfers.php" style="color: white;">
+        <i class="fas fa-university me-2" style="color: #dc3545;"></i> Transferencia
+    </a>
+    <a href="./get_reservation.php" style="color: white;">
+        <i class="fas fa-calendar-alt me-2" style="color: #69afff;"></i> Reservas
+    </a>
+    <a href="./get_paypal.php" style="color: white;">
+        <i class="fab fa-paypal me-2" style="color: #0c78f4;"></i> PayPal
+    </a>
+    <a href="./get_binance.php" style="color: white;">
+        <i class="fab fa-btc me-2" style="color: #f4c20d;"></i> Binance
+    </a>
+    <a href="../Memberships.php" style="color: white;">
+        <i class="fas fa-gift me-2" style="color: #b3ff90;"></i> Membresías
+    </a>
+    <a href="./get_reports.php" style="color: white;">
+        <i class="fas fa-file-pdf me-2 text-danger"></i> Reportes PDF
+    </a>
 
-        <!-- Datos del Dólar -->
+
         <div class="dolar-section">
             <h5>Datos del Dólar</h5>
             <ul class="list-unstyled mt-3">
@@ -155,9 +155,9 @@
                     $data = json_decode($response, true);
 
                     if ($data !== null) {
-                        echo "<li><i class='fas fa-dollar-sign'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
-                        echo "<li><i class='fas fa-chart-line'></i> Precio: " . $data[0]['promedio'] . " BS</li>";
-                        echo "<li><i class='fas fa-calendar'></i> Fecha: Hoy" . "</li>";
+                        echo "<li><i class='fas fa-dollar-sign text-warning'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
+                        echo "<li><i class='fas fa-chart-line text-danger'></i> Precio: " . $data[0]['promedio'] . " BS</li>";
+                        echo "<li><i class='fas fa-calendar text-info'></i> Fecha: Hoy" . "</li>";
                     } else {
                         echo "<li>Error al convertir la respuesta JSON.</li>";
                     }

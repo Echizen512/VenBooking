@@ -37,13 +37,14 @@ include('Header_Admin.php');
         <div class="row justify-content-end">
             <div class="col-md-8">
                 <div class="card shadow-lg">
-                    <div class="card-header">
-                        <h3 class="text-center">Generar Reporte de Reservas y Posadas</h3>
+                    <div class="card-header bg-success">
+                        <h3 class="text-center text-white"><i class="fas fa-file-pdf me-2 text-danger"></i>Generar
+                            Reporte en PDF</h3>
                     </div>
                     <div class="card-body">
                         <form action="generate_pdf.php" method="post">
                             <div class="mb-3">
-                                <label for="inns" class="form-label">Seleccione las Posadas</label>
+                                <label for="inns" class="form-label"><i class="fas fa-hotel me-2 text-info"></i>Seleccione las Posadas</label>
                                 <select class="form-select" id="inns" name="inns[]" multiple>
                                     <?php
                                     include '../config/db.php';
@@ -65,40 +66,45 @@ include('Header_Admin.php');
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="reports" class="form-label">Seleccione los Reportes</label>
+                                <label for="reports" class="form-label"><i class="fas fa-file-pdf me-2 text-danger"></i>Seleccione los Reportes</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="1"
                                         id="report1">
                                     <label class="form-check-label" for="report1">
-                                        Reporte 1: Usuarios Registrados por Posada
+                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 1: Usuarios Registrados
+                                        por Posada
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="2"
                                         id="report2">
                                     <label class="form-check-label" for="report2">
-                                        Reporte 2: Reservaciones por Posada
+                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 2: Reservaciones por
+                                        Posada
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="3"
                                         id="report3">
                                     <label class="form-check-label" for="report3">
-                                        Reporte 3: Métodos de Pago Registrados por Posada
+                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 3: Métodos de Pago
+                                        Registrados por Posada
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="4"
                                         id="report4">
                                     <label class="form-check-label" for="report4">
-                                        Reporte 4: Habitaciones Registradas por Posada
+                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 4: Habitaciones
+                                        Registradas por Posada
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="5"
                                         id="report5">
                                     <label class="form-check-label" for="report5">
-                                        Reporte 5: Vehículos Registrados por Posada
+                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 5: Vehículos
+                                        Registrados por Posada
                                     </label>
                                 </div>
                             </div>
@@ -112,4 +118,5 @@ include('Header_Admin.php');
         </div>
     </div>
 </body>
+
 </html>

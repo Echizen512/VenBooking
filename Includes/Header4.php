@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/all.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/lightbox.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/flexslider.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css" />
-    <link rel="stylesheet" type="text/css" href="inner-page-style.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/all.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/lightbox.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/flexslider.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.rateyo.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mmenu.all.css" />
+    <link rel="stylesheet" type="text/css" href="../inner-page-style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
@@ -25,7 +25,7 @@
 
 <body>
     <div>
-        <header class="site-header">
+    <header class="site-header">
             <div class="top-header bg-success">
                 <div class="container">
                     <div class="top-header-left">
@@ -52,30 +52,11 @@
                         <nav class="nav-desktop">
                             <ul class="menu-list">
                                 <li>
-                                    <a href="./index.php">
-                                        <i class="fas fa-home text-success"></i> Inicio
+                                    <a href="./Inicio.php">
+                                        <i class="fas fa-cogs text-primary"></i> Volver al Panel de Control
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="./Destinations.php">
-                                        <i class="fas fa-map-marker-alt text-danger"></i> Destinos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./Inns.php">
-                                        <i class="fas fa-bed text-success"></i> Posadas
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./Profile.php">
-                                        <i class="fas fa-user text-primary"></i> Perfil
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./users.php">
-                                        <i class="fas fa-comments text-info"></i> Chat
-                                    </a>
-                                </li>
+
 
                             </ul>
                         </nav>
@@ -93,7 +74,7 @@
 
     <script>
         document.getElementById('logout-btn').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
+            e.preventDefault(); 
 
             Swal.fire({
                 title: '¿Estás seguro?',
@@ -106,7 +87,6 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Redirigir al usuario a logout.php si confirma
                     window.location.href = './Includes/logout.php';
                 }
             })

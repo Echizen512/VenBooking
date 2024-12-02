@@ -95,82 +95,102 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    
+
     if (isset($_POST['add_vehicle']) || isset($_POST['update_vehicle'])) {
-        $vehicle_id = $_POST['vehicle_id'] ?? null; 
-        $inn_id = $_POST['inn_id'] ?? ''; 
-        $type = $_POST['type'] ?? '';
-        $brand = $_POST['brand'] ?? '';
-        $description = $_POST['description'] ?? '';
-        $price = $_POST['price'] ?? 0;
-        $capacity = $_POST['capacity'] ?? 0;
-        $year = $_POST['year'] ?? 0;
-        $model = $_POST['model'] ?? '';
-        $registration_plate = $_POST['registration_plate'] ?? '';
-        $status = $_POST['status'] ?? '';
-        $image_url = $_POST['image_url'] ?? '';
-        $image_url2 = $_POST['image_url2'] ?? '';
-        $image_url3 = $_POST['image_url3'] ?? '';
-        $image_url4 = $_POST['image_url4'] ?? '';
-        $image_url5 = $_POST['image_url5'] ?? '';
-        $invoice = $_POST['invoice'] ?? '';
+        $type = $_POST['type'];
+        $brand = $_POST['brand'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $capacity = $_POST['capacity'];
+        $year = $_POST['year'];
+        $model = $_POST['model'];
+        $registration_plate = $_POST['registration_plate'];
+        $status = $_POST['status'];
+        $image_url = $_POST['image_url'];
+        $image_url2 = $_POST['image_url2'] ?? null;
+        $image_url3 = $_POST['image_url3'] ?? null;
+        $image_url4 = $_POST['image_url4'] ?? null;
+        $image_url5 = $_POST['image_url5'] ?? null;
 
         if (isset($_POST['add_vehicle'])) {
-            
-            $sql = "INSERT INTO vehicles (inn_id, type, brand, description, price, capacity, year, model, registration_plate, status, image_url, image_url2, image_url3, image_url4, image_url5, invoice) 
+            $sql = "INSERT INTO vehicles 
+                (inn_id, type, brand, description, price, capacity, year, model, registration_plate, status, image_url, image_url2, image_url3, image_url4, image_url5) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
 
-            $stmt = $conn->prepare($sql);
             if ($stmt) {
-                
-                $stmt->bind_param("isssdiissssssss", $inn_id, $type, $brand, $description, $price, $capacity, $year, $model, $registration_plate, $status, $image_url, $image_url2, $image_url3, $image_url4, $image_url5, $invoice);
+                $stmt->bind_param(
+                    "isssdiissssssss",
+                    $inn_id, $type, $brand, $description, $price, $capacity, $year, $model, $registration_plate, $status,
+                    $image_url, $image_url2, $image_url3, $image_url4, $image_url5
+                );
+                executeQuery($stmt, "Vehículo agregado correctamente", "Error al agregar el vehículo");
+                $stmt->close();
+            } else {
+                die("Error en la preparación de la consulta para agregar vehículo: " . $conn->error);
             }
-        } else {
-            
-            $sql = "UPDATE vehicles SET type = ?, brand = ?, description = ?, price = ?, capacity = ?, year = ?, model = ?, registration_plate = ?, status = ?, image_url = ?, image_url2 = ?, image_url3 = ?, image_url4 = ?, image_url5 = ?, invoice = ? WHERE id = ?";
+        } elseif (isset($_POST['update_vehicle'])) {
+            $vehicle_id = $_POST['vehicle_id'];
+            $sql = "UPDATE vehicles 
+                SET type = ?, brand = ?, description = ?, price = ?, capacity = ?, year = ?, model = ?, registration_plate = ?, status = ?, 
+                image_url = ?, image_url2 = ?, image_url3 = ?, image_url4 = ?, image_url5 = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
+
             if ($stmt) {
-                
-                $stmt->bind_param("isssdiissssssssi", $type, $brand, $description, $price, $capacity, $year, $model, $registration_plate, $status, $image_url, $image_url2, $image_url3, $image_url4, $image_url5, $invoice, $vehicle_id);
+                $stmt->bind_param(
+                    "sssdiissssssssi",
+                    $type, $brand, $description, $price, $capacity, $year, $model, $registration_plate, $status,
+                    $image_url, $image_url2, $image_url3, $image_url4, $image_url5, $vehicle_id
+                );
+                executeQuery($stmt, "Vehículo actualizado correctamente", "Error al actualizar el vehículo");
+                $stmt->close();
+            } else {
+                die("Error en la preparación de la consulta para actualizar vehículo: " . $conn->error);
             }
         }
+
+        header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $inn_id);
+        exit();
     }
 
-
-    
     if (isset($_POST['toggle_block'])) {
         $id = $_POST['id'];
         $type = $_POST['type'];
 
-        $sql = ($type === 'vehicle') ? "SELECT block FROM vehicles WHERE id = ?" : "SELECT block FROM rooms WHERE id = ?";
+        $table = ($type === 'vehicle') ? "vehicles" : "rooms";
+
+        $sql = "SELECT block FROM $table WHERE id = ?";
         $stmt = $conn->prepare($sql);
+
         if ($stmt) {
             $stmt->bind_param("i", $id);
-            executeQuery($stmt, null, "Error en la consulta SQL para obtener estado de bloqueo");
+            executeQuery($stmt, null, "Error al obtener el estado de bloqueo");
             $stmt->bind_result($currentBlock);
             $stmt->fetch();
             $stmt->close();
 
             $newBlock = $currentBlock ? 0 : 1;
-            $sql = ($type === 'vehicle') ? "UPDATE vehicles SET block = ? WHERE id = ?" : "UPDATE rooms SET block = ? WHERE id = ?";
-
+            $sql = "UPDATE $table SET block = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
+
             if ($stmt) {
                 $stmt->bind_param("ii", $newBlock, $id);
-                executeQuery($stmt, null, "Error en la consulta SQL para cambiar estado de bloqueo");
+                executeQuery($stmt, "Estado de bloqueo actualizado correctamente", "Error al actualizar el estado de bloqueo");
                 $stmt->close();
-                header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $inn_id);
-                exit();
             } else {
-                die("Error en la consulta SQL para cambiar estado de bloqueo: " . $conn->error);
+                die("Error en la consulta para cambiar estado de bloqueo: " . $conn->error);
             }
         } else {
-            die("Error en la consulta SQL para obtener estado de bloqueo: " . $conn->error);
+            die("Error en la consulta para obtener estado de bloqueo: " . $conn->error);
         }
+
+        header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $inn_id);
+        exit();
     }
 }
 
 $conn->close();
+
 ?>
 
 
@@ -223,16 +243,42 @@ $conn->close();
 </style>
 <body>
 
-    <?php include './Header3.php'; ?>
+<script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form[name='add_vehicle_form']");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Estás a punto de agregar un nuevo vehículo",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, agregar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+</script>
+
+</script>
+
+    <?php include './Header4.php'; ?>
 
     <div class="container mt-5">
         <h2 class="mb-4 text-center" style="font-size: 28px;">
-            <i class="fas fa-home" style="font-size: 28px;"></i> <?php echo htmlspecialchars($inn_name); ?>
+            <i class="fas fa-home text-success" style="font-size: 28px;"></i> <?php echo htmlspecialchars($inn_name); ?>
         </h2>
         <div class="row mb-5">
             <div class="col-12 d-flex justify-content-between align-items-center mb-3">
                 <h3 class="mb-0" style="font-size: 28px; color: #2c3e50;">
-                    <i class="fas fa-bed" style="font-size: 28px; margin-right: 8px;"></i>
+                    <i class="fas fa-bed text-primary" style="font-size: 28px; margin-right: 8px;"></i>
                     Habitaciones
                 </h3>
                 <button class="btn btn-success" style="font-size: 14px; padding: 10px 15px; border-radius: 5px;"
@@ -245,7 +291,6 @@ $conn->close();
                 <?php while ($room = $result_rooms->fetch_assoc()): ?>
                     <div class="col-md-4">
                         <div class="card shadow-sm mb-4">
-                            <!-- Carousel para imágenes de habitación -->
                             <div id="roomCarousel<?= $room['id']; ?>" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <?php
@@ -277,11 +322,11 @@ $conn->close();
                                 <h5 class="card-title" style="font-size: 18px;"><?= $room['type']; ?> - Habitación
                                     <?= $room['room_number']; ?></h5>
                                 <p class="card-text text-truncate" style="font-size: 16px;"><?= $room['description']; ?></p>
-                                <p style="font-size: 14px;"><i class="fas fa-dollar-sign"></i> <strong>Precio:</strong>
+                                <p style="font-size: 14px;"><i class="fas fa-dollar-sign text-success"></i> <strong>Precio:</strong>
                                     <?= $room['price']; ?></p>
-                                <p style="font-size: 14px;"><i class="fas fa-users"></i> <strong>Capacidad:</strong>
+                                <p style="font-size: 14px;"><i class="fas fa-users text-primary"></i> <strong>Capacidad:</strong>
                                     <?= $room['capacity']; ?></p>
-                                <p style="font-size: 14px;"><i class="fas fa-star"></i> <strong>Calidad:</strong>
+                                <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> <strong>Calidad:</strong>
                                     <?= $room['quality']; ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button class="btn btn-primary" style="font-size: 16px;" data-bs-toggle="modal"
@@ -381,7 +426,7 @@ $conn->close();
         <div class="row mb-5">
             <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0 d-flex align-items-center" style="font-size: 28px; color: #2c3e50;">
-                    <i class="fas fa-car" style="font-size: 28px; margin-right: 10px; color: #27ae60;"></i>
+                    <i class="fas fa-car text-danger" style="font-size: 28px; margin-right: 10px; color: #27ae60;"></i>
                     Vehículos
                 </h3>
                 <button class="btn btn-success"
@@ -443,11 +488,11 @@ $conn->close();
                                 <h5 class="card-title" style="font-size: 18px;"><?= $vehicle['brand']; ?> -
                                     <?= $vehicle['model']; ?></h5>
                                 <p style="font-size: 16px;" class="card-text text-truncate"><?= $vehicle['description']; ?></p>
-                                <p style="font-size: 14px;"><i class="fas fa-dollar-sign"></i> <strong>Precio:</strong>
+                                <p style="font-size: 14px;"><i class="fas fa-dollar-sign text-success"></i> <strong>Precio:</strong>
                                     <?= $vehicle['price']; ?></p>
-                                <p style="font-size: 14px;"><i class="fas fa-users"></i> <strong>Capacidad:</strong>
+                                <p style="font-size: 14px;"><i class="fas fa-users text-primary"></i> <strong>Capacidad:</strong>
                                     <?= $vehicle['capacity']; ?></p>
-                                <p style="font-size: 14px;"><i class="fas fa-calendar-alt"></i> <strong>Año:</strong>
+                                <p style="font-size: 14px;"><i class="fas fa-calendar-alt text-info"></i> <strong>Año:</strong>
                                     <?= $vehicle['year']; ?></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <button class="btn btn-primary" style="font-size: 16px;" data-bs-toggle="modal"
@@ -527,12 +572,6 @@ $conn->close();
                                                 value="<?= $vehicle['status']; ?>" required>
                                         </div>
 
-                                        <div class="form-group mb-3">
-                                            <label for="invoice">Factura</label>
-                                            <input type="text" class="form-control" name="invoice"
-                                                value="<?= $vehicle['invoice']; ?>">
-                                        </div>
-
                                         <!-- Campos para las imágenes -->
                                         <?php
                                         $images = ['image_url', 'image_url2', 'image_url3', 'image_url4', 'image_url5']; // Define tus campos de imagen
@@ -566,74 +605,105 @@ $conn->close();
         </div>
 
 
-        <!-- Modal para agregar nuevo vehículo -->
-        <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addVehicleModalLabel">Agregar Nuevo Vehículo</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+<!-- Modal para agregar nuevo vehículo -->
+<div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVehicleModalLabel">Agregar Nuevo Vehículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    <input type="hidden" name="inn_id" value="<?= $inn_id; ?>">
+
+                    <div class="form-group">
+                        <label for="type">Tipo</label>
+                        <select class="form-control" name="type" id="type" required>
+                            <option value="" disabled selected>Seleccione el tipo</option>
+                            <option value="Auto">Auto</option>
+                            <option value="Lancha">Lancha</option>
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <form method="POST">
-                            <input type="hidden" name="inn_id" value="<?= $inn_id; ?>">
-                            <div class="form-group">
-                                <label for="type">Tipo</label>
-                                <input type="text" class="form-control" name="type" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="brand">Marca</label>
-                                <input type="text" class="form-control" name="brand" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="model">Modelo</label>
-                                <input type="text" class="form-control" name="model" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="year">Año</label>
-                                <input type="number" class="form-control" name="year" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Descripción</label>
-                                <textarea class="form-control" name="description" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Precio</label>
-                                <input type="number" class="form-control" name="price" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="capacity">Capacidad</label>
-                                <input type="number" class="form-control" name="capacity" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="registration_plate">Placa de Registro</label>
-                                <input type="text" class="form-control" name="registration_plate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="status">Estado</label>
-                                <select class="form-control" name="status" required>
-                                    <option value="1">Activo</option>
-                                    <option value="0">Bloqueado</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="image_url">URL de Imagen</label>
-                                <input type="text" class="form-control" name="image_url" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="invoice">Factura</label>
-                                <input type="text" class="form-control" name="invoice" required>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" name="add_vehicle" class="btn btn-primary">Agregar</button>
-                            </div>
-                        </form>
+
+                    <div class="form-group">
+                        <label for="brand">Marca</label>
+                        <input type="text" class="form-control" name="brand" required>
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label for="model">Modelo</label>
+                        <input type="text" class="form-control" name="model" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year">Año</label>
+                        <input type="number" class="form-control" name="year" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Descripción</label>
+                        <textarea class="form-control" name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Precio</label>
+                        <input type="number" class="form-control" name="price" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="capacity">Capacidad</label>
+                        <input type="number" class="form-control" name="capacity" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registration_plate">Placa de Registro</label>
+                        <input type="text" class="form-control" name="registration_plate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Estado</label>
+                        <select class="form-control" name="status" required>
+                            <option value="1">Activo</option>
+                            <option value="0">Bloqueado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                            <label for="image_url">URL de Imagen (Obligatoria)</label>
+                            <input type="text" class="form-control" name="image_url" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image_url2">URL de Imagen 2</label>
+                        <input type="text" class="form-control" name="image_url2">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image_url3">URL de Imagen 3</label>
+                        <input type="text" class="form-control" name="image_url3">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image_url4">URL de Imagen 4</label>
+                        <input type="text" class="form-control" name="image_url4">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="image_url5">URL de Imagen 5</label>
+                        <input type="text" class="form-control" name="image_url5">
+                    </div>
+
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" name="add_vehicle" class="btn btn-primary">Agregar</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
         <!-- Modal para agregar nueva habitación -->
         <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
@@ -649,13 +719,24 @@ $conn->close();
                                 <label for="room_number">Número de Habitación</label>
                                 <input type="number" class="form-control" name="room_number" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="type">Tipo</label>
-                                <input type="text" class="form-control" name="type" required>
+                                    <select class="form-control" name="type" id="type" required>
+                                        <option value="" disabled selected>Seleccione un tipo</option> 
+                                        <option value="Solo">Solo</option>
+                                        <option value="Pareja">Pareja</option>
+                                        <option value="Familia">Familia</option>
+                                        <option value="Grupal">Grupal</option>
+                                    </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="quality">Calidad</label>
-                                <input type="text" class="form-control" name="quality" required>
+                                    <select class="form-control" name="quality" id="quality" required>
+                                        <option value="" disabled selected>Seleccione una calidad</option> 
+                                        <option value="Alta">Alta</option>
+                                        <option value="Media">Media</option>
+                                        <option value="Baja">Baja</option>
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label for="image_url">URL de Imagen (Obligatoria)</label>
@@ -679,15 +760,15 @@ $conn->close();
                             </div>
                             <div class="form-group">
                                 <label for="description">Descripción</label>
-                                <textarea class="form-control" name="description" required></textarea>
+                                <textarea class="form-control" name="description" id="description" required pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras, acentos y espacios."></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="price">Precio</label>
-                                <input type="number" class="form-control" name="price" required>
+                                <input type="number" class="form-control" name="price" required step="1" max="1000.00" title="El precio no puede superar los 1000.00">
                             </div>
                             <div class="form-group">
                                 <label for="capacity">Capacidad</label>
-                                <input type="number" class="form-control" name="capacity" required>
+                                <input type="number" class="form-control" name="capacity" required max="10" title="La capacidad máxima es de 10">
                             </div>
                             <br>
                             <div class="d-flex justify-content-center">
@@ -706,4 +787,4 @@ $conn->close();
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 
-</html>
+</html> 

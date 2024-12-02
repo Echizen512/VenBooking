@@ -3,7 +3,6 @@
 session_start();
 include './config/db.php';
 
-// Redirigir a la página de inicio de sesión si el usuario no está autenticado
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -12,13 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $inn_id = isset($_GET['inn_id']) ? intval($_GET['inn_id']) : 0;
 
-// Procesar el formulario si se ha enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inn_id = $_POST['inn_id'];
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $payment_method = $_POST['payment_method'];
-    $reference_code = $_POST['reference_code']; // Código de referencia
+    $reference_code = $_POST['reference_code']; 
 
     $status = 'En Espera';
     $receipt_path = '';
@@ -28,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_name = $_FILES['receipt']['name'];
         $file_type = $_FILES['receipt']['type'];
 
-        // Generar un nombre único para el archivo
         $unique_file_name = uniqid() . '-' . basename($file_name);
         $upload_dir = __DIR__ . '/../uploads/';
         if (!is_dir($upload_dir)) {
@@ -37,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $file_path = $upload_dir . $unique_file_name;
 
-        // Verificar tipo de archivo permitido
         $allowed_types = array('image/jpeg', 'image/png', 'application/pdf');
         if (!in_array($file_type, $allowed_types)) {
             $_SESSION['swal_message'] = [
@@ -50,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        // Mover el archivo a la carpeta de destino
         if (move_uploaded_file($file_tmp_name, $file_path)) {
             $receipt_path = 'uploads/' . $unique_file_name;
         } else {
@@ -65,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Verificar disponibilidad
     $sql_check_availability = "SELECT * FROM reservations 
                                WHERE inn_id = ? 
                                AND (start_date <= ? AND end_date >= ?)";
@@ -88,7 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Insertar la reserva
     $sql_insert_reservation = "INSERT INTO reservations (inn_id, start_date, end_date, payment_method_id, receipt_path, status, user_id, codigo_referencia)
                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql_insert_reservation);
@@ -234,10 +227,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <!-- Monto Total -->
                                 <div class="form-group mb-3">
-                                    <label  class="form-label" style="font-size: 20px;"><i
+                                    <label class="form-label" style="font-size: 20px;"><i
                                             class="fas fa-dollar-sign"></i> Monto Total:</label>
-                                            <!-- Actualización del input monto_total -->
-<input type="text" id="monto_total" class="form-control" style="font-size: 18px;" readonly>
+                                    <!-- Actualización del input monto_total -->
+                                    <input type="text" id="monto_total" class="form-control" style="font-size: 18px;"
+                                        readonly>
 
                                 </div>
 
@@ -258,7 +252,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         style="font-size: 18px;" readonly>
                                 </div>
 
-                                <!-- Precio de Reservación (Bolívares) - 30% del monto total en bolívares -->
                                 <div class="form-group mb-3">
                                     <label for="precio_reservacion_bolivares" class="form-label"
                                         style="font-size: 20px;"><i class="fas fa-money-check-alt"></i> Precio de
@@ -293,7 +286,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     }
                                 </style>
 
-                                <!-- Botón de Confirmar -->
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn custom-btn px-5">Confirmar Reserva</button>
                                 </div>
@@ -310,53 +302,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script src="./assets/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    $(document).ready(function() {
-        // Verifica si hay mensaje en la sesión y muestra el Swal correspondiente
-        <?php if (isset($_SESSION['swal_message'])): ?>
-            Swal.fire({
-                icon: '<?php echo $_SESSION['swal_message']['icon']; ?>',
-                title: '<?php echo $_SESSION['swal_message']['title']; ?>',
-                text: '<?php echo $_SESSION['swal_message']['text']; ?>'
-            }).then(() => {
-                window.location.href = '<?php echo $_SESSION['swal_message']['redirect']; ?>';
+        <script>
+            $(document).ready(function () {
+                <?php if (isset($_SESSION['swal_message'])): ?>
+                    Swal.fire({
+                        icon: '<?php echo $_SESSION['swal_message']['icon']; ?>',
+                        title: '<?php echo $_SESSION['swal_message']['title']; ?>',
+                        text: '<?php echo $_SESSION['swal_message']['text']; ?>'
+                    }).then(() => {
+                        window.location.href = '<?php echo $_SESSION['swal_message']['redirect']; ?>';
+                    });
+                    <?php unset($_SESSION['swal_message']); ?>
+                <?php endif; ?>
+
             });
-            <?php unset($_SESSION['swal_message']); ?>
-        <?php endif; ?>
+        </script>
 
-    });
-</script>
-
-<script>
+        <script>
             $(document).ready(function () {
                 let today = new Date().toISOString().split('T')[0];
                 $('#start_date').attr('min', today);
                 $('#end_date').attr('min', today);
 
-                // Mostrar u ocultar el campo de recibo según el método de pago
                 $('#payment_method').change(function () {
                     var selectedMethod = $(this).val();
                     if (selectedMethod == '1' || selectedMethod == '2') {
-                        // Mostrar el campo de recibo y hacerlo obligatorio
                         $('#receiptGroup').show();
                         $('#receipt').attr('required', true);
                         loadPaymentInfo(selectedMethod);
-                    } else if (selectedMethod == '3' || selectedMethod == '4') { // Agregado para PayPal
-                        // Mostrar el campo de recibo y hacerlo obligatorio
+                    } else if (selectedMethod == '3' || selectedMethod == '4') {
                         $('#receiptGroup').show();
                         $('#receipt').attr('required', true);
-                        loadPaymentInfo(selectedMethod); // Si necesitas cargar información específica para Binance o PayPal, puedes hacerlo aquí
+                        loadPaymentInfo(selectedMethod);
                     } else {
-                        // Ocultar el campo de recibo y quitar la obligatoriedad
                         $('#receiptGroup').hide();
                         $('#receipt').removeAttr('required');
-                        $('#paymentInfo').empty(); // Limpiar información anterior
+                        $('#paymentInfo').empty();
                     }
                 });
 
-
-
-                // Validación de Fechas
                 document.getElementById('start_date').addEventListener('change', function () {
                     const startDate = new Date(this.value);
                     const minEndDate = new Date(startDate);
@@ -364,8 +348,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById('end_date').min = minEndDate.toISOString().split("T")[0];
                 });
 
-
-                // Cargar el precio de la habitación en dólares y calcular en bolívares
                 $('#room_id, #start_date, #end_date').change(function () {
                     var room_id = $('#room_id').val();
                     var startDate = $('#start_date').val();
@@ -381,10 +363,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 end_date: endDate
                             },
                             success: function (data) {
-                                // Mostrar el monto total en dólares
                                 $('#monto_total').val(data);
-
-                                // Llamada a la API de Dólar.com para obtener el promedio
                                 $.ajax({
                                     url: 'https://ve.dolarapi.com/v1/dolares',
                                     type: 'GET',
@@ -392,14 +371,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         const dollarRate = parseFloat(response[0].promedio);
                                         const amountInDollars = parseFloat(data);
                                         const amountInBolivares = amountInDollars * dollarRate;
-
-                                        // Mostrar el monto en bolívares
                                         $('#monto_bolivares').val(amountInBolivares.toFixed(2));
-
-                                        // Calcular y mostrar el 30% en dólares y en bolívares
                                         const reservationPriceDollars = amountInDollars * 0.30;
                                         const reservationPriceBolivares = amountInBolivares * 0.30;
-
                                         $('#precio_reservacion_dolares').val(reservationPriceDollars.toFixed(2));
                                         $('#precio_reservacion_bolivares').val(reservationPriceBolivares.toFixed(2));
                                     },
@@ -411,12 +385,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         });
                     }
                 });
-
-
-                // Función para cargar la información de Pago Móvil o Transferencia Bancaria
                 function loadPaymentInfo(paymentMethod) {
-                    var innId = "<?php echo htmlspecialchars($inn_id); ?>"; // ID de la posada
-
+                    var innId = "<?php echo htmlspecialchars($inn_id); ?>";
                     $.ajax({
                         url: './Includes/get_payment_info.php',
                         type: 'GET',
@@ -425,7 +395,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             inn_id: innId
                         },
                         success: function (response) {
-                            $('#paymentInfo').html(response); // Mostrar la información en el div
+                            $('#paymentInfo').html(response);
                         },
                         error: function () {
                             $('#paymentInfo').html('<p class="text-danger">Error al obtener la información del método de pago.</p>');
@@ -434,7 +404,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             });
         </script>
-
 
 </body>
 

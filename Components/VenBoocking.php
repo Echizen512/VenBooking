@@ -2,7 +2,7 @@
 
 <section class="page-heading" style="margin: 30px;">
     <div class="container">
-        <h2><i class="fas fa-star"></i> Lo Mejor de VenBooking</h2>
+        <h2><i class="fas fa-star text-warning"></i> Lo Mejor de VenBooking</h2>
     </div>
 </section>
 
@@ -15,7 +15,7 @@
                 </div>
                 <div class="news-detail" itemprop="description">
                     <a href="#">
-                        <h1><i class="fas fa-car"></i> Alquiler de Vehículos</h1>
+                        <h1><i class="fas fa-car text-danger"></i> Alquiler de Vehículos</h1>
                     </a>
                     <p class="text-justify">Alquilar vehículos en VenBooking es sencillo y conveniente. Ofrecemos una
                         amplia gama de opciones, desde carros modernos para explorar la ciudad hasta lanchas rápidas

@@ -1,6 +1,5 @@
 <?php
 include '../config/db.php';
-include './Dashboard.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
