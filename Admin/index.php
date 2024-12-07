@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
     if ($email === $adminEmail && $password === $adminPassword) {
         $_SESSION["user_id"] = 1; 
-        header("Location: get_inn.php");
+        header("Location: get_user.php");
         exit();
     } else {
         $errorScript = "<script>

@@ -138,7 +138,7 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                                     echo '<h5 class="card-title text-primary mb-2">' . htmlspecialchars($row["inn_name"]) . '</h5>';
                                     echo '<p class="card-text text-muted"><i class="fas fa-tags me-1"></i>' . htmlspecialchars($row["category_name"]) . '</p>';
                                     echo '<a href="inn.php?inn_id=' . $row['id'] . '" class="btn btn-outline-success mt-3" style="color: green;">';
-                                    echo '<i class="fas fa-link me-2"></i> ¡Consultar Reservación!';
+                                    echo '<i class="fas fa-link me-2"></i> ¡Ver Detalles!';
                                     echo '</a>';
                                     echo '</div>';
                                     echo '</div>';

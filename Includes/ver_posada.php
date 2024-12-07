@@ -241,6 +241,9 @@ $conn->close();
     }
     
 </style>
+
+
+
 <body>
 
 <script>
@@ -267,7 +270,10 @@ $conn->close();
     });
 </script>
 
-</script>
+
+
+
+
 
     <?php include './Header4.php'; ?>
 
@@ -351,7 +357,8 @@ $conn->close();
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editRoomModalLabel">Editar Habitación</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    
+
                                 </div>
                                 <div class="modal-body">
                                     <form method="POST">
@@ -405,7 +412,8 @@ $conn->close();
                                         </div>
                                         <br>
                                         <div class="d-flex justify-content-center">
-                                            <button type="submit" name="update_room" class="btn btn-primary">Actualizar</button>
+                                            <button type="submit" name="update_room" class="btn btn-primary me-2">Actualizar</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -585,7 +593,8 @@ $conn->close();
 
                                         <div class="d-flex justify-content-center">
                                             <button type="submit" name="update_vehicle"
-                                                class="btn btn-primary">Actualizar</button>
+                                                class="btn btn-primary me-2">Actualizar</button>
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -697,7 +706,8 @@ $conn->close();
 
                     <br>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" name="add_vehicle" class="btn btn-primary">Agregar</button>
+                        <button type="submit" name="add_vehicle" class="btn btn-primary me-2">Agregar</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
                     </div>
                 </form>
             </div>
@@ -772,7 +782,8 @@ $conn->close();
                             </div>
                             <br>
                             <div class="d-flex justify-content-center">
-                                <button type="submit" name="add_room" class="btn btn-primary">Agregar</button>
+                                <button type="submit" name="add_room" class="btn btn-primary me-2">Agregar</button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
                             </div>
                         </form>
                     </div>

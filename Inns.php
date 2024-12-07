@@ -147,12 +147,12 @@ if (!$result_inns) {
                         if (isset($_SESSION['user_id'])) {
                             echo '
                                 <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
-                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
+                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
                                 </a>';
                         } else {
                             echo '
                                 <button onclick="checkSession()" class="btn btn-success text-white">
-                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Consultar Reservación!
+                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
                                 </button>';
                         }
                         echo '

@@ -316,7 +316,7 @@
                         echo '<div class="card-body">';
                         echo '<h5 class="card-title"><i class="fas fa-hotel"></i> ' . $row['name'] . '</h5>';
                         echo '<p class="card-text"><i class="fas fa-info-circle"></i> ' . substr($row['description'], 0, 70) . '...</p>';
-                        echo '<a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success" style="font-size: 12px; color: white;">¡Consultar Reservación!</a>';
+                        echo '<a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success" style="font-size: 12px; color: white;">¡Ver Detalles!</a>';
 
                         echo '</div>';
                         echo '</div>';

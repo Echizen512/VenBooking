@@ -79,6 +79,7 @@
 
 
     <div class="sidebar bg-success">
+    <a href="./get_user.php" style="color: white;"><i class="fas fa-user icon text-danger"></i>Usuarios</a>
         <a href="./get_inn.php" style="color: white;"><i class="fas fa-hotel icon text-info"></i>Posadas</a>
         <a href="./get_vehicles.php" style="color: white;"><i class="fas fa-car icon text-danger"></i>Vehículos</a>
         <a href="./get_rooms.php" style="color: white;"><i class="fas fa-bed icon" style="color: #90ffbc;"></i>Habitaciones</a>

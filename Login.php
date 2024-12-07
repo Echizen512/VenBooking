@@ -3,118 +3,64 @@
 <?php
 include './config/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $profile_type = $_POST['profile_type'];
-    $password = $_POST['password'];
-
-    if (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{6,}$/', $password)) {
-        echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Contraseña Inválida',
-                text: 'La contraseña debe tener al menos 6 caracteres, incluyendo una mayúscula, una minúscula y un número.'
-            }).then(function() {
-                window.location.href = 'Login.php'; 
-            });
-        });
-    </script>";
-        exit();
-    }
-
-    $check_email = $conn->prepare("SELECT id FROM Profile WHERE email = ?");
-    $check_email->bind_param("s", $email);
-    $check_email->execute();
-    $check_email->store_result();
-
-    if ($check_email->num_rows > 0) {
-        echo "<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Correo ya registrado',
-                    text: 'Este correo electrónico ya está registrado.'
-                    }).then(function() {
-                window.location.href = 'Login.php'; 
-                });
-            });
-        </script>";
-        exit();
-    }
-    $check_email->close();
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO Profile (first_name, last_name, email, profile_type, password) VALUES (?, ?, ?, ?, ?)";
-
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("sssss", $first_name, $last_name, $email, $profile_type, $hashed_password);
-        if ($stmt->execute()) {
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro Exitoso',
-                        text: 'Tu cuenta ha sido creada exitosamente.'
-                    }).then(function() {
-                        window.location = 'login.php';
-                    });
-                });
-            </script>";
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
-    } else {
-        echo "Error: " . $conn->error;
-    }
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT id, password, profile_type FROM Profile WHERE email = ?";
+    $sql = "SELECT id, password, profile_type, block FROM Profile WHERE email = ?";
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $hashed_password, $profile_type);
+            $stmt->bind_result($id, $hashed_password, $profile_type, $block);
             $stmt->fetch();
-            if (password_verify($password, $hashed_password)) {
-                session_start();
-                $_SESSION["user_id"] = $id;
 
-                if ($profile_type === "Empresa") {
-                    $redirect_url = 'Includes/Inicio.php';
-                } else {
-                    $redirect_url = 'index.php';
-                }
-
-                echo "<script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Inicio de Sesión Exitoso'
-                        }).then(function() {
-                            window.location = '$redirect_url';
-                        });
-                    });
-                </script>";
-            } else {
+            // Verificar si el usuario está bloqueado
+            if ($block == 1) {
                 echo "<script>
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Contraseña Incorrecta',
-                            text: 'La contraseña que ingresaste es incorrecta.'
+                            title: 'Usuario Bloqueado',
+                            text: 'Tu cuenta ha sido bloqueada. No puedes iniciar sesión.'
                         });
                     });
                 </script>";
+            } else {
+                // Si no está bloqueado, verificar la contraseña
+                if (password_verify($password, $hashed_password)) {
+                    session_start();
+                    $_SESSION["user_id"] = $id;
+
+                    if ($profile_type === "Empresa") {
+                        $redirect_url = 'Includes/Inicio.php';
+                    } else {
+                        $redirect_url = 'index.php';
+                    }
+
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Inicio de Sesión Exitoso'
+                            }).then(function() {
+                                window.location = '$redirect_url';
+                            });
+                        });
+                    </script>";
+                } else {
+                    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Contraseña Incorrecta',
+                                text: 'La contraseña que ingresaste es incorrecta.'
+                            });
+                        });
+                    </script>";
+                }
             }
         } else {
             echo "<script>
@@ -134,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 }
 $conn->close();
 ?>
+
 
 
 

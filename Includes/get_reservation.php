@@ -13,10 +13,12 @@ $user_id = $_SESSION['user_id'];
 $sql = "SELECT reservations.id, reservations.inn_id, reservations.start_date, reservations.end_date,
                reservations.payment_method_id, reservations.receipt_path, reservations.codigo_referencia, 
                reservations.status, reservations.user_id,
-               profile.first_name AS user_name, profile.email AS user_email, inns.name AS inn_name 
+               profile.first_name AS user_name, profile.email AS user_email, inns.name AS inn_name,
+               rooms.room_number
         FROM reservations
         LEFT JOIN profile ON reservations.user_id = profile.id
         LEFT JOIN inns ON reservations.inn_id = inns.id
+        LEFT JOIN rooms ON reservations.room_id = rooms.id
         WHERE inns.user_id = ?";
 
 $stmt = $conn->prepare($sql);
@@ -45,12 +47,10 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Reservaciones</title>
     <link rel="stylesheet" href="../Assets/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet"href="../Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../Assets/css/CRUD.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 </head>
 
 <body>
@@ -66,6 +66,7 @@ $conn->close();
                                 <th class="text-center"><i class="fas fa-user"></i> Cliente</th>
                                 <th class="text-center"><i class="fas fa-envelope"></i> Correo</th>
                                 <th class="text-center"><i class="fas fa-building"></i> Posada</th>
+                                <th class="text-center"><i class="fas fa-bed"></i> Habitación</th> <!-- Nueva columna para room_number -->
                                 <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha</th>
                                 <th class="text-center"><i class="fas fa-info-circle"></i> Estado</th>
                                 <th class="text-center"><i class="fas fa-file-alt"></i> Referencia</th>
@@ -92,6 +93,7 @@ $conn->close();
                                         <td class='text-center'>{$row['user_name']}</td>
                                         <td class='text-center'>{$row['user_email']}</td>
                                         <td class='text-center'>{$row['inn_name']}</td>
+                                        <td class='text-center'>{$row['room_number']}</td> <!-- Mostrar room_number -->
                                         <td class='text-center'>{$startDateFormatted} - {$endDateFormatted}</td>
                                         <td style='color: {$statusColor};'>{$row['status']}</td>
                                         <td class='text-center'>{$row['codigo_referencia']}</td>
@@ -116,10 +118,9 @@ $conn->close();
                                     </tr>";
                                 }
                             } else {
-                                echo "<tr><td colspan='8'>No se encontraron reservaciones</td></tr>";
+                                echo "<tr><td colspan='9'>No se encontraron reservaciones</td></tr>";
                             }
                             ?>
-
                         </tbody>
                     </table>
                 </div>
@@ -127,7 +128,6 @@ $conn->close();
         </div>
     </div>
     <br> <br>
-
 
     <script src="../Assets/js/jquery-3.6.0.min.js"></script>
     <script src="../Assets/js/jquery.dataTables.min.js"></script>

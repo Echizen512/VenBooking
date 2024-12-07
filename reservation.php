@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $payment_method = $_POST['payment_method'];
-    $reference_code = $_POST['reference_code']; 
-
+    $reference_code = $_POST['reference_code'];
     $status = 'En Espera';
     $receipt_path = '';
+    $room_id = $_POST['room_id'];
 
     if (isset($_FILES['receipt']) && $_FILES['receipt']['error'] == UPLOAD_ERR_OK) {
         $file_tmp_name = $_FILES['receipt']['tmp_name'];
@@ -82,13 +82,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $sql_insert_reservation = "INSERT INTO reservations (inn_id, start_date, end_date, payment_method_id, receipt_path, status, user_id, codigo_referencia)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $monto_total = '0';
+
+    $sql_insert_reservation = "INSERT INTO reservations (inn_id, start_date, end_date, payment_method_id, receipt_path, codigo_referencia, status, user_id, room_id, monto_total)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql_insert_reservation);
+
     if (!$stmt) {
         die("Error en la preparación de la consulta de inserción: " . $conn->error);
     }
-    $stmt->bind_param('isssssss', $inn_id, $start_date, $end_date, $payment_method, $receipt_path, $status, $user_id, $reference_code);
+
+    $stmt->bind_param('issssssiii', $inn_id, $start_date, $end_date, $payment_method, $receipt_path, $reference_code, $status, $user_id, $room_id, $monto_total);
 
     if ($stmt->execute()) {
         $_SESSION['swal_message'] = [
@@ -97,7 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'text' => 'La reserva se ha confirmado exitosamente.',
             'redirect' => 'Inns.php'
         ];
-        header("Location: Inns.php");
         exit;
     } else {
         $_SESSION['swal_message'] = [
@@ -106,14 +109,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'text' => 'Hubo un error al confirmar la reserva: ' . $stmt->error,
             'redirect' => 'reservation.php?inn_id=' . urlencode($inn_id)
         ];
-        header("Location: reservation.php?inn_id=" . urlencode($inn_id));
         exit;
     }
 
     $stmt->close();
 }
 
+
 ?>
+
 
 
 

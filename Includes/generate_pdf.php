@@ -68,54 +68,66 @@ if (isset($_POST['generate_pdf'])) {
         $pdf->Ln(10);
     }
 
-    // Reporte 2: Reservaciones por Posada
-    if (in_array('2', $selected_reports)) {
-        $pdf->SetFont('Arial', 'B', 14);
-        $pdf->Cell(0, 12, utf8_decode('Reporte 2: Reservaciones por Posada'), 0, 1, 'L', true);
-        $pdf->Ln(5);
+   // Reporte 2: Reservaciones por Posada
+if (in_array('2', $selected_reports)) {
+    $pdf->SetFont('Arial', 'B', 14);
+    $pdf->Cell(0, 12, utf8_decode('Reporte 2: Reservaciones por Posada'), 0, 1, 'L', true);
+    $pdf->Ln(5);
 
-        $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(50, 10, 'Posada', 1, 0, 'C', true);
-        $pdf->Cell(30, 10, utf8_decode('Inicio'), 1, 0, 'C', true);
-        $pdf->Cell(30, 10, utf8_decode('Fin'), 1, 0, 'C', true);
-        $pdf->Cell(60, 10, utf8_decode('Método de Pago'), 1, 0, 'C', true);
-        $pdf->Ln(10);
+    // Filtros de fecha si están presentes
+    $start_date = $_POST['start_date'] ?? null;
+    $end_date = $_POST['end_date'] ?? null;
 
-        $pdf->SetFont('Arial', '', 9);
-        $fill = false;
-        foreach ($selected_inns as $inn_id) {
-            $query = "SELECT inns.name, reservations.start_date, reservations.end_date, 
-                             CASE reservations.payment_method_id
-                                 WHEN 1 THEN 'Pago Móvil'
-                                 WHEN 2 THEN 'Transferencia'
-                                 WHEN 3 THEN 'Efectivo'
-                                 ELSE 'Desconocido'
-                             END AS payment_method
-                      FROM reservations
-                      JOIN inns ON reservations.inn_id = inns.id
-                      WHERE inns.id = $inn_id";
-            $result = $conn->query($query);
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->Cell(50, 10, 'Posada', 1, 0, 'C', true);
+    $pdf->Cell(30, 10, 'Inicio', 1, 0, 'C', true);
+    $pdf->Cell(30, 10, 'Fin', 1, 0, 'C', true);
+    $pdf->Cell(60, 10, 'Método de Pago', 1, 0, 'C', true);
+    $pdf->Ln(10);
 
-            while ($row = $result->fetch_assoc()) {
-                if ($fill) {
-                    $pdf->SetFillColor($altColor[0], $altColor[1], $altColor[2]);
-                } else {
-                    $pdf->SetFillColor(255, 255, 255);
-                }
+    $pdf->SetFont('Arial', '', 9);
+    $fill = false;
 
-                $startDate = date('d/m/Y', strtotime($row['start_date']));
-                $endDate = date('d/m/Y', strtotime($row['end_date']));
+    foreach ($selected_inns as $inn_id) {
+        // Agregar condición para filtrar por fecha si existen fechas de inicio y fin
+        $date_filter = "";
+        if ($start_date && $end_date) {
+            $date_filter = " AND reservations.start_date >= '$start_date' AND reservations.end_date <= '$end_date' ";
+        }
+        
+        $query = "SELECT inns.name, reservations.start_date, reservations.end_date, 
+                         CASE reservations.payment_method_id
+                             WHEN 1 THEN 'Pago Móvil'
+                             WHEN 2 THEN 'Transferencia'
+                             WHEN 3 THEN 'Efectivo'
+                             ELSE 'Desconocido'
+                         END AS payment_method
+                  FROM reservations
+                  JOIN inns ON reservations.inn_id = inns.id
+                  WHERE inns.id = $inn_id $date_filter";
+        $result = $conn->query($query);
 
-                $pdf->Cell(50, 8, utf8_decode($row['name']), 1, 0, 'L', true);
-                $pdf->Cell(30, 8, $startDate, 1, 0, 'C', true);
-                $pdf->Cell(30, 8, $endDate, 1, 0, 'C', true);
-                $pdf->Cell(60, 8, utf8_decode($row['payment_method']), 1, 0, 'L', true);
-                $pdf->Ln(8);
-
-                $fill = !$fill;
+        while ($row = $result->fetch_assoc()) {
+            if ($fill) {
+                $pdf->SetFillColor($altColor[0], $altColor[1], $altColor[2]);
+            } else {
+                $pdf->SetFillColor(255, 255, 255);
             }
+
+            $startDate = date('d/m/Y', strtotime($row['start_date']));
+            $endDate = date('d/m/Y', strtotime($row['end_date']));
+
+            $pdf->Cell(50, 8, utf8_decode($row['name']), 1, 0, 'L', true);
+            $pdf->Cell(30, 8, $startDate, 1, 0, 'C', true);
+            $pdf->Cell(30, 8, $endDate, 1, 0, 'C', true);
+            $pdf->Cell(60, 8, utf8_decode($row['payment_method']), 1, 0, 'L', true);
+            $pdf->Ln(8);
+
+            $fill = !$fill;
         }
     }
+}
+
 
 
         // Reporte 3: Métodos de Pago registrados por Posadas

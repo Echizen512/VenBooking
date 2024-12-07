@@ -44,9 +44,11 @@ include('Header_Admin.php');
                     <div class="card-body">
                         <form action="generate_pdf.php" method="post">
                             <div class="mb-3">
-                                <label for="inns" class="form-label"><i class="fas fa-hotel me-2 text-info"></i>Seleccione las Posadas</label>
+                                <label for="inns" class="form-label"><i
+                                        class="fas fa-hotel me-2 text-info"></i>Seleccione las Posadas</label>
                                 <select class="form-select" id="inns" name="inns[]" multiple>
                                     <?php
+                                    // Consulta para obtener las posadas
                                     include '../config/db.php';
                                     $user_id = $_SESSION['user_id'];
                                     $query = "SELECT id, name FROM inns WHERE user_id = ?";
@@ -54,60 +56,61 @@ include('Header_Admin.php');
                                     $stmt->bind_param("i", $user_id);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<option value='{$row['id']}'>{$row['name']}</option>";
-                                        }
-                                    } else {
-                                        echo "<option disabled>No se encontraron posadas para este usuario.</option>";
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='{$row['id']}'>{$row['name']}</option>";
                                     }
                                     $stmt->close();
                                     ?>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="reports" class="form-label"><i class="fas fa-file-pdf me-2 text-danger"></i>Seleccione los Reportes</label>
+                                <label for="reports" class="form-label"><i
+                                        class="fas fa-file-pdf me-2 text-danger"></i>Seleccione los Reportes</label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="1"
                                         id="report1">
-                                    <label class="form-check-label" for="report1">
-                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 1: Usuarios Registrados
-                                        por Posada
-                                    </label>
+                                    <label class="form-check-label" for="report1">Reporte 1: Usuarios Registrados por
+                                        Posada</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="2"
                                         id="report2">
-                                    <label class="form-check-label" for="report2">
-                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 2: Reservaciones por
-                                        Posada
-                                    </label>
+                                    <label class="form-check-label" for="report2">Reporte 2: Reservaciones por
+                                        Posada</label>
                                 </div>
+                                <!-- Los demás reportes -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="3"
                                         id="report3">
-                                    <label class="form-check-label" for="report3">
-                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 3: Métodos de Pago
-                                        Registrados por Posada
-                                    </label>
+                                    <label class="form-check-label" for="report3">Reporte 3: Métodos de Pago Registrados
+                                        por Posada</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="4"
                                         id="report4">
-                                    <label class="form-check-label" for="report4">
-                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 4: Habitaciones
-                                        Registradas por Posada
-                                    </label>
+                                    <label class="form-check-label" for="report4">Reporte 4: Habitaciones Registradas
+                                        por Posada</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="reports[]" value="5"
                                         id="report5">
-                                    <label class="form-check-label" for="report5">
-                                        <i class="fas fa-file-pdf me-2 text-danger"></i> Reporte 5: Vehículos
-                                        Registrados por Posada
-                                    </label>
+                                    <label class="form-check-label" for="report5">Reporte 5: Vehículos Registrados por
+                                        Posada</label>
                                 </div>
                             </div>
+
+                            <!-- Filtro de Fechas solo para el reporte de Reservaciones -->
+                            <div class="mb-3" id="dateFilter" style="display: none;">
+                                <label for="start_date" class="form-label"><i
+                                        class="fas fa-calendar-alt me-2 text-info"></i>Fecha de Inicio</label>
+                                <input type="date" class="form-control" id="start_date" name="start_date">
+                            </div>
+                            <div class="mb-3" id="dateFilterEnd" style="display: none;">
+                                <label for="end_date" class="form-label"><i
+                                        class="fas fa-calendar-alt me-2 text-info"></i>Fecha de Fin</label>
+                                <input type="date" class="form-control" id="end_date" name="end_date">
+                            </div>
+
                             <button type="submit" name="generate_pdf" class="btn btn-success">
                                 <i class="fas fa-download"></i> Generar Reporte
                             </button>
@@ -118,5 +121,22 @@ include('Header_Admin.php');
         </div>
     </div>
 </body>
+
+<script>
+    // Mostrar el filtro de fechas solo si el reporte 2 (reservaciones) está seleccionado
+    document.querySelectorAll('input[name="reports[]"]').forEach((checkbox) => {
+        checkbox.addEventListener('change', function () {
+            const dateFilter = document.getElementById('dateFilter');
+            const dateFilterEnd = document.getElementById('dateFilterEnd');
+            if (document.getElementById('report2').checked) {
+                dateFilter.style.display = 'block';
+                dateFilterEnd.style.display = 'block';
+            } else {
+                dateFilter.style.display = 'none';
+                dateFilterEnd.style.display = 'none';
+            }
+        });
+    });
+</script>
 
 </html>

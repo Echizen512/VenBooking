@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2024 a las 01:51:19
+-- Tiempo de generación: 07-12-2024 a las 03:41:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -252,7 +252,12 @@ INSERT INTO `audit_log` (`id`, `user_id`, `table_name`, `action`, `affected_id`,
 (214, 6, 'inns', 'UPDATE', 33, '2024-11-30 18:58:10', 'name: Rocío de Montaña, status: 0, email: rociodemontana@example.com, phone: 04120000019, state_id: 1', 'name: Rocío de Montaña, status: 0, email: rociodemontana@example.com, phone: 04120000019, state_id: 9'),
 (215, 6, 'inns', 'UPDATE', 28, '2024-11-30 18:59:01', 'name: Playa Cristal, status: 0, email: playacristal@example.com, phone: 04120000014, state_id: 1', 'name: Playa Cristal, status: 0, email: playacristal@example.com, phone: 04120000014, state_id: 5'),
 (216, 6, 'inns', 'UPDATE', 25, '2024-11-30 18:59:37', 'name: Costa Brava, status: 0, email: costabrava@example.com, phone: 04120000011, state_id: 1', 'name: Costa Brava, status: 0, email: costabrava@example.com, phone: 04120000011, state_id: 6'),
-(217, 6, 'inns', 'UPDATE', 31, '2024-11-30 19:00:58', 'name: Mar Azul, status: 0, email: marazul@example.com, phone: 04120000017, state_id: 1', 'name: Mar Azul, status: 0, email: marazul@example.com, phone: 04120000017, state_id: 16');
+(217, 6, 'inns', 'UPDATE', 31, '2024-11-30 19:00:58', 'name: Mar Azul, status: 0, email: marazul@example.com, phone: 04120000017, state_id: 1', 'name: Mar Azul, status: 0, email: marazul@example.com, phone: 04120000017, state_id: 16'),
+(218, 6, 'profile', 'UPDATE', 6, '2024-12-07 00:41:43', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(219, 6, 'profile', 'UPDATE', 6, '2024-12-07 00:41:49', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(220, 13, 'reservations', 'INSERT', 60, '2024-12-07 02:05:29', NULL, 'inn_id: 1, start_date: 2024-12-07, end_date: 2024-12-08, payment_method_id: 1, monto_total: 0.00, status: En Espera'),
+(221, 6, 'profile', 'UPDATE', 6, '2024-12-07 02:16:44', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa'),
+(222, 6, 'profile', 'UPDATE', 6, '2024-12-07 02:17:31', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa', 'first_name: Nanami, last_name: Kento, email: jmrm19723@gmail.com, profile_type: Empresa');
 
 -- --------------------------------------------------------
 
@@ -273,7 +278,7 @@ CREATE TABLE `bank_transfer_info` (
 --
 
 INSERT INTO `bank_transfer_info` (`id`, `inn_id`, `full_name`, `account_number`, `bank_code`) VALUES
-(6, 1, 'Miguel', '1202', '0191');
+(6, 1, 'Arley', '1202', '0191');
 
 -- --------------------------------------------------------
 
@@ -1043,7 +1048,7 @@ INSERT INTO `profile` (`id`, `first_name`, `last_name`, `email`, `last_access`, 
 (2, 'Arley', 'Dos Santos', 'jmrm19722@gmail.com', '2024-11-18 02:52:59', '2024-08-18 19:04:40', 'Empresa', '$2y$10$AOp2eo9OT17LrkTIqrUbleohQvx2yA0NRNH1BuSW/D4Lp7ryGovTS', 0, 'https://th.bing.com/th/id/OIP.tabNCQDLxYc7x1HqxiUJKQHaHa?rs=1&pid=ImgDetMain', 'https://verdanttraveler.com/wp-content/uploads/2023/12/island-lake-state-recreation-area-1024x585.jpg', 'none', NULL, NULL),
 (4, 'Itadori', 'Yuji', 'jmrm19711@gmail.com', '2024-11-18 02:52:24', '2024-09-21 16:02:49', 'Empresa', '$2y$10$i32O6OJyuEu.0IjWi.yybegMuH4GfSL9RBcQn8JhEe8Ok4WYLPOLG', 0, 'https://pm1.narvii.com/7926/0cbc99c9487af031a844b2112a226af7da79f510r1-1078-1080v2_uhq.jpg', NULL, 'none', NULL, NULL),
 (5, 'Daniela', 'Morgado', 'dani@gmail.com', '2024-09-23 14:08:00', '2024-09-23 05:42:55', 'Empresa', '$2y$10$e0oZR3qgLa44fjjyIgpEGOpHirslt3ahES006vhg6CqqGbPFOOT8.', 0, 'https://th.bing.com/th/id/R.93361146c64f106b65a55a37d5bc5e02?rik=%2fIP5Ld43L78gOQ&pid=ImgRaw&r=0', 'https://www.pincamp.de/magazin/wp-content/uploads/sites/1/resized/2022/07/AdobeStock_71054640-min-min-1029x350-c-default.png', 'none', NULL, NULL),
-(6, 'Nanami', 'Kento', 'jmrm19723@gmail.com', '2024-11-29 02:35:41', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://www.looper.com/img/gallery/kento-nanamis-powers-from-jujutsu-kaisen-explained/l-intro-1632713276.jpg', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', 'gold', '2024-11-29', '2024-12-29'),
+(6, 'Nanami', 'Kento', 'jmrm19723@gmail.com', '2024-12-07 02:17:31', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://www.looper.com/img/gallery/kento-nanamis-powers-from-jujutsu-kaisen-explained/l-intro-1632713276.jpg', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', 'gold', '2024-11-29', '2024-12-29'),
 (13, 'Juan Francisco', 'Rodriguez', 'gramolca@gmail.com', '2024-11-29 02:07:45', '2024-11-29 02:07:45', 'Turista', '$2y$10$n29WP0qaMfEoSZKxQwqnceytoKFBjVlohk8EnqDSyiBeTZPM/0Aiq', 0, NULL, NULL, 'none', NULL, NULL);
 
 --
@@ -1080,24 +1085,17 @@ CREATE TABLE `reservations` (
   `receipt_path` varchar(255) DEFAULT NULL,
   `codigo_referencia` varchar(255) DEFAULT NULL,
   `status` enum('En Espera','Confirmado','Cancelado') DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `room_id` int(11) NOT NULL,
+  `monto_total` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `inn_id`, `start_date`, `end_date`, `payment_method_id`, `receipt_path`, `codigo_referencia`, `status`, `user_id`) VALUES
-(31, 2, '2024-09-12', '2024-09-13', 1, 'uploads/66e1a341a26dc-OIP98.jpg', '1234', 'Confirmado', 2),
-(32, 3, '2024-10-10', '2024-10-09', 3, '', '1234', 'Confirmado', 5),
-(33, 1, '2024-09-23', '2024-09-24', 3, '', '1234', 'Confirmado', 5),
-(34, 11, '2024-10-25', '2024-09-23', 1, 'uploads/66f198192366c-Perfil.png', '1234', 'En Espera', 5),
-(38, 2, '2024-11-29', '2024-11-30', 1, 'uploads/6737ef26d78fa-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '1', 'En Espera', 6),
-(39, 2, '2024-11-16', '2024-11-17', 1, 'uploads/6737ef347f052-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '213', 'En Espera', 6),
-(40, 2, '2024-11-21', '2024-11-22', 1, 'uploads/6737f03871b6d-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '132', 'En Espera', 6),
-(41, 2, '2024-12-24', '2024-12-26', 1, 'uploads/6737fafa57ba2-8.40.jpg', '123', 'En Espera', 6),
-(42, 2, '2025-02-02', '2025-02-04', 1, 'uploads/6738842881be7-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '1213', 'En Espera', 6),
-(43, 2, '2025-02-19', '2025-02-21', 1, 'uploads/6738857498bd6-WhatsApp Image 2024-11-03 at 15.43.52.jpeg', '2313', 'En Espera', 6);
+INSERT INTO `reservations` (`id`, `inn_id`, `start_date`, `end_date`, `payment_method_id`, `receipt_path`, `codigo_referencia`, `status`, `user_id`, `room_id`, `monto_total`) VALUES
+(60, 1, '2024-12-07', '2024-12-08', 1, 'uploads/6753ad69076b2-Caso de Uso.jpg', '123213', 'En Espera', 13, 1, 0.00);
 
 --
 -- Disparadores `reservations`
@@ -1471,7 +1469,7 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT de la tabla `audit_log`
 --
 ALTER TABLE `audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
 -- AUTO_INCREMENT de la tabla `bank_transfer_info`
@@ -1549,7 +1547,7 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT de la tabla `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `rooms`
