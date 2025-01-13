@@ -120,7 +120,7 @@
         <div>
             <h2 style="font-size: 16px;">VenBooking - Gestión de Posadas</h2>
         </div>
-        <a href="logout.php">
+        <a href="../Includes/logout.php">
             <button class="logout-btn">
                 <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
             </button>

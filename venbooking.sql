@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-01-2025 a las 03:12:04
+-- Tiempo de generación: 13-01-2025 a las 05:23:49
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -184,7 +184,12 @@ INSERT INTO `audit_log` (`id`, `user_id`, `table_name`, `action`, `affected_id`,
 (248, 14, 'profile', 'UPDATE', 14, '2025-01-13 00:12:34', 'first_name: Daniela, last_name: Morgado, email: daniela@gmail.com, profile_type: Empresa', 'first_name: Daniela, last_name: Morgado, email: daniela@gmail.com, profile_type: Empresa'),
 (249, 6, 'inns', 'UPDATE', 20, '2025-01-13 00:13:02', 'name: Posada Jardín Secreto, status: 0, email: jardinsecreto@posadasvenezuela.com, phone: 04120000006, state_id: 7', 'name: Posada Jardín Secreto, status: 0, email: jardinsecreto@posadasvenezuela.com, phone: 04120000006, state_id: 7'),
 (250, 6, 'inns', 'UPDATE', 18, '2025-01-13 00:13:19', 'name: Amanecer Andino, status: 0, email: amanecerandino@example.com, phone: 04120000004, state_id: 3', 'name: Amanecer Andino, status: 0, email: amanecerandino@example.com, phone: 04120000004, state_id: 3'),
-(251, 6, 'inns', 'UPDATE', 15, '2025-01-13 00:13:29', 'name: Posada Cielo Azul, status: 0, email: cieloazul@posadasvenezuela.com, phone: 04120000001, state_id: 2', 'name: Posada Cielo Azul, status: 0, email: cieloazul@posadasvenezuela.com, phone: 04120000001, state_id: 2');
+(251, 6, 'inns', 'UPDATE', 15, '2025-01-13 00:13:29', 'name: Posada Cielo Azul, status: 0, email: cieloazul@posadasvenezuela.com, phone: 04120000001, state_id: 2', 'name: Posada Cielo Azul, status: 0, email: cieloazul@posadasvenezuela.com, phone: 04120000001, state_id: 2'),
+(252, 6, 'profile', 'UPDATE', 6, '2025-01-13 02:28:16', 'first_name: Arley, last_name: Dos Santos, email: arley@gmail.com, profile_type: Empresa', 'first_name: Arleys, last_name: Dos Santos, email: arley@gmail.com, profile_type: Empresa'),
+(253, 6, 'profile', 'UPDATE', 6, '2025-01-13 02:28:20', 'first_name: Arleys, last_name: Dos Santos, email: arley@gmail.com, profile_type: Empresa', 'first_name: Arley, last_name: Dos Santos, email: arley@gmail.com, profile_type: Empresa'),
+(254, 13, 'reservations', 'UPDATE', 60, '2025-01-13 02:35:43', 'inn_id: 1, start_date: 2024-12-07, end_date: 2024-12-08, payment_method_id: 1, monto_total: 0.00, status: En Espera', 'inn_id: 1, start_date: 2024-12-07, end_date: 2024-12-08, payment_method_id: 1, monto_total: 0.00, status: Confirmado'),
+(255, 6, 'inns', 'UPDATE', 1, '2025-01-13 03:15:05', 'name: Posada El Paraíso Tropical, status: 1, email: paradisotropical@posadasvenezuela.com, phone: 04243264971, state_id: 1', 'name: Posada El Paraíso Tropical, status: 1, email: paradisotropical@posadasvenezuela.com, phone: 04243264971, state_id: 1'),
+(256, 6, 'inns', 'UPDATE', 1, '2025-01-13 03:15:08', 'name: Posada El Paraíso Tropical, status: 1, email: paradisotropical@posadasvenezuela.com, phone: 04243264971, state_id: 1', 'name: Posada El Paraíso Tropical, status: 1, email: paradisotropical@posadasvenezuela.com, phone: 04243264971, state_id: 1');
 
 -- --------------------------------------------------------
 
@@ -205,7 +210,8 @@ CREATE TABLE `bank_transfer_info` (
 --
 
 INSERT INTO `bank_transfer_info` (`id`, `inn_id`, `full_name`, `account_number`, `bank_code`) VALUES
-(6, 1, 'Arley', '1202', '0191');
+(6, 1, 'Arley Dos Santos', '6276093817733776', '0191'),
+(7, 2, 'Arley Dos Santos', '6276093817733776', '0191');
 
 -- --------------------------------------------------------
 
@@ -224,7 +230,7 @@ CREATE TABLE `binance_transfer_info` (
 --
 
 INSERT INTO `binance_transfer_info` (`id`, `inn_id`, `email`) VALUES
-(1, 1, 'jmrm19722@gmail.com');
+(2, 1, 'arley@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -917,7 +923,7 @@ CREATE TABLE `paypal_transfer_info` (
 --
 
 INSERT INTO `paypal_transfer_info` (`id`, `inn_id`, `email`) VALUES
-(1, 1, 'jmrm19722@gmail.com');
+(1, 1, 'arley@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -947,7 +953,7 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`id`, `first_name`, `last_name`, `email`, `last_access`, `registration_date`, `profile_type`, `password`, `block`, `profile_image_url`, `banner_image_url`, `membership_type`, `membership_start_date`, `membership_end_date`) VALUES
-(6, 'Arley', 'Dos Santos', 'arley@gmail.com', '2025-01-13 00:00:58', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://th.bing.com/th/id/R.ec0c37d2af748768cac403347e25cc0d?rik=CyuK20zFNYt%2fYw&pid=ImgRaw&r=0', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', 'gold', '2024-11-29', '2024-12-29'),
+(6, 'Arley', 'Dos Santos', 'arley@gmail.com', '2025-01-13 02:28:20', '2024-10-05 01:44:56', 'Empresa', '$2y$10$gZ.d87oTQNsDlf8DnWQ9VO.kGKsyq.o0IfbJ/wG0sxPBNvaglEZAS', 0, 'https://th.bing.com/th/id/R.ec0c37d2af748768cac403347e25cc0d?rik=CyuK20zFNYt%2fYw&pid=ImgRaw&r=0', 'https://mariginabruno.wordpress.com/wp-content/uploads/2012/01/shutterstock_49390492.jpg', 'gold', '2024-11-29', '2024-12-29'),
 (13, 'Carlos', 'Escobar', 'carlosescobar@gmail.com', '2025-01-13 00:02:36', '2024-11-29 02:07:45', 'Turista', '$2y$10$n29WP0qaMfEoSZKxQwqnceytoKFBjVlohk8EnqDSyiBeTZPM/0Aiq', 0, 'https://cdn.pixabay.com/photo/2017/02/23/13/05/profile-2092113_640.png', NULL, 'none', NULL, NULL),
 (14, 'Daniela', 'Morgado', 'daniela@gmail.com', '2025-01-13 00:12:34', '2025-01-13 00:11:03', 'Empresa', '$2y$10$MyjwxHTU0W82Dly.ikxuv.FwyqtfaQ276rkbmpGCf4SfiWXeGeEuq', 0, 'https://static.vecteezy.com/system/resources/previews/009/400/444/non_2x/woman-face-clipart-design-illustration-free-png.png', NULL, 'none', NULL, NULL);
 
@@ -995,7 +1001,7 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `inn_id`, `start_date`, `end_date`, `payment_method_id`, `receipt_path`, `codigo_referencia`, `status`, `user_id`, `room_id`, `monto_total`) VALUES
-(60, 1, '2024-12-07', '2024-12-08', 1, 'uploads/6753ad69076b2-Caso de Uso.jpg', '123213', 'En Espera', 13, 1, 0.00);
+(60, 1, '2024-12-07', '2024-12-08', 1, 'uploads/6753ad69076b2-Caso de Uso.jpg', '123213', 'Confirmado', 13, 1, 0.00);
 
 --
 -- Disparadores `reservations`
@@ -1046,7 +1052,6 @@ CREATE TABLE `rooms` (
 
 INSERT INTO `rooms` (`id`, `room_number`, `type`, `quality`, `image_url`, `description`, `price`, `capacity`, `inn_id`, `status`, `block`, `image_url2`, `image_url3`, `image_url4`, `image_url5`) VALUES
 (1, 'Palma Real - 101', 'Pareja', 'Alta', 'https://www.homenayoo.com/wp-content/uploads/2014/09/2216.jpg', 'Sumérgete en el encanto tropical con vistas a palmeras majestuosas. Incluye baño con desayuno, almuerzo y cena disponibles a la carta                                           ', 100.00, 2, 1, 0, 0, '', '', '', ''),
-(2, '102', 'Pareja', 'Media', 'https://synergy.booking-channel.com/api/hotels/658/medias/90', 'Habitación doble con vista al jardín                                            ', 120.00, 2, 1, 0, 0, '', '', '', ''),
 (3, 'Horizonte Azul - 02', 'Solo', 'Premium', 'https://th.bing.com/th/id/R.cb6ace52900dfb55d10c345b6a7855e4?rik=UHIYinqfPKm4lA&riu=http%3a%2f%2fwww.posadaelsolar.es%2fwp-content%2fuploads%2f2013%2f08%2ffotos-posada-118.jpg&ehk=s5PlXIr4unIHMGw%2bciawMBuQ9%2b4zdv2bU7HRJf26Sbo%3d&risl=&pid=ImgRaw&r=0', 'Disfruta del cielo despejado y el mar infinito desde tu ventana. Incluye baño y servicio de habitaciones 24/7', 120.00, 2, 2, 0, 0, NULL, NULL, NULL, NULL),
 (4, 'Reflejo de Luna - 103', 'Pareja', 'Estándar', 'https://synergy.booking-channel.com/api/hotels/658/medias/90', 'Un espacio romántico iluminado por la suave luz de la luna. Incluye baño y cena romántica.', 80.00, 2, 3, 0, 0, NULL, NULL, NULL, NULL),
 (5, 'Sol de Mañana - 101', 'Pareja', 'Superior', 'https://sonnigetoskana.ch/image/dirsep--propertiesdirsep--rawdirsep--3adirsep--3af2012ad62786707cf8f2d30b47ade83cc16d9d4433dotsep--jpg/800/600/0/0/0/0.jpg', 'espierta con los primeros rayos del sol iluminando tu habitación. Incluye baño.', 90.00, 2, 4, 0, 0, NULL, NULL, NULL, NULL),
@@ -1204,7 +1209,8 @@ CREATE TABLE `zelle_transfer_info` (
 --
 
 INSERT INTO `zelle_transfer_info` (`id`, `inn_id`, `email`) VALUES
-(1, 2, 'jmrm19723@gmail.com');
+(1, 2, 'jmrm19723@gmail.com'),
+(2, 1, 'arley@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -1218,6 +1224,13 @@ CREATE TABLE `zinli_transfer_info` (
   `email` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `zinli_transfer_info`
+--
+
+INSERT INTO `zinli_transfer_info` (`id`, `inn_id`, `email`, `created_at`) VALUES
+(1, 1, 'arley@gmail.com', '2025-01-13 02:35:22');
 
 --
 -- Índices para tablas volcadas
@@ -1380,19 +1393,19 @@ ALTER TABLE `zinli_transfer_info`
 -- AUTO_INCREMENT de la tabla `audit_log`
 --
 ALTER TABLE `audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
 
 --
 -- AUTO_INCREMENT de la tabla `bank_transfer_info`
 --
 ALTER TABLE `bank_transfer_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `binance_transfer_info`
 --
 ALTER TABLE `binance_transfer_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -1446,7 +1459,7 @@ ALTER TABLE `parishes`
 -- AUTO_INCREMENT de la tabla `paypal_transfer_info`
 --
 ALTER TABLE `paypal_transfer_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `profile`
@@ -1494,13 +1507,13 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT de la tabla `zelle_transfer_info`
 --
 ALTER TABLE `zelle_transfer_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `zinli_transfer_info`
 --
 ALTER TABLE `zinli_transfer_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
