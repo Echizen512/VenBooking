@@ -30,6 +30,7 @@
     </div>
 </section>
 
+
 <style>
 .events-section .event-wrap {
     transition: transform 0.3s ease, background-color 0.3s ease;
@@ -55,4 +56,70 @@
 .events-section .event-wrap:hover .details {
     color: #333;
 }
+
+.page-heading {
+    animation: fadeInDown 1.5s ease-in-out;
+}
+
+/* Keyframes para fadeInDown */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.events-section .event-wrap {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease-in-out forwards;
+    animation-delay: calc(0.1s * var(--i)); /* Delay based on the position in the list */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.events-section .event-wrap:nth-child(1) {
+    --i: 1;
+}
+
+.events-section .event-wrap:nth-child(2) {
+    --i: 2;
+}
+
+.events-section .event-wrap:hover {
+    transform: scale(1.05); 
+    background-color: #daeaf6; 
+}
+
+.events-section .img-wrap img {
+    transition: opacity 0.3s ease;
+}
+
+.events-section .event-wrap:hover .img-wrap img {
+    opacity: 0.8; 
+}
+
+.events-section .details {
+    transition: color 0.3s ease;
+}
+
+.events-section .event-wrap:hover .details {
+    color: #333;
+}
+
+/* Keyframes para fadeInUp */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 </style>

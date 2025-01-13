@@ -133,7 +133,6 @@ if (!$result_inns) {
                                     <div class="card-meta">
                                         <p style="font-size: 14px;"><i class="fas fa-tag"></i> ' . $row['state_name'] . '</p>
                                         <p style="font-size: 14px;"><i class="fas fa-map-marker-alt"></i> ' . $row['municipality_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-location-arrow"></i> ' . $row['parish_name'] . '</p>
                                         <p style="font-size: 14px;"><i class="fas fa-star"></i> ' . ucfirst($row['quality']) . '</p>
                                     </div>
                                     <br>';

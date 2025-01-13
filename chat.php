@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./Assets/css/responsive.css" rel="stylesheet">
-  <link rel="stylesheet" href="./Chat.css">
+  <link rel="stylesheet" href="./Assets/css/Chat.css">
 </head>
 
 

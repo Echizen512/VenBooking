@@ -8,8 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-
-// Consultas para obtener los datos
 $query_posadas = "SELECT COUNT(*) AS total FROM inns WHERE user_id = $user_id";
 $result_posadas = $conn->query($query_posadas);
 $total_posadas = $result_posadas->fetch_assoc()['total'];
@@ -31,7 +29,6 @@ $result_favoritos = $conn->query($query_favoritos);
 $total_favoritos = $result_favoritos->fetch_assoc()['total'];
 
 
-// Obtener datos para gráficas
 $query_habitaciones_por_posada = "
     SELECT inns.name AS posada, COUNT(rooms.id) AS habitaciones
     FROM inns
@@ -69,43 +66,6 @@ while ($row = $result_clientes->fetch_assoc()) {
 }
 
 
-$query_profile = "SELECT first_name, last_name, email, membership_type, profile_image_url, banner_image_url FROM Profile WHERE id = ?";
-$stmt = $conn->prepare($query_profile);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-    $first_name = $user['first_name'];
-    $last_name = $user['last_name'];
-    $email = $user['email'];
-    $membership_type = $user['membership_type'];
-    $profile_image_url = $user['profile_image_url'];
-    $banner_image_url = $user['banner_image_url'];
-} else {
-    $first_name = "Usuario";
-    $last_name = "Desconocido";
-    $email = "Desconocido";
-    $membership_type = "Sin membresía";
-    $profile_image_url = "../Assets/img/default-profile.png";
-    $banner_image_url = "Desconocido";
-}
-
-$query_vehiculos_por_posada = "
-    SELECT inns.name AS posada, COUNT(vehicles.id) AS vehiculos
-    FROM inns
-    LEFT JOIN vehicles ON inns.id = vehicles.inn_id
-    WHERE inns.user_id = $user_id
-    GROUP BY inns.id";
-$result_vehiculos = $conn->query($query_vehiculos_por_posada);
-$data_vehiculos = [];
-while ($row = $result_vehiculos->fetch_assoc()) {
-    $data_vehiculos[$row['posada']] = $row['vehiculos'];
-}
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -124,6 +84,90 @@ while ($row = $result_vehiculos->fetch_assoc()) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
+<style>
+    /* Animación de desvanecimiento */
+body {
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animación para tarjetas */
+.card {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUp 1s ease-in-out forwards;
+}
+
+.card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.card:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.card:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.card:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.card:nth-child(5) {
+    animation-delay: 1s;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación para gráficos */
+.chart-container {
+    opacity: 0;
+    transform: scale(0.95);
+    animation: growIn 1s ease-in-out forwards;
+}
+
+.chart-container:nth-child(1) {
+    animation-delay: 1.2s;
+}
+
+.chart-container:nth-child(2) {
+    animation-delay: 1.4s;
+}
+
+.chart-container:nth-child(3) {
+    animation-delay: 1.6s;
+}
+
+@keyframes growIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+</style>
 
 <?php include './Header_Admin.php'; ?>
 
@@ -181,89 +225,7 @@ while ($row = $result_vehiculos->fetch_assoc()) {
     </div>
 </div>
 
-<div class="container mt-5">
-    <div class="profile-container">
-        <div class="profile-left">
-            <div class="profile-image-container text-center">
-                <img src="<?php echo $profile_image_url ?? '../Assets/img/default-profile.png'; ?>" alt="Foto de Perfil"
-                    class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
-            </div>
-            <div class="profile-info text-center mt-3">
-                <h5>
-                    <i class="fas fa-id-badge text-secondary me-2"></i>
-                    <?php echo $first_name . ' ' . $last_name; ?>
-                </h5>
-                <p class="text-muted mt-2">
-                    <i class="fas fa-star text-warning me-2"></i>
-                    <?php
-                    if ($membership_type == 'basic') {
-                        echo '<span style="color: #cd7f32;">Básico</span>';
-                    } elseif ($membership_type == 'silver') {
-                        echo '<span style="color: silver;">Plata</span>';
-                    } elseif ($membership_type == 'gold') {
-                        echo '<span style="color: gold;">Oro</span>';
-                    } else {
-                        echo 'Membresía no definida';
-                    }
-                    ?>
-                </p>
-            </div>
-        </div>
 
-        <div class="profile-form">
-            <form action="update_profile.php" method="POST">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="first_name" class="form-label">
-                            <i class="fas fa-user text-primary me-2"></i>Nombre
-                        </label>
-                        <input type="text" name="first_name" id="first_name" class="form-control"
-                            value="<?php echo $first_name; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="last_name" class="form-label">
-                            <i class="fas fa-user text-primary me-2"></i>Apellido
-                        </label>
-                        <input type="text" name="last_name" id="last_name" class="form-control"
-                            value="<?php echo $last_name; ?>" required>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <label for="email" class="form-label">
-                        <i class="fas fa-envelope text-warning me-2"></i>Correo Electrónico
-                    </label>
-                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $email ?? ''; ?>"
-                        required>
-                </div>
-                <div class="mt-3">
-                    <label for="password" class="form-label">
-                        <i class="fas fa-lock text-secondary me-2"></i>Contraseña (Opcional)
-                    </label>
-                    <input type="password" name="password" id="password" class="form-control">
-                </div>
-                <div class="mt-3">
-                    <label for="profile_image_url" class="form-label">
-                        <i class="fas fa-image text-primary me-2"></i>URL de Imagen de Perfil
-                    </label>
-                    <input type="text" name="profile_image_url" id="profile_image_url" class="form-control"
-                        value="<?php echo $profile_image_url; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="banner_image_url" class="form-label">
-                        <i class="fas fa-image text-danger me-2"></i>URL de Banner
-                    </label>
-                    <input type="text" name="banner_image_url" id="banner_image_url" class="form-control"
-                        value="<?php echo $banner_image_url ?? ''; ?>">
-                </div>
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-2"></i>Guardar Cambios
-                    </button>
-                </div>
-            </form>
-        </div>
-
-    </div>
 </div>
 
 

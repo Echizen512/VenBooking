@@ -78,6 +78,7 @@ $result_inns = $conn->query($sql_inns);
     width: 100%;
 }
 
+
 </style>
 
 <body>

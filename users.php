@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 <?php include "./head.php"; ?>
 
 <link href="./Assets/css/responsive.css" rel="stylesheet">
-<link rel="stylesheet" href="./users.css">
+<link rel="stylesheet" href="./Assets/css/users.css">
 
 <body>
   <div class="wrapper">

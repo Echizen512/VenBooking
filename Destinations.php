@@ -49,9 +49,101 @@ $destinations_result = $conn->query($destinations_query);
     <link rel="stylesheet" href="./Assets/css/Destinations.css">
 </head>
 
+<style>
+    /* Animación de entrada para la sección de encabezado */
+.page-heading {
+    animation: fadeInDown 1.5s ease-in-out;
+}
+
+/* Animación de entrada para la tarjeta de filtro */
+.filter-card {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards 0.5s;
+}
+
+/* Animación de entrada para los destinos */
+.event-wrap {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-in-out forwards;
+    animation-delay: calc(0.1s * var(--i)); /* Delay based on the position in the list */
+}
+
+.event-wrap:nth-child(1) {
+    --i: 1;
+}
+
+.event-wrap:nth-child(2) {
+    --i: 2;
+}
+
+.event-wrap:nth-child(3) {
+    --i: 3;
+}
+
+/* Keyframes para fadeInDown */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Keyframes para fadeIn */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Keyframes para fadeInUp */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación de hover para los destinos */
+.event-wrap:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    background-color: #f5f5f5;
+}
+
+.img-wrap img {
+    transition: opacity 0.3s ease;
+}
+
+.event-wrap:hover .img-wrap img {
+    opacity: 0.8;
+}
+
+.details {
+    transition: color 0.3s ease;
+}
+
+.event-wrap:hover .details {
+    color: #333;
+}
+
+</style>
+
 <body>
 
     <?php include $headerFile; ?>
+
 
     <section class="page-heading">
         <div class="container">
@@ -61,7 +153,7 @@ $destinations_result = $conn->query($destinations_query);
 
     <section class="upcoming events-section">
         <div class="container">
-            <div class="filter-card">
+            <div class="filter-card" style="border-radius: 20px;">
                 <h2><i class="fas fa-filter text-danger"></i> Filtrar Posadas por Estado</h2>
                 <form action="Inns_State.php" method="GET">
                     <div class="filter-wrapper">
@@ -74,7 +166,7 @@ $destinations_result = $conn->query($destinations_query);
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success" style="font-size: 18px; padding: 10px 20px; display: flex; align-items: center; justify-content: center; width: 100%; text-align: center;">
+                    <button type="submit" class="btn btn-success" style="font-size: 18px; border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; justify-content: center; width: 100%; text-align: center;">
                         <i class="fas fa-search" style="margin-right: 10px;"></i> Filtrar
                     </button>
                 </form>
@@ -103,3 +195,4 @@ $destinations_result = $conn->query($destinations_query);
 </body>
 
 </html>
+

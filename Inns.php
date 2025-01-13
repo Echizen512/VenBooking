@@ -56,6 +56,20 @@ if (!$result_inns) {
 </head>
 
 <style>
+body {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
     .filter-btn {
         height: 50px;
         border-radius: 5px;
@@ -79,6 +93,7 @@ if (!$result_inns) {
     .filter-quality button {
         margin-bottom: 10px;
     }
+    
 </style>
 
 <body>
@@ -140,7 +155,6 @@ if (!$result_inns) {
                                     <div class="card-meta">
                                         <p style="font-size: 14px;"><i class="fas fa-tag text-primary"></i> ' . $row['state_name'] . '</p>
                                         <p style="font-size: 14px;"><i class="fas fa-map-marker-alt text-danger"></i> ' . $row['municipality_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-location-arrow text-info"></i> ' . $row['parish_name'] . '</p>
                                         <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> ' . ucfirst($row['quality']) . '</p>
                                     </div>
                                     <br>';

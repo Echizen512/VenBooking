@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Panel de Control</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
     <style>
         body {
             background-color: #f8f9fa;
             margin-top: 60px;
         }
+
+        a {
+            color: white;
+        }
+
         .sidebar {
             position: fixed;
             top: 50px;
             left: 0;
-            height: calc(100% - 60px);
+            height: calc(100% - 50px);
             width: 14%;
             transition: width 0.3s;
             overflow-x: hidden;
@@ -23,7 +34,7 @@
         .sidebar a {
             padding: 10px 10px 10px 20px;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
             color: white;
             display: flex;
             align-items: center;
@@ -62,7 +73,6 @@
             text-decoration: underline;
         }
 
-        /* Estilos para los datos del Dólar */
         .dolar-section {
             margin-top: 60px;
             padding: 15px;
@@ -90,6 +100,18 @@
             margin-right: 10px;
         }
 
+        .dropdown-container {
+            display: none;
+            padding-left: 20px;
+        }
+        .dropdown-btn {
+            cursor: pointer;
+        }
+        .dropdown-btn:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
     </style>
 </head>
 <body>
@@ -106,34 +128,51 @@
     </div>
 
     <div class="sidebar bg-success">
-    <a href="./Inicio.php" style="color: white;">
-        <i class="fas fa-home me-2" style="color: #90ffbc;"></i> Inicio
-    </a>
-    <a href="./get_inns.php" style="color: white;">
-        <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas
-    </a>
-    <a href="./get_mobile_payment.php" style="color: white;">
-        <i class="fas fa-mobile-alt me-2" style="color: #17a2b8;"></i> Pago Móvil
-    </a>
-    <a href="./get_transfers.php" style="color: white;">
-        <i class="fas fa-university me-2" style="color: #dc3545;"></i> Transferencia
-    </a>
-    <a href="./get_reservation.php" style="color: white;">
-        <i class="fas fa-calendar-alt me-2" style="color: #69afff;"></i> Reservas
-    </a>
-    <a href="./get_paypal.php" style="color: white;">
-        <i class="fab fa-paypal me-2" style="color: #0c78f4;"></i> PayPal
-    </a>
-    <a href="./get_binance.php" style="color: white;">
-        <i class="fab fa-btc me-2" style="color: #f4c20d;"></i> Binance
-    </a>
-    <a href="../Memberships.php" style="color: white;">
-        <i class="fas fa-gift me-2" style="color: #b3ff90;"></i> Membresías
-    </a>
-    <a href="./get_reports.php" style="color: white;">
-        <i class="fas fa-file-pdf me-2 text-danger"></i> Reportes PDF
-    </a>
+        <a class="dropdown-btn">
+            <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Usuarios
+        </a>
+        <div class="dropdown-container">
+            <a href="../Enterprise/Perfil.php">
+                <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Perfil
+            </a>
+            <a href="../Enterprise/get_inns.php">
+                <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas
+            </a>
+            <a href="../Enterprise/get_reservation.php">
+                <i class="fas fa-calendar-alt me-2" style="color: #69afff;"></i> Reservas
+            </a>
+        </div>
 
+        <a class="dropdown-btn" >
+            <i class="fas fa-credit-card me-2" style="color: #17a2b8;"></i> Métodos de Pago
+        </a>
+        <div class="dropdown-container">
+            <a href="./get_mobile_payment.php">
+                <i class="fas fa-mobile-alt me-2" style="color: #17a2b8;"></i> Pago Móvil
+            </a>
+            <a href="./get_transfers.php">
+                <i class="fas fa-university me-2" style="color: #dc3545;"></i> Transferencias
+            </a>
+            <a href="./get_paypal.php">
+                <i class="fab fa-paypal me-2" style="color: #0c78f4;"></i> PayPal
+            </a>
+            <a href="./get_binance.php">
+                <i class="fab fa-btc me-2" style="color: #f4c20d;"></i> Binance
+            </a>
+            <a href="./get_zelle.php">
+                <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zelle
+            </a>
+            <a href="./get_zinli.php">
+                <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zinli
+            </a>
+        </div>
+
+        <a href="../Memberships.php">
+            <i class="fas fa-gift me-2" style="color: #b3ff90;"></i> Membresías
+        </a>
+        <a href="./get_reports.php">
+            <i class="fas fa-file-pdf me-2 text-danger"></i> Reportes PDF
+        </a>
 
         <div class="dolar-section">
             <h5>Datos del Dólar</h5>
@@ -173,6 +212,21 @@
     <script src="../Assets/js/bootstrap.bundle.min.js"></script>
     <script src="../Assets/js/jquery.dataTables.min.js"></script>
     <script src="../Assets/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        for (var i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>

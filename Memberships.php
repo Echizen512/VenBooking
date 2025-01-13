@@ -76,7 +76,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" type="text/css" href="./assets/css/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css" />
-    <link rel="stylesheet" type="text/css" href="inner-page-style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/inner-page-style.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
@@ -98,6 +98,62 @@ if (!isset($_SESSION['user_id'])) {
     margin-left: calc(-50vw + 50%);
     text-align: center;
   }
+
+  /* Animación para el encabezado de la tarjeta */
+.card-header h4 {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Animación para la lista de beneficios */
+.card-body ul li {
+  animation: slideUp 0.5s ease-out;
+}
+
+/* Keyframes para las animaciones */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animación para el botón de PayPal */
+#paypal-button-container-basic,
+#paypal-button-container-silver,
+#paypal-button-container-gold {
+  animation: bounceIn 2s ease-in-out;
+}
+
+/* Keyframes para la animación del botón */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 </style>
 
 <div class="container py-3">
@@ -118,6 +174,8 @@ if (!isset($_SESSION['user_id'])) {
               <h1 class="card-title pricing-card-title" style="font-size: 24px;">$50<small class="text-muted fw-light">/mes</small></h1>
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> 1 Posada</li>
+                <li><i class="fas fa-home"></i> Sin Límite de Habitaciones</li>
+                <li><i class="fas fa-car"></i> Sin Límite de Vehículos</li>
               </ul>
               <div id="paypal-button-container-basic"></div>
             </div>
@@ -135,6 +193,8 @@ if (!isset($_SESSION['user_id'])) {
               <h1 class="card-title pricing-card-title" style="font-size: 24px;">$75<small class="text-muted fw-light">/mes</small></h1>
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> 3 Posadas</li>
+                <li><i class="fas fa-home"></i> Sin Límite de Habitaciones</li>
+                <li><i class="fas fa-car"></i> Sin Límite de Vehículos</li>
               </ul>
               <div id="paypal-button-container-silver"></div>
             </div>
@@ -152,6 +212,8 @@ if (!isset($_SESSION['user_id'])) {
               <h1 class="card-title pricing-card-title" style="font-size: 24px;">$100<small class="text-muted fw-light">/mes</small></h1>
               <ul class="list-unstyled mt-3 mb-4">
                 <li><i class="fas fa-home"></i> Sin límite de Posadas</li>
+                <li><i class="fas fa-home"></i> Sin Límite de Habitaciones</li>
+                <li><i class="fas fa-car"></i> Sin Límite de Vehículos</li>
               </ul>
               <div id="paypal-button-container-gold"></div>
             </div>

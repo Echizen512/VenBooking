@@ -1,21 +1,33 @@
+body {
+    margin: 0;
+    color: #000;
+    background-image: url('https://wallpaperaccess.com/full/1863892.jpg');
+    background-size: cover;
+    font: 600 16px/18px 'Open Sans', sans-serif;
+    animation: backgroundFade 5s infinite alternate;
+}
 
-    body {
-        margin: 0;
-        color: #000;
-        background: url('../../login.jpg') no-repeat center center fixed;
-        background-size: cover;
-        font: 600 16px/18px 'Open Sans', sans-serif;
-    }
+@keyframes backgroundFade {
+    0% { background-color: #f5f6f4; }
+    100% { background-color: #e0e0e0; }
+}
 
 
-    .login-box {
-        width: 100%;
-        margin: auto;
-        max-width: 600px;
-        min-height: 690px;
-        position: relative;
-        box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
-    }
+.login-box {
+    width: 100%;
+    margin: auto;
+    max-width: 580px;
+    min-height: 690px;
+    position: relative;
+    box-shadow: 15px 15px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+    border-radius: 50px;
+    animation: zoomIn 0.6s;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 
     .login-snip {
         width: 100%;
@@ -23,6 +35,7 @@
         position: absolute;
         padding: 90px 70px 50px 70px;
         background: #f5f6f4;
+        border-radius: 50px;
     }
 
     .login-snip .login,
@@ -47,6 +60,7 @@
     .login-space .group .label,
     .login-space .group .button {
         text-transform: uppercase;
+        margin-top: 10px;
     }
 
     .login-snip .tab {
@@ -56,11 +70,72 @@
         margin: 0 15px 10px 0;
         display: inline-block;
         border-bottom: 2px solid transparent;
+        transition: border-bottom 0.3s ease;
+    }
+    
+    .login-snip .sign-in:checked + .tab, .login-snip .sign-up:checked + .tab {
+        border-bottom-color: #6cf36c;
+        animation: stretchDown 0.5s ease-out;
+    }
+    
+    @keyframes stretchDown {
+        0% {
+            transform: scaleY(1);
+        }
+        50% {
+            transform: scaleY(1.5);
+        }
+        100% {
+            transform: scaleY(1);
+        }
+    }
+    
+    
+
+    input[title] {
+        border: 2px solid #000;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #333;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .login-snip .sign-in:checked+.tab,
-    .login-snip .sign-up:checked+.tab {
-        border-color: #1161ee;
+    input.valid {
+        background-color: #ccffcc;
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input.invalid {
+        background-color: #ffcccc;
+        border-color: #dc3545;
+        box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    label.label {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #555;
+        transition: color 0.3s ease;
+    }
+
+    .label i {
+        margin-right: 8px;
+        color: #666;
+    }
+
+    input:focus + .label i {
+        animation: iconBounce 0.5s;
+    }
+
+    @keyframes iconBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
     }
 
     .login-space {
@@ -70,14 +145,27 @@
         transform-style: preserve-3d;
     }
 
-    .login-space .group {
-        margin-bottom: 15px;
+    .login-space .group label .icon:hover {
+        animation: rotateIcon 0.5s ease-in-out;
     }
+    
+    @keyframes rotateIcon {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
 
     .login-space .group .label,
     .login-space .group .input,
-    .login-space .group .button {
+    .login-space  {
         width: 100%;
+        display: block;
+    }
+
+
+    .button{
+        width: 40%;
+        margin: 0 auto;
         display: block;
     }
 
@@ -195,4 +283,11 @@
 
     ::placeholder {
         color: #b3b3b3;
+        animation: placeholderFade 2s infinite alternate;
     }
+    
+    @keyframes placeholderFade {
+        0% { color: #b3b3b3; }
+        100% { color: #d9d9d9; }
+    }
+    

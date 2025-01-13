@@ -51,10 +51,10 @@
         .recommendation-card {
             background-color: #fff;
             color: white;
-            border: 1px solid black;
+            border: 1px solid #cccccc;
             /* Borde delgado de color negro */
             margin-bottom: 1rem;
-            border-radius: 8px;
+            border-radius: 20px;
             overflow: hidden;
             transition: transform 0.3s ease;
         }
@@ -146,22 +146,22 @@
                 if ($result_inn_detail->num_rows > 0) {
                     $row = $result_inn_detail->fetch_assoc(); // Obtener la fila de resultados
                     // Mostrar la información de la posada
-                    echo '<div class="card mb-3">';
-                    echo '<div class="card-body bg-success text-white">';
+                    echo '<div class="card mb-3" style="border-radius: 20px;">';
+                    echo '<div class="card-body bg-success text-white" style="border-radius: 20px;">';
                     echo '<h2 class="text-center" style="font-size: 24px;"><i class="fas fa-hotel"></i> ' . $row['inn_name'] . '</h2>';
                     echo '</div>';
                     echo '</div>';
 
                     ?>
-                    <div class="card mb-3">
-                        <img src="<?php echo $row['inn_image_url']; ?>" class="card-img-top" alt="Posada Image" style="margin-top: 0px; margin-bottom: 0px;">
+                    <div class="card mb-3" style="border-radius: 20px;">
+                        <img src="<?php echo $row['inn_image_url']; ?>" class="card-img-top" alt="Posada Image" style="margin-top: 0px; margin-bottom: 0px; border-radius: 20px; height: 300px;">
                         <div class="card-body">
-                            <p class="card-text" style="font-size: 18px"><i class="fas fa-info-circle"></i> <?php echo $row['description']; ?></p>
+                            <p class="card-text" style="font-size: 18px"><i class="fas fa-info-circle text-primary"></i> <?php echo $row['description']; ?></p>
                             <ul class="list-unstyled">
-                                <li style="font-size: 14px"><i class="fas fa-envelope"></i> <span>Email:</span> <?php echo $row['email']; ?></li>
-                                <li style="font-size: 14px"><i class="fas fa-phone"></i> <span>Teléfono:</span> <?php echo $row['phone']; ?></li>
-                                <li style="font-size: 14px"><i class="fas fa-map-marker-alt"></i> <span>Ubicación:</span> <?php echo $row['state_name'] . ', ' . $row['municipality_name'] . ', ' . $row['parish_name']; ?></li>
-                                <li style="font-size: 14px"><i class="fas fa-list"></i> <span>Categoría:</span> <?php echo $row['category_name']; ?></li>
+                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-envelope text-warning"></i> <span>Email:</span> <?php echo $row['email']; ?></li>
+                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-phone text-primary"></i> <span>Teléfono:</span> <?php echo $row['phone']; ?></li>
+                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-map-marker-alt text-danger"></i> <span>Ubicación:</span> <?php echo $row['state_name'] . ', ' . $row['municipality_name'] . ', ' . $row['parish_name']; ?></li>
+                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-list text-primary"></i> <span>Categoría:</span> <?php echo $row['category_name']; ?></li>
                             </ul>
                         </div>
                     </div>
@@ -176,8 +176,8 @@
                     $result_vehicles = $conn->query($sql_vehicles);
 
                     if ($result_vehicles->num_rows > 0) {
-                        echo '<div class="card mb-3">';
-                        echo '<div class="card-body bg-success">';
+                        echo '<div class="card mb-3" style="border-radius: 20px;">';
+                        echo '<div class="card-body bg-danger" style="border-radius: 20px;">';
                         echo '<h3 class="text-center text-white" style="font-size: 24px;" class="card-title"><i class="fas fa-car"></i> Vehículos disponibles</h3>';
                         echo '</div>';
                         echo '</div>';
@@ -185,7 +185,7 @@
                         echo '<div class="row">';
                         while ($vehicle = $result_vehicles->fetch_assoc()) {
                             echo '<div class="col-md-6 mb-4">';
-                            echo '<div class="card shadow-sm mb-4">';
+                            echo '<div class="card shadow-sm" style="border-radius: 20px;">';
                             // Carousel para imágenes de vehículo
                             echo '<div id="vehicleCarousel' . $vehicle['id'] . '" class="carousel slide" data-bs-ride="carousel">';
                             echo '<div class="carousel-inner">';
@@ -194,7 +194,7 @@
                             foreach ($images as $img_field) {
                                 if (!empty($vehicle[$img_field])) {
                                     echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
-                                    echo '<img src="' . $vehicle[$img_field] . '" class="d-block w-100" alt="Imagen de Vehículo" style="height: 200px; object-fit: cover;">';
+                                    echo '<img src="' . $vehicle[$img_field] . '" class="d-block w-100" alt="Imagen de Vehículo" style="height: 200px; object-fit: cover; margin-top: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;">';
                                     echo '</div>';
                                     $active = false; // Solo el primero es activo
                                 }
@@ -212,13 +212,13 @@
                             echo '</div>'; // Cierre de carousel
 
                             echo '<div class="card-body">';
-                            echo '<h5 class="card-title" style="font-size: 18px"><i class="fas fa-car"></i> ' . $vehicle['brand'] . ' ' . $vehicle['model'] . '</h5>';
-                            echo '<p class="card-text" style="font-size: 16px"><i class="fas fa-info-circle"></i> ' . $vehicle['description'] . '</p>';
+                            echo '<h5 class="card-title" style="font-size: 18px"><i class="fas fa-car text-danger"></i> ' . $vehicle['brand'] . ' ' . $vehicle['model'] . '</h5>';
+                            echo '<p class="card-text" style="font-size: 16px"><i class="fas fa-info-circle text-primary"></i> ' . $vehicle['description'] . '</p>';
                             echo '<ul class="list-unstyled">';
-                            echo '<li style="font-size: 14px"><i class="fas fa-calendar-alt"></i> <span>Año:</span> ' . $vehicle['year'] . '</li>';
-                            echo '<li style="font-size: 14px"><i class="fas fa-users"></i> <span>Capacidad:</span> ' . $vehicle['capacity'] . '</li>';
-                            echo '<li style="font-size: 14px"><i class="fas fa-dollar-sign"></i> <span>Precio:</span> ' . $vehicle['price'] . '</li>';
-                            echo '<li style="font-size: 14px"><i class="fas fa-id-card"></i> <span>Placa:</span> ' . $vehicle['registration_plate'] . '</li>';
+                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-calendar-alt text-primary"></i> <span>Año:</span> ' . $vehicle['year'] . '</li>';
+                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-users text-danger"></i> <span>Capacidad:</span> ' . $vehicle['capacity'] . '</li>';
+                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-dollar-sign text-success"></i> <span>Precio:</span> ' . $vehicle['price'] . '</li>';
+                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-id-card text-warning"></i> <span>Placa:</span> ' . $vehicle['registration_plate'] . '</li>';
                             echo '</ul>';
                             echo '</div>'; // Cierre de .card-body
                             echo '</div>'; // Cierre de .card
@@ -236,15 +236,15 @@
                     $result_rooms = $conn->query($sql_rooms);
 
                     if ($result_rooms->num_rows > 0) {
-                        echo '<div class="card mb-3">';
-                        echo '<div class="card-body bg-success">';
-                        echo '<h3 class="text-center text-white" style="font-size: 24px" class="card-title"><i class="fas fa-bed"></i> Habitaciones disponibles</h3>';
+                        echo '<div class="card mb-3" style="border-radius: 20px;">';
+                        echo '<div class="card-body bg-primary" style="border-radius: 20px;">';
+                        echo '<h3 class="text-center text-white" style="font-size: 24px;" class="card-title"><i class="fas fa-bed"></i> Habitaciones disponibles</h3>';
                         echo '</div>';
                         echo '</div>';
                         echo '<div class="row">';
                         while ($room = $result_rooms->fetch_assoc()) {
-                            echo '<div class="col-md-6 mb-4">';
-                            echo '<div class="card shadow-sm mb-4">';
+                            echo '<div class="col-md-6 mb-4" style="margin-bottom: 20px;">';
+                            echo '<div class="card shadow-sm mb-4" style="border-radius: 20px;">';
                             // Carousel para imágenes de habitación
                             echo '<div id="roomCarousel' . $room['id'] . '" class="carousel slide" data-bs-ride="carousel">';
                             echo '<div class="carousel-inner">';
@@ -253,7 +253,7 @@
                             foreach ($images as $img_field) {
                                 if (!empty($room[$img_field])) {
                                     echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
-                                    echo '<img src="' . $room[$img_field] . '" class="d-block w-100" alt="Imagen de Habitación" style="height: 200px; object-fit: cover;">';
+                                    echo '<img src="' . $room[$img_field] . '" class="d-block w-100" alt="Imagen de Habitación" style="height: 200px; object-fit: cover; margin-top: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;">';
                                     echo '</div>';
                                     $active = false; // Solo el primero es activo
                                 }
@@ -271,11 +271,11 @@
                             echo '</div>'; // Cierre de carousel
 
                             echo '<div class="card-body">';
-                            echo '<h5 class="card-title" style="font-size: 18px"><i class="fas fa-bed"></i> Habitación ' . $room['room_number'] . '</h5>';
-                            echo '<p class="card-text" style="font-size: 16px"><i class="fas fa-info-circle"></i> ' . $room['description'] . '</p>';
+                            echo '<h5 class="card-title" style="font-size: 18px"><i class="fas fa-bed text-success"></i> Habitación ' . $room['room_number'] . '</h5>';
+                            echo '<p class="card-text" style="font-size: 16px"><i class="fas fa-info-circle  text-primary"></i> ' . $room['description'] . '</p>';
                             echo '<ul class="list-unstyled">';
-                            echo '<li style="font-size: 14px"><i class="fas fa-users"></i> <span>Capacidad:</span> ' . $room['capacity'] . '</li>';
-                            echo '<li style="font-size: 14px"><i class="fas fa-dollar-sign"></i> <span>Precio:</span> ' . $room['price'] . '</li>';
+                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-users text-danger"></i> <span>Capacidad:</span> ' . $room['capacity'] . '</li>';
+                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-dollar-sign text-success"></i> <span>Precio:</span> ' . $room['price'] . '</li>';
                             echo '</ul>';
                             echo '</div>'; // Cierre de .card-body
                             echo '</div>'; // Cierre de .card
@@ -300,9 +300,9 @@
 
 
             <aside class="sidebar" itemprop="sidebar">
-                <div class="card-body bg-success text-white p-3 text-center" style="font-size: 24px;">
+                <div class="card-body bg-success text-white p-3 text-center" style="font-size: 24px; border-radius: 20px;">
                     <h3 style="color: white;">
-                        <i class="fas fa-star"></i> Recomendaciones
+                        <i class="fas fa-star text-warning"></i> Posadas Recomendadas
                     </h3>
                 </div><br>
                 <?php
@@ -314,9 +314,9 @@
                         echo '<div class="recommendation-card">';
                         echo '<img src="' . $row['image_url'] . '" alt="Posada Image">';
                         echo '<div class="card-body">';
-                        echo '<h5 class="card-title"><i class="fas fa-hotel"></i> ' . $row['name'] . '</h5>';
-                        echo '<p class="card-text"><i class="fas fa-info-circle"></i> ' . substr($row['description'], 0, 70) . '...</p>';
-                        echo '<a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success" style="font-size: 12px; color: white;">¡Ver Detalles!</a>';
+                        echo '<h5 class="card-title" style="font-size: 14px"><i class="fas fa-hotel text-success"></i> ' . $row['name'] . '</h5>';
+                        echo '<p class="card-text" style="font-size: 12px"><i class="fas fa-info-circle  text-primary"></i> ' . substr($row['description'], 0, 70) . '...</p>';
+                        echo '<a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success" style="font-size: 14px; color: white; border-radius: 30px; "><i class="fas fa-calendar-check" style="margin-right: 8px;"></i>¡Ver Detalles!</a>';
 
                         echo '</div>';
                         echo '</div>';
@@ -350,13 +350,13 @@
             <!-- Botón de Reservar -->
             <a href="reservation.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-success"
                 style="color: white; font-size: 14px; padding: 5px 15px; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
-                <i class="fas fa-calendar-check" style="margin-right: 5px; font-size: 16px;"></i> Reservar
+                <i class="fas fa-calendar-check" style="margin-right: 5px; font-size: 16px;"></i> ¡Reservar Habitación!
             </a>
 
             <!-- Botón de Guardar Posada -->
-            <a href="save_inn.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-warning"
+            <a href="save_inn.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-danger"
                 style="color: white; font-size: 14px; padding: 5px 15px; margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
-                <i class="fas fa-heart" style="margin-right: 5px; font-size: 16px;"></i> Guardar Posada
+                <i class="fas fa-heart" style="margin-right: 5px; font-size: 16px;"></i> ¡Guardar Posada!
             </a>
         <?php else: ?>
             <p class="text-danger" style="font-size: 14px;">ID de la posada no está disponible.</p>
