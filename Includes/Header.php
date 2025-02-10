@@ -66,11 +66,6 @@
                                         <i class="fas fa-user text-primary"></i> Perfil
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="./users.php">
-                                        <i class="fas fa-comments text-info"></i> Chat
-                                    </a>
-                                </li>
 
                             </ul>
                         </nav>

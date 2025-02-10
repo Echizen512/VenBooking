@@ -129,11 +129,11 @@
 
     <div class="sidebar bg-success">
         <a class="dropdown-btn">
-            <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Usuarios
+            <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Perfil
         </a>
         <div class="dropdown-container">
             <a href="./Perfil.php">
-                <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Perfil
+                <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Mi Perfil
             </a>
             <a href="./get_inns.php">
                 <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas

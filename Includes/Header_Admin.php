@@ -129,11 +129,11 @@
 
     <div class="sidebar bg-success">
         <a class="dropdown-btn">
-            <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Usuarios
+            <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Perfiles
         </a>
         <div class="dropdown-container">
             <a href="../Enterprise/Perfil.php">
-                <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Perfil
+                <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Mi Perfil
             </a>
             <a href="../Enterprise/get_inns.php">
                 <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas
@@ -147,22 +147,22 @@
             <i class="fas fa-credit-card me-2" style="color: #17a2b8;"></i> Métodos de Pago
         </a>
         <div class="dropdown-container">
-            <a href="./get_mobile_payment.php">
+            <a href="../Enterprise/get_mobile_payment.php">
                 <i class="fas fa-mobile-alt me-2" style="color: #17a2b8;"></i> Pago Móvil
             </a>
-            <a href="./get_transfers.php">
+            <a href="../Enterprise/get_transfers.php">
                 <i class="fas fa-university me-2" style="color: #dc3545;"></i> Transferencias
             </a>
-            <a href="./get_paypal.php">
+            <a href="../Enterprise/get_paypal.php">
                 <i class="fab fa-paypal me-2" style="color: #0c78f4;"></i> PayPal
             </a>
-            <a href="./get_binance.php">
+            <a href="../Enterprise/get_binance.php">
                 <i class="fab fa-btc me-2" style="color: #f4c20d;"></i> Binance
             </a>
-            <a href="./get_zelle.php">
+            <a href="../Enterprise/get_zelle.php">
                 <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zelle
             </a>
-            <a href="./get_zinli.php">
+            <a href="../Enterprise/get_zinli.php">
                 <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zinli
             </a>
         </div>
@@ -170,7 +170,7 @@
         <a href="../Memberships.php">
             <i class="fas fa-gift me-2" style="color: #b3ff90;"></i> Membresías
         </a>
-        <a href="./get_reports.php">
+        <a href="../Enterprise/get_reports.php">
             <i class="fas fa-file-pdf me-2 text-danger"></i> Reportes PDF
         </a>
 

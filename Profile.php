@@ -137,102 +137,128 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                 </div>
 
                 <div class="row justify-content-center mt-5">
-                    <div class="col-12 text-center">
-                        <h2 class="mb-4 text-success" style="font-size: 2.5rem;">
-                            <i class="fas fa-home"></i> Posadas Guardadas
-                        </h2>
-                    </div>
-                </div>
+    <div class="col-12 text-center">
+        <h2 class="mb-4 text-success" style="font-size: 2.5rem;">
+            <i class="fas fa-home"></i> Posadas Guardadas
+        </h2>
+    </div>
+</div>
+<div class="tab-pane fade show active mt-5">
+    <div class="container p-4 rounded shadow-sm custom-bg">
+        <?php if ($result_favorite_inns->num_rows > 0) { ?>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center" style="font-size: 12px;">Imagen</th>
+                    <th class="text-center" style="font-size: 12px;">Nombre</th>
+                    <th class="text-center" style="font-size: 12px;">Categoría</th>
+                    <th class="text-center" style="font-size: 12px;">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result_favorite_inns->fetch_assoc()) { ?>
+                <tr>
+                    <td style="text-align: center;">
+                        <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image" class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
+                    </td>
+                    <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
+                    <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['category_name']); ?></td>
+                    <td class="text-center" style="font-size: 12px;">
+                        <a href="inn.php?inn_id=<?php echo $row['id']; ?>" class="btn btn-outline-success mt-3" style="font-size: 12px; border-radius: 20px; width: 50%;">
+                            <i class="fas fa-link me-2"></i> ¡Ver Detalles!
+                        </a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        <?php } else { ?>
+        <div class="col-12 text-center" style="font-size: 2rem; color:rgb(136, 176, 211); padding: 1rem; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f8f9fa; margin-top: 1rem;">
+            No tienes posadas guardadas.
+        </div>
+        <?php } ?>
+    </div>
+</div>
 
-                <div class="tab-pane fade show active mt-5">
-                    <div class="container p-4 rounded shadow-sm custom-bg">
-                        <div class="row justify-content-center">
-                            <?php
-                            if ($result_favorite_inns->num_rows > 0) {
-                                while ($row = $result_favorite_inns->fetch_assoc()) {
-                                    echo '<div class="col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">';
-                                    echo '<div class="card posada-card border-0 text-center shadow" style="border-radius: 20px;">';
-                                    echo '<div class="card-body position-relative">';
-                                    echo '<img src="' . htmlspecialchars($row["image_url"]) . '" alt="Inn Image" class="posada-img rounded-circle mb-3">';
-                                    echo '<h5 class="card-title text-primary mb-2" style="font-size: 16px;">' . htmlspecialchars($row["inn_name"]) . '</h5>';
-                                    echo '<p class="card-text text-muted" style="font-size: 14px;"><i class="fas fa-tags me-1 text-danger"></i>' . htmlspecialchars($row["category_name"]) . '</p>';
-                                    echo '<a href="inn.php?inn_id=' . $row['id'] . '" class="btn btn-outline-success mt-3" style="color: green; font-size: 12px; border-radius: 20px;">';
-                                    echo '<i class="fas fa-link me-2"></i> ¡Ver Detalles!';
-                                    echo '</a>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                    echo '</div>';
-                                }
-                            } else {
-                                echo '<div class="col-12 text-center" style="font-size: 2rem; color:rgb(136, 176, 211); padding: 1rem; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f8f9fa; margin-top: 1rem;">No tienes posadas guardadas.</div>';
-                            }
-                            ?>
-                        </div>
-                    </div>
-                </div>
+<div class="row justify-content-center mt-5">
+    <div class="col-12 text-center">
+        <h2 class="mb-4 text-primary" style="font-size: 2.5rem;">
+            <i class="fas fa-calendar-check"></i> Reservaciones
+        </h2>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <?php
+    $sql_reservations = "SELECT r.id, r.inn_id, r.start_date, r.end_date, r.payment_method_id, r.receipt_path, r.codigo_referencia, r.status, r.user_id, i.name AS inn_name, i.image_url
+                         FROM reservations r
+                         JOIN inns i ON r.inn_id = i.id
+                         WHERE r.user_id = ?";
+    $stmt_reservations = $conn->prepare($sql_reservations);
+    $stmt_reservations->bind_param("i", $user_id);
+    $stmt_reservations->execute();
+    $result_reservations = $stmt_reservations->get_result();
 
-                <div class="row justify-content-center mt-5">
-                    <div class="col-12 text-center">
-                        <h2 class="mb-4 text-primary" style="font-size: 2.5rem;">
-                            <i class="fas fa-calendar-check"></i> Reservaciones
-                        </h2>
-                    </div>
-                </div>
+    if ($result_reservations->num_rows > 0) {
+    ?>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center" style="font-size: 12px;">Imagen</th>
+                <th class="text-center" style="font-size: 12px;">Nombre</th>
+                <th class="text-center" style="font-size: 12px;">Desde</th>
+                <th class="text-center" style="font-size: 12px;">Hasta</th>
+                <th class="text-center" style="font-size: 12px;">Status</th>
+                <th class="text-center" style="font-size: 12px;">Contacto</th>
+                <th class="text-center" style="font-size: 12px;">Factura</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($row = $result_reservations->fetch_assoc()) {
+                $status_color = '';
+                switch ($row['status']) {
+                    case 'En Espera':
+                        $status_color = 'bg-primary';
+                        break;
+                    case 'Confirmado':
+                        $status_color = 'bg-success';
+                        break;
+                    case 'Cancelado':
+                        $status_color = 'bg-danger';
+                        break;
+                }
+                $start_date = date('d/m/Y', strtotime($row["start_date"]));
+                $end_date = date('d/m/Y', strtotime($row["end_date"]));
+            ?>
+            <tr>
+                <td style="text-align: center;">
+                    <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image" class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
+                </td>
+                <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
+                <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($start_date); ?></td>
+                <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($end_date); ?></td>
+                <td class="text-center" style="font-size: 12px;">
+                    <span class="badge <?php echo $status_color; ?> text-white" style="font-size: 14px; padding: 5px; border-radius: 20px;"><?php echo htmlspecialchars($row["status"]); ?></span>
+                </td>
+                <td class="text-center" style="font-size: 12px;">
+                    <a href="chat.php?user_id=<?php echo htmlspecialchars($row['user_id']); ?>" class="btn btn-outline-primary text-primary" style="font-size: 12px; border-radius: 20px; width: 50%; margin-left: 70px;">
+                        <i class="fas fa-comments mr-2"></i> Contactar
+                    </a>
+                </td>
+                <td class="text-center" style="font-size: 12px;">
+                    <a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-outline-success" style="font-size: 12px; border-radius: 20px; width: 50%;">
+                        <i class="fas fa-file-pdf me-2"></i> Ver Factura
+                    </a>
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <?php } else { ?>
+    <div class="col-12 text-center">No hay reservaciones registradas.</div>
+    <?php } ?>
+</div>
 
-                <div class="row justify-content-center">
-                    <?php
-                    $sql_reservations = "SELECT r.id, r.inn_id, r.start_date, r.end_date, r.payment_method_id, r.receipt_path, r.codigo_referencia, r.status, r.user_id, i.name AS inn_name, i.image_url
-                             FROM reservations r
-                             JOIN inns i ON r.inn_id = i.id
-                             WHERE r.user_id = ?";
-                    $stmt_reservations = $conn->prepare($sql_reservations);
-                    $stmt_reservations->bind_param("i", $user_id);
-                    $stmt_reservations->execute();
-                    $result_reservations = $stmt_reservations->get_result();
-
-                    if ($result_reservations->num_rows > 0) {
-                        while ($row = $result_reservations->fetch_assoc()) {
-                            $status_color = '';
-                            switch ($row['status']) {
-                                case 'En Espera':
-                                    $status_color = 'bg-primary';
-                                    break;
-                                case 'Confirmado':
-                                    $status_color = 'bg-success';
-                                    break;
-                                case 'Cancelado':
-                                    $status_color = 'bg-danger';
-                                    break;
-                            }
-
-                            $start_date = date('d/m/Y', strtotime($row["start_date"]));
-                            $end_date = date('d/m/Y', strtotime($row["end_date"]));
-                            echo '<div class="col-sm-6 col-lg-4 mb-4 d-flex justify-content-center">';
-                            echo '<div class="card posada-card border-0 text-center shadow" style="border-radius: 20px;">';
-                            echo '<div class="card-body position-relative">';
-                            echo '<img src="' . htmlspecialchars($row["image_url"]) . '" alt="Inn Image" class="posada-img rounded-circle mb-3">';
-                            echo '<h5 class="card-title text-primary mb-2" style="font-size: 16px;">' . htmlspecialchars($row["inn_name"]) . '</h5>';
-                            echo '<p class="card-text" style="font-size: 14px;"><i class="fas fa-calendar-alt me-1 text-primary"></i>Desde: ' . htmlspecialchars($start_date) . '</p>';
-                            echo '<p class="card-text" style="font-size: 14px;"><i class="fas fa-calendar-alt me-1 text-primary"></i>Hasta: ' . htmlspecialchars($end_date) . '</p>';
-                            echo '<p class="badge ' . $status_color . ' text-white" style="font-size: 14px; padding: 5px; border-radius: 20px;">' . htmlspecialchars($row["status"]) . '</p>';
-                            echo '<div class="d-flex justify-content-between mt-3">';
-                            echo '<a href="chat.php?user_id=' . htmlspecialchars($row["user_id"]) . '" class="btn btn-outline-primary" style="color: blue; font-size: 12px; border-radius: 20px;">';
-                            echo '<i class="fas fa-comments mr-2"></i> Contactar';
-                            echo '</a>';
-                            echo '<a href="generate_pdf_report.php?reservation_id=' . htmlspecialchars($row["id"]) . '" class="btn btn-outline-success" style="color: green; font-size: 12px; border-radius: 20px;">';
-                            echo '<i class="fas fa-file-pdf me-2"></i> Ver Factura';
-                            echo '</a>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo '<div class="col-12 text-center">No hay reservaciones registradas.</div>';
-                    }
-                    ?>
-                </div>
-            </div>
 
             <div class="text-center mt-6">
                 <div class="btn-group">
