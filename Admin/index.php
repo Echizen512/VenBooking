@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$errorScript = ""; // Inicializa una variable para el script de error
+$errorScript = ""; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 
     if ($email === $adminEmail && $password === $adminPassword) {
         $_SESSION["user_id"] = 1; 
-        header("Location: get_user.php");
+        header("Location: user.php");
         exit();
     } else {
         $errorScript = "<script>
@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 <body>
 <div class="row">
     <div class="col-md-6 mx-auto p-4">
-        <div class="login-box">
-            <div class="login-snip">
+        <div class="login-box" style="border-radius: 50px;">
+            <div class="login-snip" style="border-radius: 50px;">
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
                 <label for="tab-1" class="tab"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</label>
                 <div class="login-space">
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
 </div>
 
 <?php if ($errorScript): ?>
-    <?php echo $errorScript; // Muestra el script de error si hay uno ?>
+    <?php echo $errorScript; ?>
 <?php endif; ?>
 
 </body>

@@ -33,6 +33,7 @@ if (isset($_GET['reservation_id'])) {
     $reservation = $result->fetch_assoc();
 
     if ($reservation) {
+
         // Calcular el monto total basado en la cantidad de días reservados
         $start_date = strtotime($reservation['start_date']);
         $end_date = strtotime($reservation['end_date']);
@@ -42,19 +43,30 @@ if (isset($_GET['reservation_id'])) {
         $pdf = new FPDF();
         $pdf->AddPage();
 
-        // Encabezado de la factura
+        // Encabezado con logo
+        $pdf->Image('logo.png', 10, 0, 45);
         $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Cell(0, 10, utf8_decode('FACTURA DE RESERVACIÓN'), 0, 1, 'C');
+        $pdf->Cell(0, 10, utf8_decode('República Bolivariana de Venezuela'), 0, 1, 'C'); 
+        $pdf->Cell(0, 10, utf8_decode('La Victoria - Estado Aragua'), 0, 1, 'C');
+        $pdf->Cell(0, 10, utf8_decode('VenBooking'), 0, 1, 'C');
         $pdf->Ln(5);
         $pdf->SetFont('Arial', 'I', 10);
-        $pdf->Cell(0, 10, 'Fecha: ' . date('d/m/Y'), 0, 1, 'R');
+        $pdf->Cell(0, 10, 'Fecha: ' . date('d/m/Y'), 0, 1, 'C');
+        $pdf->Ln(5); 
+        
+        // Título de la factura
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->SetFillColor(144, 238, 144); 
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetDrawColor(34, 139, 34);
+        $pdf->Cell(0, 10, utf8_decode('FACTURA DE RESERVACIÓN'), 1, 1, 'C', true);
         $pdf->Ln(10);
 
         // Información del cliente
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 10, utf8_decode('Información del Cliente'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(0, 8, utf8_decode('Nombre: ') . utf8_decode($reservation['first_name'] . ' ' . $reservation['last_name']), 0, 1, 'L');
+        $pdf->Cell(100, 8, utf8_decode('Nombre: ') . utf8_decode($reservation['first_name'] . ' ' . $reservation['last_name']), 0, 0, 'L');
         $pdf->Cell(0, 8, 'Email: ' . utf8_decode($reservation['email']), 0, 1, 'L');
         $pdf->Ln(10);
 
@@ -62,28 +74,31 @@ if (isset($_GET['reservation_id'])) {
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 10, utf8_decode('Detalles de la Reservación'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(0, 8, utf8_decode('Posada: ') . utf8_decode($reservation['inn_name']), 0, 1, 'L');
+        $pdf->Cell(100, 8, utf8_decode('Posada: ') . utf8_decode($reservation['inn_name']), 0, 0, 'L');
         $pdf->Cell(0, 8, utf8_decode('Habitación (ID): ') . $reservation['room_id'], 0, 1, 'L');
+        $pdf->Cell(100, 8, utf8_decode('Fecha de inicio: ') . date('d/m/Y', strtotime($reservation['start_date'])), 0, 0, 'L');
+        $pdf->Cell(0, 8, utf8_decode('Fecha de fin: ') . date('d/m/Y', strtotime($reservation['end_date'])), 0, 1, 'L');
+        $pdf->Cell(100, 8, utf8_decode('Dias reservados: ') . $days_reserved, 0, 0, 'L');
         $pdf->Cell(0, 8, utf8_decode('Precio por noche: $') . number_format($reservation['room_price'], 2), 0, 1, 'L');
-        $pdf->Cell(0, 8, 'Fecha de inicio: ' . date('d/m/Y', strtotime($reservation['start_date'])), 0, 1, 'L');
-        $pdf->Cell(0, 8, 'Fecha de fin: ' . date('d/m/Y', strtotime($reservation['end_date'])), 0, 1, 'L');
-        $pdf->Cell(0, 8, 'Dias reservados: ' . $days_reserved, 0, 1, 'L');
         $pdf->Ln(10);
 
         // Información del pago
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 10, utf8_decode('Método de Pago'), 0, 1, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(0, 8, utf8_decode('Método: ') . utf8_decode($reservation['payment_method']), 0, 1, 'L');
-        $pdf->Cell(0, 8, 'Codigo de Referencia: ' . utf8_decode($reservation['codigo_referencia']), 0, 1, 'L');
-        $pdf->Cell(0, 8, 'Estado: ' . utf8_decode(ucfirst($reservation['status'])), 0, 1, 'L');
+        $pdf->Cell(100, 8, utf8_decode('Método: ') . utf8_decode($reservation['payment_method']), 0, 0, 'L');
+        $pdf->Cell(0, 8, utf8_decode('Codigo de Referencia: ') . utf8_decode($reservation['codigo_referencia']), 0, 1, 'L');
+        $pdf->Cell(100, 8, 'Estado: ' . utf8_decode(ucfirst($reservation['status'])), 0, 1, 'L');
         $pdf->Ln(10);
 
         // Total
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(0, 10, 'Monto Total', 0, 1, 'L');
+        $pdf->SetFillColor(255, 228, 225); 
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetDrawColor(255, 0, 0);
+        $pdf->Cell(0, 10, utf8_decode('Monto Total'), 1, 1, 'L', true);
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(0, 8, 'Total a Pagar: $' . number_format($total_amount, 2), 0, 1, 'L');
+        $pdf->Cell(0, 8, utf8_decode('Total a Pagar: $') . number_format($total_amount, 2), 0, 1, 'L');
         $pdf->Ln(20);
 
         // Footer

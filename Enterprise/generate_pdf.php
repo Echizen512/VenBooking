@@ -14,7 +14,7 @@ $pdf->Image('logo.png', 10, 0, 45);
 
 $pdf->SetFont('Arial', 'B', 16);
 
-$pdf->Cell(0, 10, utf8_decode('República Bolivariana de Venezuela'), 0, 1, 'C'); // Reduciendo la altura aquí
+$pdf->Cell(0, 10, utf8_decode('República Bolivariana de Venezuela'), 0, 1, 'C'); 
 $pdf->Cell(0, 10, utf8_decode('La Victoria - Estado Aragua'), 0, 1, 'C');
 $pdf->Cell(0, 10, utf8_decode('VenBooking'), 0, 1, 'C');
 
@@ -22,14 +22,14 @@ $pdf->Cell(0, 10, utf8_decode('VenBooking'), 0, 1, 'C');
 $pdf->SetLineWidth(0);
 
 $pdf->Ln(5);
-// Fecha
+
 $pdf->SetFont('Arial', 'I', 10);
 $pdf->Cell(0, 10, 'Fecha: ' . date('d/m/Y'), 0, 1, 'C');
-$pdf->Ln(5); // Más de lo mismo
+$pdf->Ln(5); 
 
     $pdf->SetFont('Arial', 'B', 16);
 
-    $pdf->SetFillColor(144, 238, 144); // Verde claro para el fondo
+    $pdf->SetFillColor(144, 238, 144); 
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetDrawColor(34, 139, 34);
 
@@ -43,7 +43,7 @@ $pdf->Ln(5); // Más de lo mismo
     $fill = false;
 
 
-    // Reporte 1: Usuarios Registrados por Posada
+    
     if (in_array('1', $selected_reports)) {
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(0, 12, utf8_decode('Reporte 1: Usuarios Registrados por Posada'), 0, 1, 'C', true);
@@ -80,13 +80,13 @@ $pdf->Ln(5); // Más de lo mismo
         $pdf->Ln(10);
     }
 
-    // Reporte 2: Reservaciones por Posada
+    
     if (in_array('2', $selected_reports)) {
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(0, 12, utf8_decode('Reporte 2: Reservaciones por Posada'), 0, 1, 'C', true);
         $pdf->Ln(5);
 
-        // Filtros de fecha si están presentes
+        
         $start_date = $_POST['start_date'] ?? null;
         $end_date = $_POST['end_date'] ?? null;
 
@@ -101,7 +101,7 @@ $pdf->Ln(5); // Más de lo mismo
         $fill = false;
 
         foreach ($selected_inns as $inn_id) {
-            // Agregar condición para filtrar por fecha si existen fechas de inicio y fin
+            
             $date_filter = "";
             if ($start_date && $end_date) {
                 $date_filter = " AND reservations.start_date >= '$start_date' AND reservations.end_date <= '$end_date' ";
@@ -142,7 +142,7 @@ $pdf->Ln(5); // Más de lo mismo
 
 
 
-    // Reporte 3: Métodos de Pago registrados por Posadas
+    
     if (in_array('3', $selected_reports)) {
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(0, 12, utf8_decode('Reporte 3: Métodos de Pago registrados por Posadas'), 0, 1, 'C', true);
@@ -198,7 +198,7 @@ $pdf->Ln(5); // Más de lo mismo
         $pdf->Ln(10);
     }
 
-    // Reporte 4: Habitaciones Registradas por Posada
+    
     if (in_array('4', $selected_reports)) {
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(0, 12, utf8_decode('Reporte 4: Habitaciones Registradas por Posada'), 0, 1, 'C', true);
@@ -215,13 +215,13 @@ $pdf->Ln(5); // Más de lo mismo
         $pdf->SetFont('Arial', '', 9);
         $fill = false;
         foreach ($selected_inns as $inn_id) {
-            // Obtener el nombre de la posada
+            
             $queryInnName = "SELECT name FROM inns WHERE id = $inn_id";
             $resultInnName = $conn->query($queryInnName);
             $innNameRow = $resultInnName->fetch_assoc();
             $innName = utf8_decode($innNameRow['name']);
 
-            // Obtener habitaciones de la posada
+            
             $queryRooms = "SELECT room_number, type, quality, price 
                        FROM rooms WHERE inn_id = $inn_id";
             $resultRooms = $conn->query($queryRooms);
@@ -246,7 +246,7 @@ $pdf->Ln(5); // Más de lo mismo
         $pdf->Ln(10);
     }
 
-    // Reporte 5: Vehículos Registrados por Posadas
+    
     if (in_array('5', $selected_reports)) {
         $pdf->SetFont('Arial', 'B', 14);
         $pdf->Cell(0, 12, utf8_decode('Reporte 5: Vehículos Registrados por Posadas'), 0, 1, 'C', true);
@@ -263,7 +263,7 @@ $pdf->Ln(5); // Más de lo mismo
         $pdf->SetFont('Arial', '', 9);
         $fill = false;
         foreach ($selected_inns as $inn_id) {
-            // Obtener las posadas del usuario activo
+            
             $queryInns = "SELECT id, name FROM inns WHERE id = $inn_id";
             $resultInns = $conn->query($queryInns);
 
@@ -271,7 +271,7 @@ $pdf->Ln(5); // Más de lo mismo
                 $inn_id = $inn['id'];
                 $inn_name = utf8_decode($inn['name']);
 
-                // Obtener los vehículos de la posada
+                
                 $queryVehicles = "SELECT type, brand, model, year, capacity 
                           FROM vehicles WHERE inn_id = $inn_id";
                 $resultVehicles = $conn->query($queryVehicles);

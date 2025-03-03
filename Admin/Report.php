@@ -2,11 +2,10 @@
 include '../config/db.php';
 include './Includes/Dashboard.php';
 
-// Consultar todas las posadas para llenar el select
 $sql_inns = "SELECT id, name FROM inns";
 $inns_result = $conn->query($sql_inns);
 
-$inns_options = '<option disabled selected>Seleccionar Posada</option>'; // Opción deshabilitada
+$inns_options = '<option disabled selected>Seleccionar Posada</option>'; 
 if ($inns_result) {
     while ($row = $inns_result->fetch_assoc()) {
         $inns_options .= '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
@@ -64,17 +63,17 @@ $conn->close();
 
 <div class="container mt-5">
     <div class="card">
-        <h2><i class="fas fa-file-alt"></i> Generar Reportes</h2>
-        <form action="generate_report.php" method="POST">
+        <h2><i class="fas fa-file-alt text-danger"></i> Generar Reportes</h2>
+        <form action="./php/generate_report.php" method="POST">
             <div class="form-group">
-                <label for="inns" style="font-size: 14px;"><i class="fas fa-hotel"></i> Seleccionar Posada:</label>
+                <label for="inns" style="font-size: 14px;"><i class="fas fa-hotel text-info"></i> Seleccionar Posada:</label>
                 <select name="inns[]" id="inns" class="form-control" multiple>
                     <?php echo $inns_options; ?>
                 </select>
             </div>
             <br>
             <div class="form-group">
-                <label for="reports" style="font-size: 14px;"><i class="fas fa-chart-bar"></i> Seleccionar Reporte:</label>
+                <label for="reports" style="font-size: 14px;"><i class="fas fa-chart-bar text-success"></i> Seleccionar Reporte:</label>
                 <select name="reports[]" id="reports" class="form-control" multiple>
                     <option value="1">Usuarios Registrados por Posada</option>
                     <option value="2">Reservaciones por Posada</option>

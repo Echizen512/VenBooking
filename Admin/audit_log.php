@@ -1,13 +1,10 @@
 <?php
 session_start();
-
-// Verificar si el usuario está autenticado
 if (!isset($_SESSION["user_id"])) {
     header("Location: index.php");
     exit();
 }
 ?>
-
 
 <?php include './Includes/Dashboard.php'; ?>
 
@@ -21,21 +18,7 @@ if (!isset($_SESSION["user_id"])) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        .card {
-            width: 80%;
-            margin-left: 200px; /* Mueve la tarjeta más a la derecha */
-        }
-        
-        /* Agregar estilos CSS para hacer la tabla más pequeña y visible */
-        .table {
-            font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-        }
-
-        .table th, .table td {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="./Assets/CSS/audit_log.css">
 </head>
 <body>
 <div class="container mt-5">
@@ -46,11 +29,11 @@ if (!isset($_SESSION["user_id"])) {
                 <table id="auditTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th><i class="fas fa-user"></i> ID del Usuario</th>
-                            <th><i class="fas fa-table"></i> Nombre de la Tabla</th>
-                            <th><i class="fas fa-cogs"></i> Acción</th>
-                            <th><i class="fas fa-tag"></i> ID Afectado</th>
-                            <th><i class="fas fa-calendar-alt"></i> Fecha</th>
+                            <th><i class="fas fa-user text-primary"></i> ID del Usuario</th>
+                            <th><i class="fas fa-table text-info"></i> Nombre de la Tabla</th>
+                            <th><i class="fas fa-cogs text-primary"></i> Acción</th>
+                            <th><i class="fas fa-tag text-danger"></i> ID Afectado</th>
+                            <th><i class="fas fa-calendar-alt text-info"></i> Fecha</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,7 +42,6 @@ if (!isset($_SESSION["user_id"])) {
                         $sql = "SELECT * FROM audit_log";
                         $result = $conn->query($sql);
                         while($row = $result->fetch_assoc()) {
-                            // Formatear la fecha a día/mes/año
                             $formattedDate = date("d/m/Y", strtotime($row['action_timestamp']));
                             echo "<tr>
                                     <td>{$row['user_id']}</td>

@@ -1,0 +1,10 @@
+.card {
+    width: 80%;
+    margin-left: 200px; 
+}
+.table {
+    font-size: 0.9rem; 
+}
+.table th, .table td {
+    text-align: center;
+}
