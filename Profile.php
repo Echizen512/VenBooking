@@ -246,7 +246,7 @@ $end_date = date('d/m/Y', strtotime($row["end_date"]));
 </a>
 </td>
 <td class="text-center" style="font-size: 12px;">
-<a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-outline-success" style="font-size: 12px; border-radius: 20px; width: 50%;">
+<a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-outline-success text-success" style="font-size: 12px; border-radius: 20px; width: 50%;">
   <i class="fas fa-file-pdf me-2"></i> Ver Factura
 </a>
 </td>

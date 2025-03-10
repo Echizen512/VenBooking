@@ -52,7 +52,7 @@
                         <nav class="nav-desktop">
                             <ul class="menu-list">
                                 <li>
-                                    <a href="./Inicio.php">
+                                    <a href="./inns.php">
                                         <i class="fas fa-cogs text-primary"></i> Volver al Panel de Control
                                     </a>
                                 </li>

@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'text' => 'La reserva se ha confirmado exitosamente.',
             'redirect' => 'Inns.php'
         ];
-        exit;
+        // Aquí dejamos de redirigir inmediatamente
     } else {
         $_SESSION['swal_message'] = [
             'icon' => 'error',
@@ -109,20 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'text' => 'Hubo un error al confirmar la reserva: ' . $stmt->error,
             'redirect' => 'reservation.php?inn_id=' . urlencode($inn_id)
         ];
-        exit;
     }
 
     $stmt->close();
 }
-
-
 ?>
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -307,21 +298,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
-            $(document).ready(function () {
-                <?php if (isset($_SESSION['swal_message'])): ?>
-                    Swal.fire({
-                        icon: '<?php echo $_SESSION['swal_message']['icon']; ?>',
-                        title: '<?php echo $_SESSION['swal_message']['title']; ?>',
-                        text: '<?php echo $_SESSION['swal_message']['text']; ?>'
-                    }).then(() => {
-                        window.location.href = '<?php echo $_SESSION['swal_message']['redirect']; ?>';
-                    });
-                    <?php unset($_SESSION['swal_message']); ?>
-                <?php endif; ?>
-
+    $(document).ready(function () {
+        <?php if (isset($_SESSION['swal_message'])): ?>
+            Swal.fire({
+                icon: '<?php echo $_SESSION['swal_message']['icon']; ?>',
+                title: '<?php echo $_SESSION['swal_message']['title']; ?>',
+                text: '<?php echo $_SESSION['swal_message']['text']; ?>'
+            }).then(() => {
+                setTimeout(() => {
+                    window.location.href = '<?php echo $_SESSION['swal_message']['redirect']; ?>';
+                }, 3000); // Esperar 3 segundos antes de redirigir
             });
-        </script>
-
+            <?php unset($_SESSION['swal_message']); ?>
+        <?php endif; ?>
+    });
+</script>
         <script>
             $(document).ready(function () {
                 let today = new Date().toISOString().split('T')[0];
