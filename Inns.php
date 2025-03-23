@@ -33,14 +33,32 @@ if (isset($_SESSION['user_id'])) {
     include './Includes/Header2.php';
 }
 
-$sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
-                   s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, i.category_id, 
-                   i.quality
-            FROM inns i
-            LEFT JOIN states s ON i.state_id = s.id
-            LEFT JOIN municipalities m ON i.municipality_id = m.id
-            LEFT JOIN parishes p ON i.parish_id = p.id";
+$sql_inns = "
+    SELECT 
+        i.id AS inn_id,
+        i.name AS inn_name,
+        i.description,
+        i.image_url,
+        i.email,
+        i.phone,
+        s.name AS state_name,
+        m.name AS municipality_name,
+        p.name AS parish_name,
+        i.category_id,
+        i.quality,
+        COUNT(rw.id) AS total_reviews,
+        ROUND(AVG(rw.rating), 2) AS average_rating
+    FROM inns i
+    LEFT JOIN states s ON i.state_id = s.id
+    LEFT JOIN municipalities m ON i.municipality_id = m.id
+    LEFT JOIN parishes p ON i.parish_id = p.id
+    LEFT JOIN reservations rs ON i.id = rs.inn_id
+    LEFT JOIN reviews rw ON rs.id = rw.reservation_id
+    GROUP BY i.id
+    ORDER BY i.name ASC
+";
 $result_inns = $conn->query($sql_inns);
+
 if (!$result_inns) {
     die("Error en la consulta de posadas: " . $conn->error);
 }
@@ -127,59 +145,67 @@ body {
                 </div>
             </div>
             <div class="grid" id="cGrid">
-                <?php
-                if ($result_inns->num_rows > 0) {
-                    while ($row = $result_inns->fetch_assoc()) {
-                        $category_class = '';
-                        switch ($row['category_id']) {
-                            case 1:
-                                $category_class = 'montaña';
-                                break;
-                            case 2:
-                                $category_class = 'ciudad';
-                                break;
-                            case 3:
-                                $category_class = 'playa';
-                                break;
-                        }
-                        $quality_class = strtolower($row['quality']);
-                        echo '
-                        <div class="grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
-                            <div class="custom-card" style="height: 450px;">
-                                <div class="img-wrap">
-                                    <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid">
-                                </div>
-                                <div class="card-body">
-                                    <h2 class="card-title"><i class="fas fa-bed text-success"></i> ' . $row['inn_name'] . '</h2>
-                                    <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
-                                    <div class="card-meta">
-                                        <p style="font-size: 14px;"><i class="fas fa-tag text-primary"></i> ' . $row['state_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-map-marker-alt text-danger"></i> ' . $row['municipality_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> ' . ucfirst($row['quality']) . '</p>
-                                    </div>
-                                    <br>';
-                        if (isset($_SESSION['user_id'])) {
-                            echo '
-                                <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
-                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
-                                </a>';
-                        } else {
-                            echo '
-                                <button onclick="checkSession()" class="btn btn-success text-white">
-                                    <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
-                                </button>';
-                        }
-                        echo '
-                                </div>
-                            </div>
-                        </div>';
-                    }
-                } else {
-                    echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
-                }
-                $conn->close();
-                ?>
-            </div>
+    <?php
+    if ($result_inns->num_rows > 0) {
+        while ($row = $result_inns->fetch_assoc()) {
+            $category_class = '';
+            switch ($row['category_id']) {
+                case 1:
+                    $category_class = 'montaña';
+                    break;
+                case 2:
+                    $category_class = 'ciudad';
+                    break;
+                case 3:
+                    $category_class = 'playa';
+                    break;
+            }
+            $quality_class = strtolower($row['quality']);
+            $total_reviews = $row['total_reviews'] ?? 0; // Evitar valores nulos
+            $average_rating = $row['average_rating'] ?? 0; // Evitar valores nulos
+
+            echo '
+            <div class="grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
+                <div class="custom-card" style="height: 500px;">
+                    <div class="img-wrap">
+                        <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title"><i class="fas fa-bed text-success"></i> ' . $row['inn_name'] . '</h2>
+                        <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
+                        <div class="card-meta">
+                            <p style="font-size: 14px;"><i class="fas fa-tag text-primary"></i> ' . $row['state_name'] . '</p>
+                            <p style="font-size: 14px;"><i class="fas fa-map-marker-alt text-danger"></i> ' . $row['municipality_name'] . '</p>
+                            <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> ' . ucfirst($row['quality']) . '</p>
+                        </div>
+                        <hr>
+                        <div class="reviews-summary">
+                            <p style="font-size: 14px;"><i class="fas fa-comment-dots text-info"></i> <strong>Cantidad de Valoraciones:</strong> ' . $total_reviews . '</p>
+                            <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> <strong>Promedio:</strong> ' . $average_rating . '</p>
+                        </div>
+                        <br>';
+            if (isset($_SESSION['user_id'])) {
+                echo '
+                    <a href="Inn.php?inn_id=' . $row['inn_id'] . '" class="btn btn-success text-white">
+                        <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
+                    </a>';
+            } else {
+                echo '
+                    <button onclick="checkSession()" class="btn btn-success text-white">
+                        <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
+                    </button>';
+            }
+            echo '
+                    </div>
+                </div>
+            </div>';
+        }
+    } else {
+        echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
+    }
+    ?>
+</div>
+
         </div>
     </section>
 

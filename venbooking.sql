@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-01-2025 a las 05:23:49
+-- Tiempo de generación: 23-03-2025 a las 15:24:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -374,6 +374,15 @@ CREATE TABLE `messages` (
   `msg` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `messages`
+--
+
+INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`, `created_at`) VALUES
+(2, 13, 6, 'Prueba', '2025-03-23 03:32:26'),
+(3, 14, 6, 'Prueba', '2025-03-23 03:34:48'),
+(4, 6, 14, 'Prueba', '2025-03-23 03:46:58');
 
 -- --------------------------------------------------------
 
@@ -1025,6 +1034,26 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `reservation_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL CHECK (`rating` between 1 and 5),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `reservation_id`, `rating`, `created_at`) VALUES
+(4, 60, 4, '2025-03-23 14:18:49');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `rooms`
 --
 
@@ -1337,6 +1366,13 @@ ALTER TABLE `reservations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reservation_id` (`reservation_id`);
+
+--
 -- Indices de la tabla `rooms`
 --
 ALTER TABLE `rooms`
@@ -1435,7 +1471,7 @@ ALTER TABLE `membership_purchases`
 -- AUTO_INCREMENT de la tabla `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `mobile_payment_info`
@@ -1472,6 +1508,12 @@ ALTER TABLE `profile`
 --
 ALTER TABLE `reservations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT de la tabla `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `rooms`
@@ -1588,6 +1630,12 @@ ALTER TABLE `parishes`
 --
 ALTER TABLE `paypal_transfer_info`
   ADD CONSTRAINT `paypal_transfer_info_ibfk_1` FOREIGN KEY (`inn_id`) REFERENCES `inns` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `rooms`

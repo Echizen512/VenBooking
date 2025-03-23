@@ -77,14 +77,13 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
 </head>
 
 <style>
-    .form-label {
-        font-size: 14px;
-    }
+.form-label {
+    font-size: 14px;
+}
 
-    .form-text {
-        font-size: 12px;
-    }
-
+.form-text {
+    font-size: 12px;
+}
 </style>
 
 <body>
@@ -137,48 +136,67 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                 </div>
 
                 <div class="row justify-content-center mt-5">
-    <div class="col-12 text-center">
-        <h2 class="mb-4 text-success" style="font-size: 2.5rem;">
-            <i class="fas fa-home"></i> Posadas Guardadas
-        </h2>
-    </div>
-</div>
-<div class="tab-pane fade show active mt-5">
-    <div class="container p-4 rounded shadow-sm custom-bg">
-        <?php if ($result_favorite_inns->num_rows > 0) { ?>
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th class="text-center" style="font-size: 12px;">Imagen</th>
-                    <th class="text-center" style="font-size: 12px;">Nombre</th>
-                    <th class="text-center" style="font-size: 12px;">Categoría</th>
-                    <th class="text-center" style="font-size: 12px;">Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result_favorite_inns->fetch_assoc()) { ?>
-                <tr>
-                    <td style="text-align: center;">
-                        <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image" class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
-                    </td>
-                    <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
-                    <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['category_name']); ?></td>
-                    <td class="text-center" style="font-size: 12px;">
-                        <a href="inn.php?inn_id=<?php echo $row['id']; ?>" class="btn btn-outline-success mt-3" style="font-size: 12px; border-radius: 20px; width: 50%;">
-                            <i class="fas fa-link me-2"></i> ¡Ver Detalles!
-                        </a>
-                    </td>
-                </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-        <?php } else { ?>
-        <div class="col-12 text-center" style="font-size: 2rem; color:rgb(136, 176, 211); padding: 1rem; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f8f9fa; margin-top: 1rem;">
-            No tienes posadas guardadas.
-        </div>
-        <?php } ?>
-    </div>
-</div>
+                    <div class="col-12 text-center">
+                        <h2 class="mb-4 text-success" style="font-size: 2.5rem;">
+                            <i class="fas fa-home"></i> Posadas Guardadas
+                        </h2>
+                    </div>
+                </div>
+                <div class="tab-pane fade show active mt-5">
+                    <div class="container p-4 rounded shadow-sm custom-bg">
+                        <?php if ($result_favorite_inns->num_rows > 0) { ?>
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center" style="font-size: 12px;">Imagen</th>
+                                    <th class="text-center" style="font-size: 12px;">Nombre</th>
+                                    <th class="text-center" style="font-size: 12px;">Categoría</th>
+                                    <th class="text-center" style="font-size: 12px;">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result_favorite_inns->fetch_assoc()) { ?>
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image"
+                                            class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
+                                    </td>
+                                    <td class="text-center" style="font-size: 12px;">
+                                        <?php echo htmlspecialchars($row['inn_name']); ?></td>
+                                    <td class="text-center" style="font-size: 12px;">
+                                        <?php echo htmlspecialchars($row['category_name']); ?></td>
+                                    <td class="text-center" style="font-size: 12px;">
+                                        <a href="inn.php?inn_id=<?php echo $row['id']; ?>"
+                                            class="btn btn-outline-success mt-3"
+                                            style="font-size: 12px; border-radius: 20px; width: 50%;">
+                                            <i class="fas fa-link me-2"></i> ¡Ver Detalles!
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <?php } else { ?>
+                        <div class="col-12 text-center"
+                            style="font-size: 2rem; color:rgb(136, 176, 211); padding: 1rem; border: 1px solid #e0e0e0; border-radius: 5px; background-color: #f8f9fa; margin-top: 1rem;">
+                            No tienes posadas guardadas.
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+
+               <?php
+// Consulta para obtener las reservaciones del usuario
+$sql_reservations = "SELECT r.id, r.inn_id, r.start_date, r.end_date, r.payment_method_id, r.receipt_path, r.codigo_referencia, r.status, i.name AS inn_name, i.image_url, i.user_id AS inn_owner_id
+FROM reservations r
+JOIN inns i ON r.inn_id = i.id
+WHERE r.user_id = ?";
+$stmt_reservations = $conn->prepare($sql_reservations);
+$stmt_reservations->bind_param("i", $user_id);
+$stmt_reservations->execute();
+$result_reservations = $stmt_reservations->get_result();
+?>
 
 <div class="row justify-content-center mt-5">
     <div class="col-12 text-center">
@@ -189,163 +207,211 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
 </div>
 <div class="row justify-content-center">
     <?php
-   $sql_reservations = "SELECT r.id, r.inn_id, r.start_date, r.end_date, r.payment_method_id, r.receipt_path, r.codigo_referencia, r.status, i.name AS inn_name, i.image_url, i.user_id AS inn_owner_id
-   FROM reservations r
-   JOIN inns i ON r.inn_id = i.id
-   WHERE r.user_id = ?";
-$stmt_reservations = $conn->prepare($sql_reservations);
-$stmt_reservations->bind_param("i", $user_id);
-$stmt_reservations->execute();
-$result_reservations = $stmt_reservations->get_result();
+    if ($result_reservations->num_rows > 0) {
+    ?>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center" style="font-size: 12px;">Imagen</th>
+                <th class="text-center" style="font-size: 12px;">Nombre</th>
+                <th class="text-center" style="font-size: 12px;">Desde</th>
+                <th class="text-center" style="font-size: 12px;">Hasta</th>
+                <th class="text-center" style="font-size: 12px;">Status</th>
+                <th class="text-center" style="font-size: 12px;">Contacto</th>
+                <th class="text-center" style="font-size: 12px;">Factura</th>
+                <th class="text-center" style="font-size: 12px;">Valoración</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Consulta para verificar si existe una valoración para una reservación
+            $sql_reviews = "SELECT reservation_id FROM reviews WHERE reservation_id = ?";
+            $stmt_reviews = $conn->prepare($sql_reviews);
 
-if ($result_reservations->num_rows > 0) {
-?>
-<table class="table table-bordered">
-<thead class="thead-light">
-<tr>
-<th class="text-center" style="font-size: 12px;">Imagen</th>
-<th class="text-center" style="font-size: 12px;">Nombre</th>
-<th class="text-center" style="font-size: 12px;">Desde</th>
-<th class="text-center" style="font-size: 12px;">Hasta</th>
-<th class="text-center" style="font-size: 12px;">Status</th>
-<th class="text-center" style="font-size: 12px;">Contacto</th>
-<th class="text-center" style="font-size: 12px;">Factura</th>
-</tr>
-</thead>
-<tbody>
-<?php
-while ($row = $result_reservations->fetch_assoc()) {
-$status_color = '';
-switch ($row['status']) {
-case 'En Espera':
-  $status_color = 'bg-primary';
-  break;
-case 'Confirmado':
-  $status_color = 'bg-success';
-  break;
-case 'Cancelado':
-  $status_color = 'bg-danger';
-  break;
-}
-$start_date = date('d/m/Y', strtotime($row["start_date"]));
-$end_date = date('d/m/Y', strtotime($row["end_date"]));
-?>
-<tr>
-<td style="text-align: center;">
-<img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image" class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
-</td>
-<td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
-<td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($start_date); ?></td>
-<td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($end_date); ?></td>
-<td class="text-center" style="font-size: 12px;">
-<span class="badge <?php echo $status_color; ?> text-white" style="font-size: 14px; padding: 5px; border-radius: 20px;"><?php echo htmlspecialchars($row["status"]); ?></span>
-</td>
-<td class="text-center" style="font-size: 12px;">
-<a href="chat.php?user_id=<?php echo htmlspecialchars($row['inn_owner_id']); ?>" class="btn btn-outline-primary text-primary" style="font-size: 12px; border-radius: 20px; width: 50%; margin-left: 70px;">
-  <i class="fas fa-comments mr-2"></i> Contactar
-</a>
-</td>
-<td class="text-center" style="font-size: 12px;">
-<a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>" class="btn btn-outline-success text-success" style="font-size: 12px; border-radius: 20px; width: 50%;">
-  <i class="fas fa-file-pdf me-2"></i> Ver Factura
-</a>
-</td>
-</tr>
-<?php } ?>
-</tbody>
-</table>
-<?php } else { ?>
-<div class="col-12 text-center">No hay reservaciones registradas.</div>
-<?php } ?>
+            while ($row = $result_reservations->fetch_assoc()) {
+                // Determinar color del estado
+                $status_color = '';
+                switch ($row['status']) {
+                    case 'En Espera':
+                        $status_color = 'bg-primary';
+                        break;
+                    case 'Confirmado':
+                        $status_color = 'bg-success';
+                        break;
+                    case 'Cancelado':
+                        $status_color = 'bg-danger';
+                        break;
+                }
 
+                // Formatear fechas
+                $start_date = date('d/m/Y', strtotime($row["start_date"]));
+                $end_date = date('d/m/Y', strtotime($row["end_date"]));
+
+                // Verificar si la reservación ya tiene valoración
+                $stmt_reviews->bind_param("i", $row['id']);
+                $stmt_reviews->execute();
+                $result_reviews = $stmt_reviews->get_result();
+                $has_review = $result_reviews->num_rows > 0;
+            ?>
+            <tr>
+                <td style="text-align: center;">
+                    <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image" 
+                         class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
+                </td>
+                <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
+                <td class="text-center" style="font-size: 12px;"><?php echo $start_date; ?></td>
+                <td class="text-center" style="font-size: 12px;"><?php echo $end_date; ?></td>
+                <td class="text-center" style="font-size: 12px;">
+                    <span class="badge <?php echo $status_color; ?> text-white"
+                          style="font-size: 14px; padding: 5px; border-radius: 20px;">
+                        <?php echo htmlspecialchars($row["status"]); ?>
+                    </span>
+                </td>
+                <td class="text-center" style="font-size: 12px;">
+                    <a href="chat.php?user_id=<?php echo htmlspecialchars($row['inn_owner_id']); ?>"
+                       class="btn btn-outline-primary text-primary"
+                       style="font-size: 12px; border-radius: 20px; width: 50%; margin-left: 70px;">
+                       <i class="fas fa-comments mr-2"></i> Contactar
+                    </a>
+                </td>
+                <td class="text-center" style="font-size: 12px;">
+                    <a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>"
+                       class="btn btn-outline-success text-success"
+                       style="font-size: 12px; border-radius: 20px; width: 50%;">
+                       <i class="fas fa-file-pdf me-2"></i> Ver Factura
+                    </a>
+                </td>
+               <td class="text-center align-middle" style="vertical-align: middle;">
+    <?php if (!$has_review) { ?>
+        <form action="submit_review.php" method="POST" style="display: inline-block; text-align: center;">
+            <input type="hidden" name="reservation_id" value="<?php echo htmlspecialchars($row['id']); ?>">
+            <div class="form-group mb-2" style="display: flex; justify-content: center; align-items: center;">
+                <select id="rating-<?php echo $row['id']; ?>" name="rating" class="custom-select"
+                        style="width: 100px; font-size: 14px; border-radius: 5px;" required>
+                    <option value="" disabled selected>Elige</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary"
+                    style="font-size: 14px; padding: 10px 20px; border-radius: 30px; background: linear-gradient(90deg, #007bff, #0056b3); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                Enviar <i class="fas fa-paper-plane ml-2"></i>
+            </button>
+        </form>
+    <?php } else { ?>
+        <span class="badge badge-success" style="font-size: 14px; padding: 10px; border-radius: 20px;">
+            <i class="fas fa-check-circle"></i> Valoración registrada
+        </span>
+    <?php } ?>
+</td>
+
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <?php
+    } else {
+        echo '<div class="col-12 text-center">No hay reservaciones registradas.</div>';
+    }
+    ?>
 </div>
 
 
-            <div class="text-center mt-6">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
-                        data-bs-target="#editProfileModal">
-                        <i class="fas fa-edit"></i> Editar Perfil
-                    </button>
                 </div>
-            </div>
-            <br><br>
-            <?php include './Includes/Footer.php'; ?>
 
-            <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-success text-center">
-                            <h5 class="modal-title text-white p-2" style="font-size: 16px;" id="editProfileModalLabel">Editar Perfil</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="./Includes/update_profile.php" method="post">
-                            <div class="modal-body">
-                                <div class="mb-3 text-left">
-                                    <label for="first_name" class="form-label">Nombre:</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name"
-                                        value="<?php echo htmlspecialchars($user['first_name']); ?>" required>
-                                </div>
-                                <div class="mb-3 text-left">
-                                    <label for="last_name" class="form-label">Apellido:</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name"
-                                        value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
-                                </div>
-                                <div class="mb-3 text-left">
-                                    <label for="email" class="form-label">Email:</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        value="<?php echo htmlspecialchars($user['email']); ?>" required>
-                                </div>
-                                <div class="mb-3 text-left">
-                                    <label for="password" class="form-label">Contraseña:</label>
-                                    <input type="password" class="form-control" id="password" name="password">
-                                    <div class="form-text">Dejar en blanco si no deseas cambiar la contraseña.</div>
-                                </div>
-                                <div class="mb-3 text-left">
-                                    <label for="profile_image_url" class="form-label">URL de la Foto de Perfil:</label>
-                                    <input type="text" class="form-control" id="profile_image_url"
-                                        name="profile_image_url"
-                                        value="<?php echo htmlspecialchars($user['profile_image_url']); ?>">
-                                </div>
-                                <div class="mb-3 text-left">
-                                    <label for="banner_image_url" class="form-label">URL del Banner:</label>
-                                    <input type="text" class="form-control" id="banner_image_url"
-                                        name="banner_image_url"
-                                        value="<?php echo htmlspecialchars($user['banner_image_url']); ?>">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Guardar Cambios</button>
-                                <button type="button" class="btn btn-outline-primary"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                            </div>
-                        </form>
+
+                <div class="text-center mt-6">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#editProfileModal">
+                            <i class="fas fa-edit"></i> Editar Perfil
+                        </button>
                     </div>
                 </div>
-            </div>
+                <br><br>
+                <?php include './Includes/Footer.php'; ?>
+
+                <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-center">
+                                <h5 class="modal-title text-white p-2" style="font-size: 16px;"
+                                    id="editProfileModalLabel">Editar Perfil</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form action="./Includes/update_profile.php" method="post">
+                                <div class="modal-body">
+                                    <div class="mb-3 text-left">
+                                        <label for="first_name" class="form-label">Nombre:</label>
+                                        <input type="text" class="form-control" id="first_name" name="first_name"
+                                            value="<?php echo htmlspecialchars($user['first_name']); ?>" required>
+                                    </div>
+                                    <div class="mb-3 text-left">
+                                        <label for="last_name" class="form-label">Apellido:</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name"
+                                            value="<?php echo htmlspecialchars($user['last_name']); ?>" required>
+                                    </div>
+                                    <div class="mb-3 text-left">
+                                        <label for="email" class="form-label">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                                    </div>
+                                    <div class="mb-3 text-left">
+                                        <label for="password" class="form-label">Contraseña:</label>
+                                        <input type="password" class="form-control" id="password" name="password">
+                                        <div class="form-text">Dejar en blanco si no deseas cambiar la contraseña.</div>
+                                    </div>
+                                    <div class="mb-3 text-left">
+                                        <label for="profile_image_url" class="form-label">URL de la Foto de
+                                            Perfil:</label>
+                                        <input type="text" class="form-control" id="profile_image_url"
+                                            name="profile_image_url"
+                                            value="<?php echo htmlspecialchars($user['profile_image_url']); ?>">
+                                    </div>
+                                    <div class="mb-3 text-left">
+                                        <label for="banner_image_url" class="form-label">URL del Banner:</label>
+                                        <input type="text" class="form-control" id="banner_image_url"
+                                            name="banner_image_url"
+                                            value="<?php echo htmlspecialchars($user['banner_image_url']); ?>">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                        data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
                     const editProfileModal = document.getElementById('editProfileModal');
-                    const openModalButtons = document.querySelectorAll('.open-edit-profile'); // Asegúrate de usar esta clase en el botón
+                    const openModalButtons = document.querySelectorAll(
+                    '.open-edit-profile'); // Asegúrate de usar esta clase en el botón
 
                     openModalButtons.forEach(button => {
-                        button.addEventListener('click', function () {
+                        button.addEventListener('click', function() {
                             const userData = JSON.parse(this.getAttribute('data-user'));
                             document.getElementById('first_name').value = userData.first_name;
                             document.getElementById('last_name').value = userData.last_name;
                             document.getElementById('email').value = userData.email;
-                            document.getElementById('profile_image_url').value = userData.profile_image_url;
+                            document.getElementById('profile_image_url').value = userData
+                                .profile_image_url;
 
                             const modal = new bootstrap.Modal(editProfileModal);
                             modal.show();
                         });
                     });
                 });
-
-            </script>
+                </script>
 
 </body>
 
