@@ -77,6 +77,13 @@ $result = $stmt->get_result();
     <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../Assets/css/CRUD.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 </head>
 
 <style>
@@ -107,6 +114,21 @@ $result = $stmt->get_result();
 
         .slideInUp {
             animation: slideInUp 1s ease-in-out;
+        }
+    </style>
+
+<style>
+        .tippy-box[data-theme='custom'] {
+            background-color:rgb(25, 135, 84);
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
+
+        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
+            transform-origin: top;
         }
     </style>
 
@@ -202,7 +224,7 @@ $result = $stmt->get_result();
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-primary">
+                <div class="modal-header bg-success">
                     <h5 class="modal-title" id="editModalLabel" style="color: white;">Editar Transferencia PayPal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -214,7 +236,7 @@ $result = $stmt->get_result();
                             <label for="edit_email">Correo Electrónico</label>
                             <input type="email" name="email" id="edit_email" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3" style="width: 100%;">Actualizar Transferencia</button>
+                        <button type="submit" class="btn btn-success mt-3" style="width: 100%;">Actualizar Transferencia</button>
                     </form>
                 </div>
             </div>
@@ -240,6 +262,25 @@ $result = $stmt->get_result();
             });
         });
     </script>
+
+<script>
+
+    tippy('.btn-success[data-bs-target="#createModal"]', {
+        content: 'Haz clic para añadir un nuevo registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right', 
+    });
+
+
+    tippy('.btn-primary[data-bs-target="#editModal"]', {
+        content: 'Haz clic para editar este registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right',
+    });
+
+</script>
 
 </body>
 

@@ -46,8 +46,9 @@
             </div>
             <div class="main-header">
                 <div class="container">
-                    <div class="logo-wrap" itemprop="logo">
-                    </div>
+                <div class="icon-left">
+            <img src="./logo.png" alt="Icono izquierdo" style="width: 140px; height: 80px;">
+        </div>
                     <div class="nav-wrap">
                         <nav class="nav-desktop">
                             <ul class="menu-list">

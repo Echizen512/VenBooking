@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/all.css">
@@ -11,18 +11,35 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/flexslider.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/inner-page-style.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    
+    <style>
+        .tippy-box[data-theme='custom'] {
+            background-color:rgb(25, 135, 84);
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
 
+        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
+            transform-origin: top;
+        }
+    </style>
 
 </head>
-
-
 <body>
     <div>
         <header class="site-header">
@@ -46,41 +63,65 @@
             </div>
             <div class="main-header">
                 <div class="container">
-                    <div class="logo-wrap" itemprop="logo">
-                    </div>
+                    <div class="logo-wrap"></div>
                     <div class="nav-wrap">
                         <nav class="nav-desktop">
                             <ul class="menu-list">
                                 <li>
-                                    <a href="./Destinations.php">
+                                    <a href="./Destinations.php" id="destinations-tooltip">
                                         <i class="fas fa-map-marker-alt text-danger"></i> Destinos
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./Inns.php">
+                                    <a href="./Inns.php" id="inns-tooltip">
                                         <i class="fas fa-bed text-success"></i> Posadas
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./Profile.php">
+                                    <a href="./Profile.php" id="profile-tooltip">
                                         <i class="fas fa-user text-primary"></i> Perfil
                                     </a>
                                 </li>
-
                             </ul>
                         </nav>
-                        <div id="bar">
-                            <i class="fas fa-bars"></i>
-                        </div>
-                        <div id="close">
-                            <i class="fas fa-times"></i>
-                        </div>
+                        <div id="bar"><i class="fas fa-bars"></i></div>
+                        <div id="close"><i class="fas fa-times"></i></div>
                     </div>
                 </div>
             </div>
         </header>
     </div>
 
+    <script>
+        tippy('#email-tooltip', {
+            content: '¡Contáctanos por correo!',
+            animation: 'scale',
+            theme: 'custom',
+            placement: 'bottom',
+        });
+
+        tippy('#destinations-tooltip', {
+            content: 'Explora los destinos más populares de Venezuela', 
+            animation: 'shift-away',
+            theme: 'custom',
+            placement: 'right',
+        });
+
+        tippy('#inns-tooltip', {
+            content: 'Encuentra las mejores posadas y reserva de forma segura.',
+            animation: 'shift-toward',
+            theme: 'custom',
+            placement: 'right',
+        });
+
+        tippy('#profile-tooltip', {
+            content: 'Consulta y actualiza tu perfil personal',
+            animation: 'perspective',
+            theme: 'custom',
+            placement: 'right',
+        });
+    </script>
+    
     <script>
         document.getElementById('logout-btn').addEventListener('click', function (e) {
             e.preventDefault(); // Evita que el enlace se ejecute inmediatamente
@@ -102,6 +143,7 @@
             })
         });
     </script>
+
 
 
 </body>

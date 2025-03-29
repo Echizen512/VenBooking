@@ -82,6 +82,14 @@ $result = $stmt->get_result();
     <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../Assets/css/CRUD.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    
     <style>
         /* Animaciones */
         @keyframes fadeIn {
@@ -112,6 +120,22 @@ $result = $stmt->get_result();
             animation: slideInUp 1s ease-in-out;
         }
     </style>
+
+<style>
+        .tippy-box[data-theme='custom'] {
+            background-color:rgb(25, 135, 84);
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
+
+        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
+            transform-origin: top;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -148,7 +172,7 @@ $result = $stmt->get_result();
                                     <td class='text-center'>{$row['phone_number']}</td>
                                     <td class='text-center'>{$row['inn_name']}</td>
                                     <td class='text-center'>
-                                        <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal' data-id='{$row['id']}' data-cedula='{$row['cedula']}' data-bank-code='{$row['bank_code']}' data-phone-number='{$row['phone_number']}' style='width: 20px; height: 20px; padding: 0; text-align: center; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: white;'>
+                                        <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal' data-id='{$row['id']}' data-cedula='{$row['cedula']}' data-bank-code='{$row['bank_code']}' data-phone-number='{$row['phone_number']}' style='width: 30px; height: 30px; padding: 0; text-align: center; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; color: white;'>
                                             <i class='fas fa-edit'></i>
                                         </button>
                                     </td>
@@ -291,6 +315,26 @@ $result = $stmt->get_result();
             });
         });
     </script>
+
+<script>
+
+    tippy('.btn-success[data-bs-target="#createModal"]', {
+        content: 'Haz clic para añadir un nuevo registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right', 
+    });
+
+
+    tippy('.btn-primary[data-bs-target="#editModal"]', {
+        content: 'Haz clic para editar este registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right',
+    });
+
+</script>
+
 </body>
 
 </html>

@@ -33,6 +33,8 @@ if (isset($_SESSION['user_id'])) {
     include './Includes/Header2.php';
 }
 
+$search = isset($_GET['search']) ? '%' . $conn->real_escape_string($_GET['search']) . '%' : '%';
+
 $sql_inns = "
     SELECT 
         i.id AS inn_id,
@@ -54,10 +56,16 @@ $sql_inns = "
     LEFT JOIN parishes p ON i.parish_id = p.id
     LEFT JOIN reservations rs ON i.id = rs.inn_id
     LEFT JOIN reviews rw ON rs.id = rw.reservation_id
+    WHERE i.name LIKE ?
     GROUP BY i.id
     ORDER BY i.name ASC
 ";
-$result_inns = $conn->query($sql_inns);
+
+$stmt = $conn->prepare($sql_inns);
+$stmt->bind_param("s", $search);
+$stmt->execute();
+$result_inns = $stmt->get_result();
+
 
 if (!$result_inns) {
     die("Error en la consulta de posadas: " . $conn->error);
@@ -112,14 +120,38 @@ body {
         margin-bottom: 10px;
     }
     
+    .grid-container {
+    display: flex;
+    flex-wrap: wrap; /* Los elementos se ajustan automáticamente */
+    justify-content: space-between; /* Distribución similar a tu ejemplo */
+    gap: 10px; /* Espaciado entre los elementos */
+}
+
+.grid-item {
+    width: 22%; /* Ajusta al tamaño deseado */
+    margin-bottom: 10px; /* Espaciado inferior */
+}
+
+.filter-ubicacion button,
+.filter-quality button {
+    margin-bottom: 10px; /* Espaciado entre botones */
+}
+
+
+
+
 </style>
 
 <body>
+
     <section class="course-listing-page">
         <div class="container">
-            <div class="card shadow-sm" style="padding: 20px">
+            <div class="card shadow-sm" style="padding: 20px; border-radius: 20px;">
                 <div class="card-body">
                     <div id="filters" class="button-group">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre..." onkeyup="searchInns()" style="margin-bottom: 20px; padding: 10px; border-radius: 20px; font-size: 16px;">
+
+
                         <button class="btn btn-success filter-btn" data-filter="*" style="color: white;">
                             <i class="fas fa-th" style="margin-right: 8px;"></i> Todos
                         </button>
@@ -228,34 +260,50 @@ body {
         }
     </script>
 
-    <script>
-        document.querySelectorAll('.btn[data-filter]').forEach(button => {
-            button.addEventListener('click', function () {
-                let filterValue = this.getAttribute('data-filter');
-                let items = document.querySelectorAll('.grid-item');
-                items.forEach(item => {
-                    if (filterValue === '*' || item.classList.contains(filterValue.replace('.', ''))) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
+<script>
+    document.getElementById('searchInput').addEventListener('input', filterItems);
+    document.querySelectorAll('.btn[data-filter], .filter-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const filterValue = this.getAttribute('data-filter');
+            filterItems(filterValue);
         });
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                let qualityFilter = this.getAttribute('data-filter');
-                let items = document.querySelectorAll('.grid-item');
-                items.forEach(item => {
-                    if (qualityFilter === '*' || item.classList.contains(qualityFilter.replace('.', ''))) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
+    });
+
+    function filterItems(categoryFilter = '*') {
+        const filterText = document.getElementById('searchInput').value.toLowerCase().trim();
+        const items = document.querySelectorAll('.grid-item');
+
+        items.forEach(item => {
+            const itemName = item.querySelector('.card-title').innerText.toLowerCase();
+            const matchesText = filterText === '' || itemName.includes(filterText);
+            const matchesCategory = categoryFilter === '*' || item.classList.contains(categoryFilter.replace('.', ''));
+
+            item.style.display = matchesText && matchesCategory ? 'block' : 'none';
         });
-    </script>
+
+        // Forzar el recálculo
+        const gridContainer = document.querySelector('.grid-container');
+        gridContainer.style.display = 'none'; // Oculta temporalmente
+        gridContainer.offsetHeight; // Fuerza el recálculo
+        gridContainer.style.display = 'flex'; // Vuelve a activar flexbox
+    }
+</script>
+
+
+<script>
+    function searchInns() {
+        const searchValue = document.getElementById('searchInput').value;
+        fetch(`?search=${encodeURIComponent(searchValue)}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('cGrid').innerHTML = new DOMParser().parseFromString(html, "text/html").getElementById('cGrid').innerHTML;
+            })
+            .catch(error => console.error("Error en la búsqueda:", error));
+    }
+
+
+</script>
+
 
 </body>
 </html>

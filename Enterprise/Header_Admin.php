@@ -9,7 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
     
     <style>
         body {
@@ -112,6 +118,19 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
+        .tippy-box[data-theme='custom'] {
+            background-color:rgb(25, 135, 84);
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
+
+        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
+            transform-origin: top;
+        }
+
     </style>
 </head>
 <body>
@@ -128,49 +147,49 @@
     </div>
 
     <div class="sidebar bg-success">
-        <a class="dropdown-btn">
+        <a class="dropdown-btn" id="perfiles-tooltip">
             <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Perfil
         </a>
         <div class="dropdown-container">
-            <a href="./Perfil.php">
+            <a href="./Perfil.php" id="perfil-tooltip">
                 <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Mi Perfil
             </a>
-            <a href="./inns.php">
+            <a href="./inns.php" id="posadas-tooltip">
                 <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas
             </a>
-            <a href="./reservation.php">
+            <a href="./reservation.php" id="reserva-tooltip">
                 <i class="fas fa-calendar-alt me-2" style="color: #69afff;"></i> Reservas
             </a>
         </div>
 
-        <a class="dropdown-btn" >
+        <a class="dropdown-btn" id="pagos-tooltip">
             <i class="fas fa-credit-card me-2" style="color: #17a2b8;"></i> Métodos de Pago
         </a>
         <div class="dropdown-container">
-            <a href="./mobile_payment.php">
+            <a href="./mobile_payment.php" id="pagomovil-tooltip">
                 <i class="fas fa-mobile-alt me-2" style="color: #17a2b8;"></i> Pago Móvil
             </a>
-            <a href="./transfers.php">
+            <a href="./transfers.php" id="transferencias-tooltip">
                 <i class="fas fa-university me-2" style="color: #dc3545;"></i> Transferencias
             </a>
-            <a href="./paypal.php">
+            <a href="./paypal.php" id="paypal-tooltip">
                 <i class="fab fa-paypal me-2" style="color: #0c78f4;"></i> PayPal
             </a>
-            <a href="./binance.php">
+            <a href="./binance.php" id="binance-tooltip">
                 <i class="fab fa-btc me-2" style="color: #f4c20d;"></i> Binance
             </a>
-            <a href="./zelle.php">
+            <a href="./zelle.php" id="zelle-tooltip">
                 <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zelle
             </a>
-            <a href="./zinli.php">
+            <a href="./zinli.php" id="zinli-tooltip">
                 <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zinli
             </a>
         </div>
 
-        <a href="../Memberships.php">
+        <a href="../Memberships.php"  id="membresias-tooltip">
             <i class="fas fa-gift me-2" style="color: #b3ff90;"></i> Membresías
         </a>
-        <a href="./reports.php">
+        <a href="./reports.php"  id="reportes-tooltip">
             <i class="fas fa-file-pdf me-2 text-danger"></i> Reportes PDF
         </a>
 
@@ -227,6 +246,114 @@
             });
         }
     </script>
+
+<script>
+            // Tooltip para "Perfiles"
+            tippy('#perfiles-tooltip', {
+                content: 'Accede a diferentes perfiles',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Mi Perfil"
+            tippy('#perfil-tooltip', {
+                content: 'Consulta tu información personal',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Posadas"
+            tippy('#posadas-tooltip', {
+                content: 'Explora nuestras posadas disponibles',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Reservas"
+            tippy('#reserva-tooltip', {
+                content: 'Administra tus reservas fácilmente',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Métodos de Pago"
+            tippy('#pagos-tooltip', {
+                content: 'Elige cómo deseas realizar tus pagos',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Pago Móvil"
+            tippy('#pagomovil-tooltip', {
+                content: 'Realiza pagos desde tu dispositivo móvil',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Transferencias"
+            tippy('#transferencias-tooltip', {
+                content: 'Haz transferencias bancarias de forma sencilla',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "PayPal"
+            tippy('#paypal-tooltip', {
+                content: 'Utiliza PayPal para tus pagos online',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Binance"
+            tippy('#binance-tooltip', {
+                content: 'Realiza pagos usando criptomonedas',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Zelle"
+            tippy('#zelle-tooltip', {
+                content: 'Paga fácilmente con Zelle',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Zinli"
+            tippy('#zinli-tooltip', {
+                content: 'Realiza tus pagos con Zinli de manera segura',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Membresías"
+            tippy('#membresias-tooltip', {
+                content: 'Descubre nuestras membresías exclusivas',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+            // Tooltip para "Reportes PDF"
+            tippy('#reportes-tooltip', {
+                content: 'Descarga reportes en formato PDF',
+                animation: 'scale',
+                theme: 'custom',
+                placement: 'right',
+            });
+
+        </script>
+
 
 </body>
 </html>

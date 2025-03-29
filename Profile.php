@@ -82,56 +82,68 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
 }
 
 .form-text {
-    font-size: 12px;
+    font-size: 14px;
 }
 </style>
 
 <body>
     <?php include './Includes/Header.php'; ?>
     <div class="container p-0" style="max-width: 100%">
-        <div class="card overflow-hidden p-0">
-            <div class="card-body p-0">
-                <img src="<?php echo isset($user['banner_image_url']) && !empty($user['banner_image_url']) ? htmlspecialchars($user['banner_image_url']) : 'https://c.wallhere.com/photos/64/fc/3840x2160_px_animals_artwork_Clear_Sky_Deer_digital_art_drawing_Firewatch-516653.jpg!d'; ?>"
-                    alt="Banner Image" class="w-100" style="height: 300px;">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 order-lg-1 order-2">
-                        <div class="d-flex align-items-center justify-content-around m-4">
-                            <div class="text-center d-flex flex-column align-items-center">
-                                <i class="fas fa-calendar-check fs-1 d-block mb-3 text-primary"></i>
-                                <h4 class="mb-0 fw-semibold lh-1" style="font-size: 1.5rem;">
-                                    <?php echo $reservations_count; ?>
-                                </h4>
-                                <p class="mb-0 fs-3">Reservaciones</p>
-                            </div>
-                            <div class="text-center d-flex flex-column align-items-center">
-                                <i class="fas fa-heart fs-1 d-block mb-3 text-danger"></i>
-                                <h4 class="mb-0 fw-semibold lh-1" style="font-size: 1.5rem;">
-                                    <?php echo $favorite_inns_count; ?>
-                                </h4>
-                                <p class="mb-0 fs-3">Posadas Guardadas</p>
+    <div class="card overflow-hidden p-0">
+        <div class="card-body p-0">
+            <img src="<?php echo isset($user['banner_image_url']) && !empty($user['banner_image_url']) ? htmlspecialchars($user['banner_image_url']) : 'https://c.wallhere.com/photos/64/fc/3840x2160_px_animals_artwork_Clear_Sky_Deer_digital_art_drawing_Firewatch-516653.jpg!d'; ?>"
+                alt="Banner Image" class="w-100" style="height: 300px;">
+            <div class="row align-items-center text-center">
+                <!-- Ícono izquierdo -->
+                <div class="col-lg-4 col-6">
+                    <div class="d-flex flex-column align-items-center">
+                        <i class="fas fa-calendar-check fs-1 d-block mb-3 text-primary"></i>
+                        <h4 class="mb-0 fw-semibold lh-1" style="font-size: 1.5rem;">
+                            <?php echo $reservations_count; ?>
+                        </h4>
+                        <p class="mb-0 fs-4">Reservaciones</p>
+                    </div>
+                </div>
+                
+                <!-- Foto de perfil en el centro -->
+                <div class="col-lg-4 col-12">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle"
+                            style="width: 110px; height: 110px;">
+                            <div class="border border-4 border-white rounded-circle overflow-hidden"
+                                style="width: 100px; height: 100px;">
+                                <img src="<?php echo isset($user['profile_image_url']) && !empty($user['profile_image_url']) ? htmlspecialchars($user['profile_image_url']) : 'https://th.bing.com/th/id/R.8dff49985d0d8afa53751d9ba8907aed?rik=7clxEmBk65lU2A&pid=ImgRaw&r=0'; ?>"
+                                    alt="Profile Image" class="w-100 h-100">
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-                        <div class="mt-n5">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle"
-                                    style="width: 110px; height: 110px;">
-                                    <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden"
-                                        style="width: 100px; height: 100px;">
-                                        <img src="<?php echo isset($user['profile_image_url']) && !empty($user['profile_image_url']) ? htmlspecialchars($user['profile_image_url']) : 'https://th.bing.com/th/id/R.8dff49985d0d8afa53751d9ba8907aed?rik=7clxEmBk65lU2A&pid=ImgRaw&r=0'; ?>"
-                                            alt="Profile Image" class="w-100 h-100">
-                                    </div>
+                    <div class="text-center mt-2">
+                        <h5 class="fs-5 mb-0 fw-semibold">
+                            <?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']); ?>
+                        </h5>
+                        <p class="mb-0 fs-4"><?php echo htmlspecialchars($user['profile_type']); ?></p>
+                    </div>
+                </div>
 
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <h5 class="fs-5 mb-0 fw-semibold">
-                                    <?php echo htmlspecialchars($user['first_name']) . ' ' . htmlspecialchars($user['last_name']); ?>
-                                </h5>
-                                <p class="mb-0 fs-4"><?php echo htmlspecialchars($user['profile_type']); ?></p>
-                            </div>
-                        </div>
+                <!-- Ícono derecho -->
+                <div class="col-lg-4 col-6">
+                    <div class="d-flex flex-column align-items-center">
+                        <i class="fas fa-heart fs-1 d-block mb-3 text-danger"></i>
+                        <h4 class="mb-0 fw-semibold lh-1" style="font-size: 1.5rem;">
+                            <?php echo $favorite_inns_count; ?>
+                        </h4>
+                        <p class="mb-0 fs-4">Posadas Guardadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <div class="text-center mt-6">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-custom-outline-primary p-4" data-bs-toggle="modal" style="font-size: 14px;"
+                            data-bs-target="#editProfileModal">
+                            <i class="fas fa-edit"></i> Editar Perfil
+                        </button>
                     </div>
                 </div>
 
@@ -148,10 +160,10 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                         <table class="table table-bordered">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-center" style="font-size: 12px;">Imagen</th>
-                                    <th class="text-center" style="font-size: 12px;">Nombre</th>
-                                    <th class="text-center" style="font-size: 12px;">Categoría</th>
-                                    <th class="text-center" style="font-size: 12px;">Acción</th>
+                                    <th class="text-center" style="font-size: 14px;">Imagen</th>
+                                    <th class="text-center" style="font-size: 14px;">Nombre</th>
+                                    <th class="text-center" style="font-size: 14px;">Categoría</th>
+                                    <th class="text-center" style="font-size: 14px;">Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,14 +173,14 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                                         <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image"
                                             class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
                                     </td>
-                                    <td class="text-center" style="font-size: 12px;">
+                                    <td class="text-center" style="font-size: 14px;">
                                         <?php echo htmlspecialchars($row['inn_name']); ?></td>
-                                    <td class="text-center" style="font-size: 12px;">
+                                    <td class="text-center" style="font-size: 14px;">
                                         <?php echo htmlspecialchars($row['category_name']); ?></td>
-                                    <td class="text-center" style="font-size: 12px;">
+                                    <td class="text-center" style="font-size: 14px;">
                                         <a href="inn.php?inn_id=<?php echo $row['id']; ?>"
                                             class="btn btn-outline-success mt-3"
-                                            style="font-size: 12px; border-radius: 20px; width: 50%;">
+                                            style="font-size: 14px; border-radius: 20px; width: 50%;">
                                             <i class="fas fa-link me-2"></i> ¡Ver Detalles!
                                         </a>
                                     </td>
@@ -205,21 +217,21 @@ $result_reservations = $stmt_reservations->get_result();
         </h2>
     </div>
 </div>
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="margin: 50px;">
     <?php
     if ($result_reservations->num_rows > 0) {
     ?>
-    <table class="table table-bordered">
+    <table class="table table-bordered" >
         <thead class="thead-light">
             <tr>
-                <th class="text-center" style="font-size: 12px;">Imagen</th>
-                <th class="text-center" style="font-size: 12px;">Nombre</th>
-                <th class="text-center" style="font-size: 12px;">Desde</th>
-                <th class="text-center" style="font-size: 12px;">Hasta</th>
-                <th class="text-center" style="font-size: 12px;">Status</th>
-                <th class="text-center" style="font-size: 12px;">Contacto</th>
-                <th class="text-center" style="font-size: 12px;">Factura</th>
-                <th class="text-center" style="font-size: 12px;">Valoración</th>
+                <th class="text-center" style="font-size: 14px;">Imagen</th>
+                <th class="text-center" style="font-size: 14px;">Nombre</th>
+                <th class="text-center" style="font-size: 14px;">Desde</th>
+                <th class="text-center" style="font-size: 14px;">Hasta</th>
+                <th class="text-center" style="font-size: 14px;">Status</th>
+                <th class="text-center" style="font-size: 14px;">Contacto</th>
+                <th class="text-center" style="font-size: 14px;">Factura</th>
+                <th class="text-center" style="font-size: 14px;">Valoración</th>
             </tr>
         </thead>
         <tbody>
@@ -258,26 +270,26 @@ $result_reservations = $stmt_reservations->get_result();
                     <img src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="Inn Image" 
                          class="posada-img rounded-circle mb-3" style="width: 50px; height: 50px;">
                 </td>
-                <td class="text-center" style="font-size: 12px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
-                <td class="text-center" style="font-size: 12px;"><?php echo $start_date; ?></td>
-                <td class="text-center" style="font-size: 12px;"><?php echo $end_date; ?></td>
-                <td class="text-center" style="font-size: 12px;">
+                <td class="text-center" style="font-size: 14px;"><?php echo htmlspecialchars($row['inn_name']); ?></td>
+                <td class="text-center" style="font-size: 14px;"><?php echo $start_date; ?></td>
+                <td class="text-center" style="font-size: 14px;"><?php echo $end_date; ?></td>
+                <td class="text-center" style="font-size: 14px;">
                     <span class="badge <?php echo $status_color; ?> text-white"
                           style="font-size: 14px; padding: 5px; border-radius: 20px;">
                         <?php echo htmlspecialchars($row["status"]); ?>
                     </span>
                 </td>
-                <td class="text-center" style="font-size: 12px;">
+                <td class="text-center" style="font-size: 14px;">
                     <a href="chat.php?user_id=<?php echo htmlspecialchars($row['inn_owner_id']); ?>"
                        class="btn btn-outline-primary text-primary"
-                       style="font-size: 12px; border-radius: 20px; width: 50%; margin-left: 70px;">
+                       style="font-size: 14px; border-radius: 20px; width: 50%; margin-left: 70px;">
                        <i class="fas fa-comments mr-2"></i> Contactar
                     </a>
                 </td>
-                <td class="text-center" style="font-size: 12px;">
+                <td class="text-center" style="font-size: 14px;">
                     <a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>"
                        class="btn btn-outline-success text-success"
-                       style="font-size: 12px; border-radius: 20px; width: 50%;">
+                       style="font-size: 14px; border-radius: 20px; width: 60%;">
                        <i class="fas fa-file-pdf me-2"></i> Ver Factura
                     </a>
                 </td>
@@ -323,15 +335,6 @@ $result_reservations = $stmt_reservations->get_result();
                 </div>
 
 
-                <div class="text-center mt-6">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-custom-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#editProfileModal">
-                            <i class="fas fa-edit"></i> Editar Perfil
-                        </button>
-                    </div>
-                </div>
-                <br><br>
                 <?php include './Includes/Footer.php'; ?>
 
                 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"

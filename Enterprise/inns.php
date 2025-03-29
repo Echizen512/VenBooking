@@ -130,9 +130,28 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
+<style>
+        .tippy-box[data-theme='custom'] {
+            background-color:rgb(25, 135, 84);
+            color: white;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
+
+        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
+            transform-origin: top;
+        }
+    </style>
 
 
 <style>
@@ -273,12 +292,12 @@ $conn->close();
                                                 <form action="toggle_block.php" method="POST" class="m-0">
                                                     <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                                     <input type="hidden" name="block" value="<?= $row['block'] ? 0 : 1 ?>">
-                                                    <button type="submit" class="btn btn-warning btn-sm"
+                                                    <button type="submit" class="btn btn-warning btn-sm" id="blockPosadaTooltip"
                                                         title="Bloquear/Desbloquear">
                                                         <i class="fas fa-ban" style="font-size: 18px; color: white"></i>
                                                     </button>
                                                 </form>
-                                                <a href="ver_posada.php?id=<?= $row['id'] ?>" class="btn btn-info">
+                                                <a href="ver_posada.php?id=<?= $row['id'] ?>" class="btn btn-info" id="verPosadaTooltip">
                                                     <i class="fas fa-eye" style="font-size: 18px; color: white"></i>
                                                 </a>
                                             </div>
@@ -297,6 +316,45 @@ $conn->close();
         </div>
     </div>
 
+    <script>
+
+    tippy('#addPosadaButton', {
+        content: 'Haz clic para añadir un nuevo registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right', 
+    });
+
+
+    tippy('.btn-primary[data-target="#editModal"]', {
+        content: 'Haz clic para editar este registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right',
+    });
+
+    tippy('.btn-primary[data-target="#editModal"]', {
+        content: 'Haz clic para editar este registro',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right',
+    });
+
+    tippy('#verPosadaTooltip', {
+        content: 'Ver Detalles de la Posada',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right',
+    });
+
+    tippy('#blockPosadaTooltip', {
+        content: 'Bloquear/Desbloquear la Posada',
+        animation: 'scale',
+        theme: 'custom',
+        placement: 'right',
+    });
+
+</script>
 
     <!-- Modal -->
     <div class="modal fade" id="posadaModal" tabindex="-1" role="dialog" aria-labelledby="posadaModalLabel"

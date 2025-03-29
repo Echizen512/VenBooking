@@ -4,7 +4,7 @@ include './config/db.php';
 
 $alertMessage = '';  
 $alertType = '';     
-$redirectUrl = 'index.php'; 
+$redirectUrl = 'Inns.php'; 
 
 
 if (!isset($_SESSION['user_id'])) {

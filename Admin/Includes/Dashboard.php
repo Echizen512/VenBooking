@@ -86,8 +86,10 @@
         <a href="./states.php" style="color: white;"><i class="fas fa-map-marker-alt icon text-danger"></i> Estados</a>
         <a href="./municipalities.php" style="color: white;"><i class="fas fa-city icon text-info"></i>Municipios</a>
         <a href="./parishes.php" style="color: white;"><i class="fas fa-compass icon text-warning"></i> Parroquias</a>
+        <a href="./reservations.php" style="color: white;"><i class="fas fa-calendar-alt icon text-info"></i> Reservaciones</a>
         <a href="./report.php" style="color: white;"><i class="fas fa-file-alt icon text-danger"></i> Reportes</a>
         <a href="./audit_log.php"  style="color: white;"><i class="fas fa-file-alt icon text-info"></i>  Auditoría</a>
+        <a href="./admin-bakup.php" style="color: white;"><i class="fas fa-database icon text-warning"></i> Respaldo</a>
     </div>
 
     <script src="../Assets/js/jquery-3.6.0.min.js"></script>

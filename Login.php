@@ -154,7 +154,32 @@ $conn->close();
     <link rel="stylesheet" href="./Assets/css/Register.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
+
+    <style>
+        .tippy-box[data-theme='custom'] {
+            background-color:rgb(25, 135, 84);
+            color: white;
+            border-radius: 10px;
+            font-size: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 8px;
+        }
+
+        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
+            transform-origin: top;
+        }
+    </style>
+
 </head>
+
 
 <body>
     <div class="row">
@@ -188,7 +213,7 @@ $conn->close();
                                 </div>
                                 <div class="hr"></div>
                                 <div class="foot">
-                                    <a href="#"><i class="fas fa-unlock-alt"></i> ¿Olvidaste tu contraseña?</a>
+                                    <a href="./password.php"><i class="fas fa-unlock-alt"></i> ¿Olvidaste tu contraseña?</a>
                                 </div>
                             </form>
                         </div>
@@ -224,7 +249,7 @@ $conn->close();
                                         <option value="Empresa">Empresa</option>
                                     </select>
                                 </div>
-                                <div class="group">
+                                <div class="group" id="password-group">
                                     <label for="pass" class="label"><i class="fas fa-lock"></i> Contraseña.</label>
                                     <input id="pass" name="password" type="password" class="input"
                                         placeholder="Crea tu contraseña"
@@ -242,6 +267,50 @@ $conn->close();
             </div>
         </div>
     </div>
+
+
+    <script>
+        // Tooltip para "Nombre"
+tippy('#first_name', {
+    content: 'El nombre solo puede contener letras (mayúsculas, minúsculas), espacios y acentos.',
+    animation: 'scale',
+    theme: 'custom',
+    placement: 'right',
+});
+
+// Tooltip para "Apellido"
+tippy('#last_name', {
+    content: 'El apellido solo puede contener letras (mayúsculas, minúsculas), espacios y acentos.',
+    animation: 'scale',
+    theme: 'custom',
+    placement: 'right',
+});
+
+// Tooltip para "Correo Electrónico"
+tippy('#email', {
+    content: 'Por favor, ingresa un correo electrónico válido (ejemplo@dominio.com).',
+    animation: 'scale',
+    theme: 'custom',
+    placement: 'right',
+});
+
+// Tooltip para "Tipo de Perfil"
+tippy('#profile_type', {
+    content: 'Selecciona el tipo de perfil que más te identifique.',
+    animation: 'scale',
+    theme: 'custom',
+    placement: 'right',
+});
+
+// Tooltip para "Contraseña"
+tippy('#password-group', {
+    content: 'Debe contener mínimo seis caracteres, incluyendo mayúsculas, minúsculas y números.',
+    animation: 'scale',
+    theme: 'custom',
+    placement: 'right',
+});
+
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

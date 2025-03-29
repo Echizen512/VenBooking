@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param('si', $newStatus, $id);
 
     if ($stmt->execute()) {
-        header("Location: get_reservation.php?status=success");
+        header("Location: reservation.php?status=success");
     } else {
         error_log('Error al ejecutar la consulta: ' . $stmt->error);
-        header("Location: get_reservation.php?status=error");
+        header("Location: reservation.php?status=error");
     }
     $stmt->close();
     $conn->close();

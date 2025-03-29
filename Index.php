@@ -88,6 +88,8 @@ $result_inns = $conn->query($sql_inns);
     include './Components/banner.php';
     ?>
 
+
+
     <div class="page-heading">
         <div class="container">
             <h2><i class="fas fa-hotel text-success"></i> Posadas Populares</h2>
