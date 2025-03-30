@@ -71,6 +71,7 @@ if (!$result_inns) {
     die("Error en la consulta de posadas: " . $conn->error);
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -138,8 +139,6 @@ body {
 }
 
 
-
-
 </style>
 
 <body>
@@ -150,7 +149,6 @@ body {
                 <div class="card-body">
                     <div id="filters" class="button-group">
                     <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre..." onkeyup="searchInns()" style="margin-bottom: 20px; padding: 10px; border-radius: 20px; font-size: 16px;">
-
 
                         <button class="btn btn-success filter-btn" data-filter="*" style="color: white;">
                             <i class="fas fa-th" style="margin-right: 8px;"></i> Todos
@@ -261,36 +259,6 @@ body {
     </script>
 
 <script>
-    document.getElementById('searchInput').addEventListener('input', filterItems);
-    document.querySelectorAll('.btn[data-filter], .filter-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            const filterValue = this.getAttribute('data-filter');
-            filterItems(filterValue);
-        });
-    });
-
-    function filterItems(categoryFilter = '*') {
-        const filterText = document.getElementById('searchInput').value.toLowerCase().trim();
-        const items = document.querySelectorAll('.grid-item');
-
-        items.forEach(item => {
-            const itemName = item.querySelector('.card-title').innerText.toLowerCase();
-            const matchesText = filterText === '' || itemName.includes(filterText);
-            const matchesCategory = categoryFilter === '*' || item.classList.contains(categoryFilter.replace('.', ''));
-
-            item.style.display = matchesText && matchesCategory ? 'block' : 'none';
-        });
-
-        // Forzar el recálculo
-        const gridContainer = document.querySelector('.grid-container');
-        gridContainer.style.display = 'none'; // Oculta temporalmente
-        gridContainer.offsetHeight; // Fuerza el recálculo
-        gridContainer.style.display = 'flex'; // Vuelve a activar flexbox
-    }
-</script>
-
-
-<script>
     function searchInns() {
         const searchValue = document.getElementById('searchInput').value;
         fetch(`?search=${encodeURIComponent(searchValue)}`)
@@ -304,6 +272,36 @@ body {
 
 </script>
 
+
+
+    <script>
+        document.querySelectorAll('.btn[data-filter]').forEach(button => {
+            button.addEventListener('click', function () {
+                let filterValue = this.getAttribute('data-filter');
+                let items = document.querySelectorAll('.grid-item');
+                items.forEach(item => {
+                    if (filterValue === '*' || item.classList.contains(filterValue.replace('.', ''))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                let qualityFilter = this.getAttribute('data-filter');
+                let items = document.querySelectorAll('.grid-item');
+                items.forEach(item => {
+                    if (qualityFilter === '*' || item.classList.contains(qualityFilter.replace('.', ''))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

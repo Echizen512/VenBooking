@@ -36,7 +36,7 @@ if (!isset($_SESSION["user_id"])) {
                             <th><i class="fas fa-credit-card text-primary"></i> Método de Pago</th>
 
                             <th><i class="fas fa-code text-secondary"></i> Código de Referencia</th>
-                            <th><i class="fas fa-toggle-on text-info"></i> Estado</th>
+                            
                             <th><i class="fas fa-user text-success"></i> ID Usuario</th>
                             <th><i class="fas fa-door-open text-primary"></i> ID Habitación</th>
 
@@ -60,7 +60,7 @@ if (!isset($_SESSION["user_id"])) {
                                     <td>{$row['payment_method_id']}</td>
                                     
                                     <td>{$row['codigo_referencia']}</td>
-                                    <td>{$statusText}</td>
+
                                     <td>{$row['user_id']}</td>
                                     <td>{$row['room_id']}</td>
    
