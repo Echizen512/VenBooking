@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id'])) {
     include './Includes/Header2.php';
 }
 
-$search = isset($_GET['search']) ? '%' . $conn->real_escape_string($_GET['search']) . '%' : '%';
+$search = isset($_GET['search']) && !empty($_GET['search']) ? '%' . $conn->real_escape_string($_GET['search']) . '%' : '%';
 
 $sql_inns = "
     SELECT 
@@ -65,6 +65,7 @@ $stmt = $conn->prepare($sql_inns);
 $stmt->bind_param("s", $search);
 $stmt->execute();
 $result_inns = $stmt->get_result();
+
 
 
 if (!$result_inns) {
@@ -147,8 +148,31 @@ body {
         <div class="container">
             <div class="card shadow-sm" style="padding: 20px; border-radius: 20px;">
                 <div class="card-body">
+                <form method="GET" action="" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 30px;">
+    <input 
+        type="text" 
+        name="search" 
+        class="form-control" 
+        placeholder="Buscar por nombre..." 
+        value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>" 
+        style="padding: 12px 20px; border: 2px solid #ddd; border-radius: 30px; font-size: 16px; width: 100%; max-width: 400px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: border-color 0.3s ease;"
+        onfocus="this.style.borderColor='#007bff';"
+        onblur="this.style.borderColor='#ddd';"
+    >
+    <button 
+        type="submit" 
+        class="btn btn-primary" 
+        style="padding: 12px 25px; background-color: #007bff; border: none; border-radius: 30px; font-size: 16px; color: white; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+        onmouseout="this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';"
+    >
+        Buscar
+    </button>
+</form>
+<br>
                     <div id="filters" class="button-group">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre..." onkeyup="searchInns()" style="margin-bottom: 20px; padding: 10px; border-radius: 20px; font-size: 16px;">
+
+
 
                         <button class="btn btn-success filter-btn" data-filter="*" style="color: white;">
                             <i class="fas fa-th" style="margin-right: 8px;"></i> Todos
@@ -272,36 +296,93 @@ body {
 
 </script>
 
+<style>
+    .grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 100px;
+    min-height: 200px; /* Asegura un espacio mínimo */
+}
+
+.grid-item {
+    width: 22%;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Evita que el footer suba */
+footer {
+    clear: both;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+</style>
 
 
-    <script>
-        document.querySelectorAll('.btn[data-filter]').forEach(button => {
-            button.addEventListener('click', function () {
-                let filterValue = this.getAttribute('data-filter');
-                let items = document.querySelectorAll('.grid-item');
-                items.forEach(item => {
-                    if (filterValue === '*' || item.classList.contains(filterValue.replace('.', ''))) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                let qualityFilter = this.getAttribute('data-filter');
-                let items = document.querySelectorAll('.grid-item');
-                items.forEach(item => {
-                    if (qualityFilter === '*' || item.classList.contains(qualityFilter.replace('.', ''))) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
-    </script>
+<script>
+  // Función para realizar la búsqueda
+
+
+// Función para filtrar elementos por categoría
+function filterItems(filterSelector) {
+    const items = document.querySelectorAll('.grid-item');
+    let visibleCount = 0; // Contador de elementos visibles
+
+    items.forEach(item => {
+        if (filterSelector === '*' || item.classList.contains(filterSelector.replace('.', ''))) {
+            item.style.display = 'block';
+            visibleCount++;
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    adjustGridContainer(visibleCount); // Ajusta el contenedor dinámicamente
+}
+
+// Función para ajustar el contenedor dinámico
+function adjustGridContainer(visibleCount = null) {
+    const cGrid = document.getElementById('cGrid');
+    const items = document.querySelectorAll('.grid-item');
+
+    if (visibleCount === null) {
+        visibleCount = Array.from(items).filter(item => item.style.display !== 'none').length;
+    }
+
+    if (visibleCount === 0) {
+        cGrid.innerHTML = "<p>No se encontraron resultados.</p>";
+    } else {
+        cGrid.style.height = 'auto'; // Ajusta la altura del contenedor dinámicamente
+    }
+}
+
+// Reconectar eventos después de actualizar el DOM
+function reconnectFilters() {
+    const buttons = document.querySelectorAll('.btn[data-filter]');
+    buttons.forEach(button => {
+        button.removeEventListener('click', handleFilterClick);
+        button.addEventListener('click', handleFilterClick);
+    });
+}
+
+// Manejador para los botones de filtro
+function handleFilterClick() {
+    const filterValue = this.getAttribute('data-filter');
+    filterItems(filterValue);
+}
+
+// Eventos iniciales
+document.getElementById('searchButton').addEventListener('click', searchInns);
+
+document.querySelectorAll('.btn[data-filter]').forEach(button => {
+    button.addEventListener('click', handleFilterClick);
+});
+
+</script>
+
 
 </body>
 </html>
