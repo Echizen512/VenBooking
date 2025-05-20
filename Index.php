@@ -56,7 +56,6 @@ $result_inns = $conn->query($sql_inns);
 
 
 <style>
-   
 .card-body .btn {
     font-size: 20px;
     font-weight: bold;
@@ -77,8 +76,6 @@ $result_inns = $conn->query($sql_inns);
     font-weight: bold;
     width: 100%;
 }
-
-
 </style>
 
 <body>
@@ -98,73 +95,71 @@ $result_inns = $conn->query($sql_inns);
 
     <section class="course-listing-page">
         <div class="container">
-            <div class="row">
+            <div class="row d-flex justify-content-center">
                 <?php
-                if ($result_inns->num_rows > 0) {
-                    while ($row = $result_inns->fetch_assoc()) {
-                        $category_class = strtolower(str_replace(' ', '-', $row['category_name']));
-                        $quality_class = strtolower($row['quality']);
+        if ($result_inns->num_rows > 0) {
+            while ($row = $result_inns->fetch_assoc()) {
+                $category_class = strtolower(str_replace(' ', '-', $row['category_name']));
+                $quality_class = strtolower($row['quality']);
 
-                        echo '
-                        <div class="col-md-4 grid-item ' . $category_class . ' ' . $quality_class . '" data-category="' . $category_class . ' ' . $quality_class . '">
-                            <div class="custom-card" style="height: 550px;">
-                                <div class="img-wrap">
-                                    <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid" style="height: 250px; object-fit: cover;">
-                                </div>
-                                <div class="card-body">
-                                    <h2 class="card-title" style="font-size: 16px;"><i class="fas fa-bed text-primary"></i> ' . $row['inn_name'] . '</h2>
-                                    <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
-                                    
-                                    <div class="card-meta">
-                                        <p style="font-size: 14px;"><i class="fas fa-tag text-primary"></i> ' . $row['state_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-map-marker-alt text-danger"></i> ' . $row['municipality_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-location-arrow text-success"></i> ' . $row['parish_name'] . '</p>
-                                        <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> ' . ucfirst($row['quality']) . '</p>
-                                    </div>
-
-                                    <br>';
-
-                        if (isset($_SESSION['user_id'])) {
-                            echo '
-                                            <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
-                                                <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
-                                            </a>';
-                        } else {
-                            echo '
-                                            <button onclick="checkSession()" class="btn btn-success text-white">
-                                                <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
-                                            </button>';
-                        }
-
-                        echo '
-                                </div>
+                echo '
+                <div class="col-lg-4 col-md-6 col-sm-12 grid-item ' . $category_class . ' ' . $quality_class . '" data-category="' . $category_class . ' ' . $quality_class . '">
+                    <div class="custom-card" style="height: 550px;">
+                        <div class="img-wrap">
+                            <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid" style="height: 250px; object-fit: cover;">
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title" style="font-size: 16px;"><i class="fas fa-bed text-primary"></i> ' . $row['inn_name'] . '</h2>
+                            <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
+                            
+                            <div class="card-meta">
+                                <p style="font-size: 14px;"><i class="fas fa-tag text-primary"></i> ' . $row['state_name'] . '</p>
+                                <p style="font-size: 14px;"><i class="fas fa-map-marker-alt text-danger"></i> ' . $row['municipality_name'] . '</p>
+                                <p style="font-size: 14px;"><i class="fas fa-location-arrow text-success"></i> ' . $row['parish_name'] . '</p>
+                                <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> ' . ucfirst($row['quality']) . '</p>
                             </div>
-                        </div>';
-                    }
+                            <br>';
+
+                if (isset($_SESSION['user_id'])) {
+                    echo '
+                        <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
+                            <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
+                        </a>';
                 } else {
-                    echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
+                    echo '
+                        <button onclick="checkSession()" class="btn btn-success text-white">
+                            <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
+                        </button>';
                 }
-                $conn->close();
-                ?>
+                echo '
+                        </div>
+                    </div>
+                </div>';
+            }
+        } else {
+            echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
+        }
+        ?>
             </div>
         </div>
+
     </section>
 
     <script>
-        function checkSession() {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Iniciar Sesión Requerido',
-                text: 'Debes iniciar sesión o crear una cuenta para realizar una reservación.',
-                confirmButtonText: 'Ir a Login',
-                showCancelButton: true,
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'login.php';
-                }
-            });
-        }
+    function checkSession() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Iniciar Sesión Requerido',
+            text: 'Debes iniciar sesión o crear una cuenta para realizar una reservación.',
+            confirmButtonText: 'Ir a Login',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'login.php';
+            }
+        });
+    }
     </script>
 
     <?php

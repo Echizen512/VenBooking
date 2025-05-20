@@ -1,134 +1,64 @@
+<div id="bannerCarousel" class="carousel slide banner" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+            aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="5000">
+            <img src="images/banner.jpg" class="d-block w-100 banner-img" alt="Banner 1">
+            <div class="carousel-caption d-md-block">
+                <h5 class="banner-title">VenBooking</h5>
+                <p class="banner-subtitle">Descubre, reserva, disfruta: VenBooking hace realidad tu escapada perfecta.
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000">
+            <img src="images/banner2.jpg" class="d-block w-100 banner-img" alt="Banner 2">
+            <div class="carousel-caption d-md-block">
+                <h5 class="banner-title">Explora nuevos destinos</h5>
+                <p class="banner-subtitle">Déjate sorprender por lugares increíbles.</p>
+            </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000">
+            <img src="images/banner4.jpg" class="d-block w-100 banner-img" alt="Banner 3">
+            <div class="carousel-caption d-md-block">
+                <h5 class="banner-title">Tu próxima aventura comienza aquí</h5>
+                <p class="banner-subtitle">Reserva fácilmente y vive la experiencia.</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
 <style>
-
-/* Fondo animado en degradado */
-.banner {
-    position: relative;
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite, fadeIn 2s ease-in forwards;
+.banner-img {
+    max-height: 400px;
+    object-fit: cover;
 }
 
-/* Animación del título */
-.banner-title {
-    font-size: 3rem;
-    color: #fff;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: float 2.5s ease-in-out infinite, fadeIn 2s ease-in forwards 1s;
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
-
-/* Animación del subtítulo */
-.banner-subtitle {
-    font-size: 1.5rem;
-    color: #fff;
-    opacity: 0;
-    animation: fadeInUp 3s ease-in-out forwards 1.5s;
-}
-
-/* Keyframes para el degradado */
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Keyframes para flotación del título */
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
-
-/* Keyframes para desvanecer hacia arriba */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Keyframes para fadeIn */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Keyframes para slideInLeft */
-@keyframes slideInLeft {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Animación de deslizamiento para las imágenes del carrusel */
-.owl-carousel .item img {
-    animation: slideInLeft 1.5s ease-in-out;
-}
-
-
 </style>
 
-<link rel="stylesheet" href="./assets/css/index.css">
-<div class="banner">
-    <div class="owl-carousel owl-theme">
-        <div class="item"><img src="images/banner.jpg" alt="Image of Banner"></div>
-        <div class="item"><img src="images/banner2.jpg" alt="Image of Banner"></div>
-        <div class="item"><img src="images/banner4.jpg" alt="Image of Banner"></div>
-    </div>
-    <div class="container text-center">
-        <h1 class="banner-title">VenBooking</h1>
-        <h3 class="banner-subtitle">"Descubre, reserva, disfruta: VenBooking hace realidad tu escapada perfecta".</h3>
-    </div>
-</div>
-<script src="./assets/js/jquery-3.6.0.min.js"></script>
-<script src="./assets/js/owl.carousel.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $(".owl-carousel").owlCarousel({
-            items: 1,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 5000, 
-            autoplayHoverPause: true, 
-            animateOut: 'fadeOut',
-            animateIn: 'fadeIn',
-            dots: true, 
-            nav: false, 
-            responsive: {
-                0: {
-                    items: 1
-                },
-                600: {
-                    items: 1
-                },
-                1000: {
-                    items: 1
-                }
-            }
-        });
+document.addEventListener("DOMContentLoaded", function() {
+    const carousel = new bootstrap.Carousel(document.getElementById("bannerCarousel"), {
+        interval: 3000,
+        ride: "carousel"
     });
+});
 </script>
