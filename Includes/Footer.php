@@ -15,15 +15,13 @@
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase"
                     style="font-size: 20px; font-weight: bold; letter-spacing: 1px; margin: 10px;">
-                    <i class="fa-solid fa-link me-2 text-info"></i> Enlaces Rápidos
+                    Enlaces Rápidos
                 </h5>
                 <ul class="list-unstyled mt-3">
                     <li><a href="#!" class="text-white"
-                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-map-marker-alt text-danger me-3"></i>Destinos</a></li>
+                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-user me-3"></i>Perfil</a></li>
                     <li><a href="#!" class="text-white"
-                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-user text-primary me-3"></i>Perfil</a></li>
-                    <li><a href="#!" class="text-white"
-                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-comments text-info me-3"></i>Chat</a></li>
+                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-comments me-3"></i>Chat</a></li>
                 </ul>
             </div>
 
@@ -49,9 +47,9 @@
                         $data = json_decode($response, true);
 
                         if ($data !== null) {
-                            echo "<li><i class='fas fa-dollar-sign text-warning'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
-                            echo "<li><i class='fas fa-chart-line text-danger'></i> Precio en BS: " . $data[0]['promedio'] . "</li>";
-                            echo "<li><i class='fas fa-calendar text-info'></i> Fecha de Actualización: Hoy" . "</li>";
+                            echo "<li><i class='fas fa-dollar-sign'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
+                            echo "<li><i class='fas fa-chart-line'></i> Precio en BS: " . $data[0]['promedio'] . "</li>";
+                            echo "<li><i class='fas fa-calendar'></i> Fecha de Actualización: Hoy" . "</li>";
                         } else {
                             echo "<li>Error al convertir la respuesta JSON.</li>";
                         }

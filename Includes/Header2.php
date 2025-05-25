@@ -54,7 +54,7 @@
                     <div class="top-header-right">
                         <a href="./login.php" id="login-btn">
                             <button class="login-btn">
-                                <i class="fas fa-sign-in-alt text-info"></i> Iniciar Sesión
+                                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                             </button>
                         </a>
                     </div>
@@ -70,17 +70,17 @@
                             <ul class="menu-list">
                                 <li>
                                     <a href="./index.php">
-                                        <i class="fas fa-home text-success"></i> Inicio
+                                        <i class="fas fa-home"></i> Inicio
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./Destinations.php">
-                                        <i class="fas fa-map-marker-alt text-primary"></i> Destinos
+                                        <i class="fas fa-map-marker-alt"></i> Destinos
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./Inns.php">
-                                        <i class="fas fa-bed text-danger"></i> Posadas
+                                        <i class="fas fa-bed"></i> Posadas
                                     </a>
                                 </li>
                             </ul>

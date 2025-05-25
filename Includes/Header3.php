@@ -38,7 +38,7 @@
                     <div class="top-header-right">
                         <a href="#" id="logout-btn">
                             <button class="logout-btn">
-                                <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                             </button>
                         </a>
                     </div>
@@ -54,7 +54,7 @@
                             <ul class="menu-list">
                                 <li>
                                     <a href="./Includes/Inicio.php">
-                                        <i class="fas fa-cogs text-primary"></i> Volver al Panel de Control
+                                        <i class="fas fa-cogs"></i> Volver al Panel de Control
                                     </a>
                                 </li>
 

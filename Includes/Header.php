@@ -55,7 +55,7 @@
                     <div class="top-header-right">
                         <a href="#" id="logout-btn">
                             <button class="logout-btn">
-                                <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                             </button>
                         </a>
                     </div>
@@ -71,17 +71,17 @@
                             <ul class="menu-list">
                                 <li>
                                     <a href="./Destinations.php" id="destinations-tooltip">
-                                        <i class="fas fa-map-marker-alt text-danger"></i> Destinos
+                                        <i class="fas fa-map-marker-alt"></i> Destinos
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./Inns.php" id="inns-tooltip">
-                                        <i class="fas fa-bed text-success"></i> Posadas
+                                        <i class="fas fa-bed"></i> Posadas
                                     </a>
                                 </li>
                                 <li>
                                     <a href="./Profile.php" id="profile-tooltip">
-                                        <i class="fas fa-user text-primary"></i> Perfil
+                                        <i class="fas fa-user"></i> Perfil
                                     </a>
                                 </li>
                             </ul>
