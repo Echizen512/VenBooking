@@ -2,7 +2,7 @@
 
 <section class="page-heading" style="margin: 30px;">
     <div class="container">
-        <h2><i class="fas fa-star text-warning"></i> Lo Mejor de VenBooking</h2>
+        <h2><i class="fas fa-star text-warning"></i> Encuentra lo Mejor en VenBooking</h2>
     </div>
 </section>
 

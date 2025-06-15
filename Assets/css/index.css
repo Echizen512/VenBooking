@@ -52,7 +52,6 @@
 .banner {
     position: relative;
     overflow: hidden;
-    margin-bottom: 50px; 
 }
 
 .banner .owl-carousel .item img {

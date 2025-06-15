@@ -50,18 +50,22 @@ $result_inns = $conn->query($sql_inns);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/all.min.css">
-    <link rel="stylesheet" href="./assets/css/index.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 
 <style>
+
+body{
+    background-color:rgb(48, 137, 226);
+}
+
 .card-body .btn {
     font-size: 20px;
     font-weight: bold;
     width: 100%;
     text-align: center;
-    padding: 15px;
     margin-top: 10px;
 }
 
@@ -83,67 +87,13 @@ $result_inns = $conn->query($sql_inns);
     <?php
     include $headerFile;
     include './Components/banner.php';
+    include './Components/VenBoocking.php';
+    include './Components/Info.php';
+    include './Components/Gallery.php';
+    include './Components/Destinations.php';
+
+    include './Includes/Footer.php';
     ?>
-
-
-
-    <div class="page-heading">
-        <div class="container">
-            <h2><i class="fas fa-hotel text-success"></i> Posadas Populares</h2>
-        </div>
-    </div>
-
-    <section class="course-listing-page">
-        <div class="container">
-            <div class="row d-flex justify-content-center">
-                <?php
-        if ($result_inns->num_rows > 0) {
-            while ($row = $result_inns->fetch_assoc()) {
-                $category_class = strtolower(str_replace(' ', '-', $row['category_name']));
-                $quality_class = strtolower($row['quality']);
-
-                echo '
-                <div class="col-lg-4 col-md-6 col-sm-12 grid-item ' . $category_class . ' ' . $quality_class . '" data-category="' . $category_class . ' ' . $quality_class . '">
-                    <div class="custom-card" style="height: 550px;">
-                        <div class="img-wrap">
-                            <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid" style="height: 250px; object-fit: cover;">
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title" style="font-size: 16px;"><i class="fas fa-bed text-primary"></i> ' . $row['inn_name'] . '</h2>
-                            <p class="card-text"><i class="fas fa-info-circle"></i> ' . $row['description'] . '</p>
-                            
-                            <div class="card-meta">
-                                <p style="font-size: 14px;"><i class="fas fa-tag text-primary"></i> ' . $row['state_name'] . '</p>
-                                <p style="font-size: 14px;"><i class="fas fa-map-marker-alt text-danger"></i> ' . $row['municipality_name'] . '</p>
-                                <p style="font-size: 14px;"><i class="fas fa-location-arrow text-success"></i> ' . $row['parish_name'] . '</p>
-                                <p style="font-size: 14px;"><i class="fas fa-star text-warning"></i> ' . ucfirst($row['quality']) . '</p>
-                            </div>
-                            <br>';
-
-                if (isset($_SESSION['user_id'])) {
-                    echo '
-                        <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">
-                            <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
-                        </a>';
-                } else {
-                    echo '
-                        <button onclick="checkSession()" class="btn btn-success text-white">
-                            <i class="fas fa-calendar-check" style="margin-right: 8px;"></i> ¡Ver Detalles!
-                        </button>';
-                }
-                echo '
-                        </div>
-                    </div>
-                </div>';
-            }
-        } else {
-            echo "<p><i class='fas fa-exclamation-circle'></i> No se encontraron resultados.</p>";
-        }
-        ?>
-            </div>
-        </div>
-
-    </section>
 
     <script>
     function checkSession() {
@@ -161,14 +111,6 @@ $result_inns = $conn->query($sql_inns);
         });
     }
     </script>
-
-    <?php
-    include './Components/Info.php';
-    include './Components/Gallery.php';
-    include './Components/Destinations.php';
-    include './Components/VenBoocking.php';
-    include './Includes/Footer.php';
-    ?>
 
 </body>
 

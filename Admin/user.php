@@ -9,8 +9,6 @@ include './php/user.php';
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +25,7 @@ include './php/user.php';
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title text-center">Lista de Perfiles</h2>
+            <h2 class="card-title text-center">Tabla de Usuarios</h2>
             <table id="profilesTable" class="table table-bordered table-striped">
                 <thead>
                 <tr class="text-center">

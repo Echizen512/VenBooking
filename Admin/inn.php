@@ -37,7 +37,6 @@ include 'php/inn.php';
                             <th><i class="fas fa-home"></i> Nombre</th>
                             <th><i class="fas fa-file-alt"></i> Descripción</th>
                             <th><i class="fas fa-image"></i> Imagen</th>
-                            <th><i class="fas fa-envelope"></i> Email</th>
                             <th><i class="fas fa-phone"></i> Teléfono</th>
                             <th><i class="fas fa-toggle-on"></i> Bloqueado</th>
                             <th><i class="fas fa-cogs"></i> Acciones</th>
@@ -55,7 +54,6 @@ include 'php/inn.php';
                                 <td>{$row['name']}</td>
                                 <td>{$row['description']}</td>
                                 <td><img src='{$row['image_url']}' alt='Imagen' style='width: 100px;'></td>
-                                <td>{$row['email']}</td>
                                 <td>{$row['phone']}</td>
                                 <td class='text-center'>" . ($row['status'] ? 'Sí' : 'No') . "</td>
                                 <td class='text-center'>

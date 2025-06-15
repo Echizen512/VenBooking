@@ -32,7 +32,7 @@
             top: 50px;
             left: 0;
             height: calc(100% - 50px);
-            width: 14%;
+            width: 16%;
             transition: width 0.3s;
             overflow-x: hidden;
             padding-top: 20px;
@@ -141,56 +141,56 @@
         </div>
         <a href="logout.php">
             <button class="logout-btn">
-                <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </button>
         </a>
     </div>
 
     <div class="sidebar bg-success">
         <a class="dropdown-btn" id="perfiles-tooltip">
-            <i class="fas fa-users me-2" style="color: #90ffbc;"></i> Perfiles
+            <i class="fas fa-users me-2"></i> Perfiles
         </a>
         <div class="dropdown-container" >
             <a href="../Enterprise/Perfil.php" id="perfil-tooltip">
-                <i class="fas fa-user me-2" style="color: #90ffbc;"></i> Mi Perfil
+                <i class="fas fa-user me-2"></i> Mi Perfil
             </a>
             <a href="../Enterprise/inns.php" id="posadas-tooltip">
-                <i class="fas fa-hotel me-2" style="color: #9eeaff;"></i> Posadas
+                <i class="fas fa-hotel me-2"></i> Posadas
             </a>
             <a href="../Enterprise/reservation.php" id="reserva-tooltip">
-                <i class="fas fa-calendar-alt me-2" style="color: #69afff;"></i> Reservas
+                <i class="fas fa-calendar-alt me-2"></i> Reservas
             </a>
         </div>
 
         <a class="dropdown-btn" id="pagos-tooltip">
-            <i class="fas fa-credit-card me-2" style="color: #17a2b8;"></i> Métodos de Pago
+            <i class="fas fa-credit-card me-2"></i> Métodos de Pago
         </a>
         <div class="dropdown-container">
             <a href="../Enterprise/mobile_payment.php" id="pagomovil-tooltip">
-                <i class="fas fa-mobile-alt me-2" style="color: #17a2b8;"></i> Pago Móvil
+                <i class="fas fa-mobile-alt me-2"></i> Pago Móvil
             </a>
             <a href="../Enterprise/transfers.php" id="transferencias-tooltip">
-                <i class="fas fa-university me-2" style="color: #dc3545;"></i> Transferencias
+                <i class="fas fa-university me-2"></i> Transferencias
             </a>
             <a href="../Enterprise/paypal.php" id="paypal-tooltip">
-                <i class="fab fa-paypal me-2" style="color: #0c78f4;"></i> PayPal
+                <i class="fab fa-paypal me-2"></i> PayPal
             </a>
             <a href="../Enterprise/binance.php" id="binance-tooltip">
-                <i class="fab fa-btc me-2" style="color: #f4c20d;"></i> Binance
+                <i class="fab fa-btc me-2"></i> Binance
             </a>
             <a href="../Enterprise/zelle.php" id="zelle-tooltip">
-                <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zelle
+                <i class="fas fa-credit-card me-2"></i>Zelle
             </a>
             <a href="../Enterprise/zinli.php" id="zinli-tooltip">
-                <i class="fas fa-credit-card me-2" style="color:rgb(183, 74, 255);"></i>Zinli
+                <i class="fas fa-credit-card me-2"></i>Zinli
             </a>
         </div>
 
         <a href="../Memberships.php" id="membresias-tooltip">
-            <i class="fas fa-gift me-2" style="color: #b3ff90;"></i> Membresías
+            <i class="fas fa-gift me-2"></i> Membresías
         </a>
         <a href="../Enterprise/reports.php" id="reportes-tooltip">
-            <i class="fas fa-file-pdf me-2 text-danger"></i> Reportes PDF
+            <i class="fas fa-file-pdf me-2"></i> Reportes PDF
         </a>
 
         <div class="dolar-section">
@@ -213,9 +213,9 @@
                     $data = json_decode($response, true);
 
                     if ($data !== null) {
-                        echo "<li><i class='fas fa-dollar-sign text-warning'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
-                        echo "<li><i class='fas fa-chart-line text-danger'></i> Precio: " . $data[0]['promedio'] . " BS</li>";
-                        echo "<li><i class='fas fa-calendar text-info'></i> Fecha: Hoy" . "</li>";
+                        echo "<li><i class='fas fa-dollar-sign'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
+                        echo "<li><i class='fas fa-chart-line'></i> Precio: " . $data[0]['promedio'] . " BS</li>";
+                        echo "<li><i class='fas fa-calendar'></i> Fecha: Hoy" . "</li>";
                     } else {
                         echo "<li>Error al convertir la respuesta JSON.</li>";
                     }

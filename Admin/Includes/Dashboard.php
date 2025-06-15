@@ -72,25 +72,77 @@
         </div>
         <a href="./Includes/logout.php">
     <button class="logout-btn">
-        <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
+        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
     </button>
         </a>
     </div>
 
 
-    <div class="sidebar bg-success">
-    <a href="./user.php" style="color: white;"><i class="fas fa-user icon text-danger"></i>Usuarios</a>
-        <a href="./inn.php" style="color: white;"><i class="fas fa-hotel icon text-info"></i>Posadas</a>
-        <a href="./vehicles.php" style="color: white;"><i class="fas fa-car icon text-danger"></i>Vehículos</a>
-        <a href="./rooms.php" style="color: white;"><i class="fas fa-bed icon" style="color: #90ffbc;"></i>Habitaciones</a>
-        <a href="./states.php" style="color: white;"><i class="fas fa-map-marker-alt icon text-danger"></i> Estados</a>
-        <a href="./municipalities.php" style="color: white;"><i class="fas fa-city icon text-info"></i>Municipios</a>
-        <a href="./parishes.php" style="color: white;"><i class="fas fa-compass icon text-warning"></i> Parroquias</a>
-        <a href="./reservations.php" style="color: white;"><i class="fas fa-calendar-alt icon text-info"></i> Reservaciones</a>
-        <a href="./report.php" style="color: white;"><i class="fas fa-file-alt icon text-danger"></i> Reportes</a>
-        <a href="./audit_log.php"  style="color: white;"><i class="fas fa-file-alt icon text-info"></i>  Auditoría</a>
-        <a href="./admin-backup.php" style="color: white;"><i class="fas fa-database icon text-warning"></i> Respaldo</a>
+<div class="sidebar bg-success">
+    <a href="#" class="menu-toggle"><i class="fas fa-bars icon"></i> Menú</a>
+    <div class="menu">
+        <div class="category">
+            <a href="#" class="category-toggle"><i class="fas fa-user icon"></i> Usuarios</a>
+            <div class="submenu">
+                <a href="./user.php">Usuarios</a>
+            </div>
+        </div>
+
+        <div class="category">
+            <a href="#" class="category-toggle"><i class="fas fa-hotel icon"></i> Alojamiento</a>
+            <div class="submenu">
+                <a href="./inn.php">Posadas</a>
+                <a href="./rooms.php">Habitaciones</a>
+                <a href="./reservations.php">Reservaciones</a>
+            </div>
+        </div>
+
+        <div class="category">
+            <a href="#" class="category-toggle"><i class="fas fa-car icon"></i> Transporte</a>
+            <div class="submenu">
+                <a href="./vehicles.php">Vehículos</a>
+            </div>
+        </div>
+
+        <div class="category">
+            <a href="#" class="category-toggle"><i class="fas fa-map-marker-alt icon"></i> Ubicación</a>
+            <div class="submenu">
+                <a href="./states.php">Estados</a>
+                <a href="./municipalities.php">Municipios</a>
+                <a href="./parishes.php">Parroquias</a>
+            </div>
+        </div>
+
+        <div class="category">
+            <a href="#" class="category-toggle"><i class="fas fa-file-alt icon"></i> Administración</a>
+            <div class="submenu">
+                <a href="./report.php">Reportes</a>
+                <a href="./audit_log.php">Auditoría</a>
+                <a href="./admin-backup.php">Respaldo</a>
+            </div>
+        </div>
     </div>
+</div>
+
+<script>
+    document.querySelector(".menu-toggle").addEventListener("click", function() {
+        document.querySelector(".menu").classList.toggle("active");
+    });
+
+    document.querySelectorAll(".category-toggle").forEach(toggle => {
+        toggle.addEventListener("click", function() {
+            this.nextElementSibling.classList.toggle("active");
+        });
+    });
+</script>
+
+<style>
+    .menu { display: none; }
+    .menu.active { display: block; }
+    .submenu { display: none; }
+    .submenu.active { display: block; }
+</style>
+
 
     <script src="../Assets/js/jquery-3.6.0.min.js"></script>
     <script src="../Assets/js/bootstrap.bundle.min.js"></script>

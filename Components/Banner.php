@@ -40,6 +40,7 @@
 </div>
 
 <style>
+
 .banner-img {
     max-height: 400px;
     object-fit: cover;
