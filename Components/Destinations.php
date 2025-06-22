@@ -1,125 +1,96 @@
-<section class="page-heading" style="margin: 30px;">
-    <div class="container">
-        <h2><i class="fas fa-map-marker-alt text-danger"></i> Destinos Populares</h2>
-    </div>
-</section>
-
-<section class="events-section" style="margin: 20px;">
-    <div class="container">
-        <div class="event-wrap">
-            <div class="img-wrap">
-                <img src="images/los-roques.jpg" alt="event images" style="height: 300px;">
-            </div>
-            <div class="details">
-                <a href="#"><h3 itemprop="name"><i class="fas fa-sun"></i> Los Roques</h3></a>
-                <p itemprop="description" class="text-justify">Un paraíso en el Caribe, Los Roques es un archipiélago de aguas cristalinas y arenas blancas, perfecto para los amantes del sol y el mar. Ideal para el buceo, el snorkel y la pesca deportiva, este destino ofrece una escapada tropical donde puedes relajarte en sus playas idílicas y explorar la rica vida marina.</p>
-                <h5 itemprop="location"><i class="fas fa-map-marker-alt"></i> Archipiélago de Los Roques</h5>
+       <div class="b-example-divider"></div>
+        <div class="container px-4 py-5" id="custom-cards">
+            <h2 class="pb-2 border-bottom">Disfruta con VenBooking</h2>
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+                <div class="col">
+                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                        style="background-image: url('images/card1.jpg');">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Escapadas de Aventura</h3>
+                            <ul class="d-flex list-unstyled mt-auto">
+                                <li class="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32"
+                                        height="32" class="rounded-circle border border-white"> </li>
+                                <li class="d-flex align-items-center me-3"> <svg class="bi me-2" width="1em"
+                                        height="1em" role="img" aria-label="Location">
+                                        <use xlink:href="#geo-fill"></use>
+                                    </svg>  </li>
+                                <li class="d-flex align-items-center"> <svg class="bi me-2" width="1em" height="1em"
+                                        role="img" aria-label="Duration">
+                                        <use xlink:href="#calendar3"></use>
+                                    </svg>  </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                        style="background-image: url('images/card2.jpg');">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Descanso frente al Mar</h3>
+                            <ul class="d-flex list-unstyled mt-auto">
+                                <li class="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32"
+                                        height="32" class="rounded-circle border border-white"> </li>
+                                <li class="d-flex align-items-center me-3"> <svg class="bi me-2" width="1em"
+                                        height="1em" role="img" aria-label="Location">
+                                        <use xlink:href="#geo-fill"></use>
+                                    </svg>  </li>
+                                <li class="d-flex align-items-center"> <svg class="bi me-2" width="1em" height="1em"
+                                        role="img" aria-label="Duration">
+                                        <use xlink:href="#calendar3"></use>
+                                    </svg> 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                        style="background-image: url('images/card3.jpg');">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Rutas Culturales</h3>
+                            <ul class="d-flex list-unstyled mt-auto">
+                                <li class="me-auto"> <img src="https://github.com/twbs.png" alt="Bootstrap" width="32"
+                                        height="32" class="rounded-circle border border-white"> </li>
+                                <li class="d-flex align-items-center me-3"> <svg class="bi me-2" width="1em"
+                                        height="1em" role="img" aria-label="Location">
+                                        <use xlink:href="#geo-fill"></use>
+                                    </svg> 
+                                <li class="d-flex align-items-center"> <svg class="bi me-2" width="1em" height="1em"
+                                        role="img" aria-label="Duration">
+                                        <use xlink:href="#calendar3"></use>
+                                    </svg> 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="event-wrap">
-            <div class="img-wrap">
-                <img src="images/merida.jpg" alt="event images" style="height: 300px;">
-            </div>
-            <div class="details">
-                <a href="#"><h3 itemprop="name"><i class="fas fa-mountain"></i> Mérida</h3></a>
-                <p itemprop="description" class="text-justify">Ubicada en los Andes venezolanos, es conocida por sus paisajes montañosos, clima fresco y la majestuosidad del teleférico más alto y largo del mundo. Aquí, puedes disfrutar de actividades al aire libre como senderismo, parapente y visitas a pintorescos pueblos andinos.</p>
-                <h5 itemprop="location"><i class="fas fa-map-marker-alt"></i> Mérida, Estado Mérida</h5>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<style>
-.events-section .event-wrap {
-    transition: transform 0.3s ease, background-color 0.3s ease;
+        <style>
+            .feature-icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: .75rem;
 }
 
-.events-section .event-wrap:hover {
-    transform: scale(1.05); 
-    background-color: #daeaf6; 
+.icon-square {
+  width: 3rem;
+  height: 3rem;
+  border-radius: .75rem;
 }
 
-.events-section .img-wrap img {
-    transition: opacity 0.3s ease;
+.text-shadow-1 { text-shadow: 0 .125rem .25rem rgba(0, 0, 0, .25); }
+.text-shadow-2 { text-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25); }
+.text-shadow-3 { text-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .25); }
+
+.card-cover {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
-.events-section .event-wrap:hover .img-wrap img {
-    opacity: 0.8; 
+.feature-icon-small {
+  width: 3rem;
+  height: 3rem;
 }
 
-.events-section .details {
-    transition: color 0.3s ease;
-}
-
-.events-section .event-wrap:hover .details {
-    color: #333;
-}
-
-.page-heading {
-    animation: fadeInDown 1.5s ease-in-out;
-}
-
-/* Keyframes para fadeInDown */
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.events-section .event-wrap {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s ease-in-out forwards;
-    animation-delay: calc(0.1s * var(--i)); /* Delay based on the position in the list */
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.events-section .event-wrap:nth-child(1) {
-    --i: 1;
-}
-
-.events-section .event-wrap:nth-child(2) {
-    --i: 2;
-}
-
-.events-section .event-wrap:hover {
-    transform: scale(1.05); 
-    background-color: #daeaf6; 
-}
-
-.events-section .img-wrap img {
-    transition: opacity 0.3s ease;
-}
-
-.events-section .event-wrap:hover .img-wrap img {
-    opacity: 0.8; 
-}
-
-.events-section .details {
-    transition: color 0.3s ease;
-}
-
-.events-section .event-wrap:hover .details {
-    color: #333;
-}
-
-/* Keyframes para fadeInUp */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-</style>
+        </style>

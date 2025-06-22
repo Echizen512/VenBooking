@@ -46,6 +46,22 @@
     object-fit: cover;
 }
 
+.banner-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.banner-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #f8f9fa;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    margin-top: 0.5rem;
+}
+
+
 .carousel-caption {
     position: absolute;
     top: 50%;

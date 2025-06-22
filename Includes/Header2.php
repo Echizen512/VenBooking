@@ -5,134 +5,335 @@
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/all.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/lightbox.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/flexslider.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/inner-page-style.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/newstyles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    <style>
-        .tippy-box[data-theme='custom'] {
-            background-color:rgb(25, 135, 84);
-            color: white;
-            border-radius: 10px;
-            font-size: 18px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-        }
-
-        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
-            transform-origin: top;
-        }
-    </style>
 </head>
 
 <body>
-    <div>
-        <header class="site-header">
-            <div class="top-header bg-success">
-                <div class="container">
-                    <div class="top-header-left">
-                        <div class="top-header-block">
-                            <a href="mailto:venbooking@gmail.com" style="color:white;" class="text-white" itemprop="email">
-                                <i class="fas fa-envelope text-warning"></i> Soporte Técnico: venbooking@gmail.com
-                            </a>
-                        </div>
-                    </div>
-                    <div class="top-header-right">
-                        <a href="./login.php" id="login-btn">
-                            <button class="login-btn">
-                                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                            </button>
+    <header class="site-header">
+        <!-- Top Header -->
+        <div class="top-header">
+            <div class="container">
+                <div class="top-header-content">
+                    <!-- Support Email -->
+                    <div class="support-info">
+                        <i class="fas fa-envelope support-icon"></i>
+                        <a href="mailto:venbooking@gmail.com" class="support-email">
+                            Soporte Técnico: venbooking@gmail.com
                         </a>
                     </div>
+
+                    <!-- Login Button -->
+                    <a href="./login.php" class="login-btn p-2">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span style="font-size: 14px">Iniciar Sesión</span>
+                    </a>
                 </div>
             </div>
-            <div class="main-header">
-                <div class="container">
-                    <div class="icon-left">
-            <img src="./logo.png" alt="Icono izquierdo" style="width: 140px; height: 80px;">
         </div>
-                    <div class="nav-wrap">
-                        <nav class="nav-desktop">
-                            <ul class="menu-list">
-                                <li>
-                                    <a href="./index.php">
-                                        <i class="fas fa-home"></i> Inicio
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./Destinations.php">
-                                        <i class="fas fa-map-marker-alt"></i> Destinos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./Inns.php">
-                                        <i class="fas fa-bed"></i> Posadas
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <div id="bar">
-                            <i class="fas fa-bars"></i>
+
+        <!-- Main Header -->
+        <div class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <!-- Logo -->
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <i class="fas fa-bed"></i>
                         </div>
-                        <div id="close">
-                            <i class="fas fa-times"></i>
+                        <div class="logo-text">
+                            <h1 class="brand-name">VenBooking</h1>
+                            <p class="brand-tagline">Tu destino perfecto</p>
                         </div>
                     </div>
+
+                    <!-- Desktop Navigation -->
+                    <nav class="desktop-nav">
+                        <ul class="nav-menu">
+                            <li class="nav-item">
+                                <a href="./index.php" class="nav-link">
+                                    <i class="fas fa-home nav-icon"></i>
+                                   <span style="font-size: 14px">Inicio</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./Destinations.php" class="nav-link">
+                                    <i class="fas fa-map-marker-alt nav-icon"></i>
+                                    <span style="font-size: 14px">Destinos</span>
+                                </a>
+                            </li>
+                            <li class="nav-item text-sm">
+                                <a href="./Inns.php" class="nav-link">
+                                    <i class="fas fa-bed nav-icon"></i>
+                                    <span style="font-size: 14px">Posadas</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
                 </div>
             </div>
-        </header>
-    </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <nav class="mobile-nav">
+                        <a href="./index.php" class="mobile-nav-link">
+                            <div class="mobile-nav-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="./Destinations.php" class="mobile-nav-link">
+                            <div class="mobile-nav-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span>Destinos</span>
+                        </a>
+                        <a href="./Inns.php" class="mobile-nav-link">
+                            <div class="mobile-nav-icon">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                            <span>Posadas</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
 
     <script>
-        // Configuración de tooltips llamativos
-        tippy('[itemprop="email"]', {
-            content: 'Contáctanos por Correo Electronico.',
-            animation: 'scale',
-            theme: 'custom',
-            placement: 'bottom',
+    // Mobile Menu Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let isMenuOpen = false;
+
+        // Toggle mobile menu
+        mobileMenuBtn.addEventListener('click', function() {
+            isMenuOpen = !isMenuOpen;
+
+            if (isMenuOpen) {
+                mobileMenuBtn.classList.add('active');
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            } else {
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
         });
 
-        tippy('#login-btn', {
-            content: 'Inicia Sesion o Registrate en VenBooking.',
-            animation: 'fade',
-            theme: 'custom',
-            placement: 'bottom',
+        // Close menu when clicking on a link
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                isMenuOpen = false;
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
         });
 
-        tippy('.menu-list a[href="./index.php"]', {
-            content: 'Conoce VenBooking y todo lo que te ofrece.',
-            animation: 'shift-away',
-            theme: 'custom',
-            placement: 'right',
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (isMenuOpen && !mobileMenu.contains(event.target) && !mobileMenuBtn.contains(event
+                    .target)) {
+                isMenuOpen = false;
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
 
-        tippy('.menu-list a[href="./Destinations.php"]', {
-            content: 'Explora los destinos populares.',
-            animation: 'shift-toward',
-            theme: 'custom',
-            placement: 'right',
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                isMenuOpen = false;
+                mobileMenuBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
 
-        tippy('.menu-list a[href="./Inns.php"]', {
-            content: 'Este apartado te permitirá reservar en las mejores posadas.',
-            animation: 'perspective',
-            theme: 'custom',
-            placement: 'right',
+        // Smooth scroll for anchor links
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
         });
+
+        // Add scroll effect to header
+        let lastScrollTop = 0;
+        const header = document.querySelector('.site-header');
+
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Add loading animation to feature cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards for animation
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition =
+                `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
+            observer.observe(card);
+        });
+
+        // Add ripple effect to buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = button.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+
+            button.appendChild(circle);
+        }
+
+        // Add ripple effect styles
+        const style = document.createElement('style');
+        style.textContent = `
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 600ms linear;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .login-btn, .nav-link, .mobile-nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .site-header.scrolled {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+        
+        .site-header.scrolled .main-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    `;
+        document.head.appendChild(style);
+
+        // Add ripple effect to interactive elements
+        const interactiveElements = document.querySelectorAll('.login-btn, .nav-link, .mobile-nav-link');
+        interactiveElements.forEach(element => {
+            element.addEventListener('click', createRipple);
+        });
+
+        // Add typing effect to brand tagline
+        const tagline = document.querySelector('.brand-tagline');
+        const originalText = tagline.textContent;
+        tagline.textContent = '';
+
+        let i = 0;
+
+        function typeWriter() {
+            if (i < originalText.length) {
+                tagline.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Start typing effect after a short delay
+        setTimeout(typeWriter, 1000);
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Add hover sound effect (optional - requires audio files)
+        const playHoverSound = () => {
+            // Uncomment and add audio file if desired
+            // const audio = new Audio('hover-sound.mp3');
+            // audio.volume = 0.1;
+            // audio.play().catch(() => {}); // Ignore errors if audio fails
+        };
+
+        // Add hover effects with sound
+        const hoverElements = document.querySelectorAll(
+            '.nav-link, .mobile-nav-link, .login-btn, .feature-card');
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', playHoverSound);
+        });
+    });
     </script>
 </body>
 
