@@ -224,14 +224,7 @@ body {
         </div>
     </div>
 </div>
-
-
 </div>
-
-
-<footer>
-    <p style="text-align: center; color: #666;">© 2024 VenBooking. Todos los derechos reservados.</p>
-</footer>
 
 <script>
     function generateRandomColors(count) {

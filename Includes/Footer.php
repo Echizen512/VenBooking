@@ -1,4 +1,4 @@
-<footer class="bg-success text-white text-center text-lg-start">
+<footer class="text-white text-center text-lg-start" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
     <div class="container p-5">
         <div class="row">
             <div class="col-lg-6 col-md-12 mb-6 mb-md-0">
@@ -63,7 +63,7 @@
     </div>
 
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.3); font-size: 20px; letter-spacing: 0.5px;">
-        © 2024 VenBooking. Todos los derechos reservados.
+        © 2025 VenBooking. Todos los derechos reservados.
     </div>
 </footer>
 

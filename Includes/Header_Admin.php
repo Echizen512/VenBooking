@@ -135,7 +135,7 @@
 </head>
 <body>
 
-    <div class="header bg-success">
+    <div class="header" style=" background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
         <div>
             <h2 style="font-size: 16px;">VenBooking - Gestión de Posadas</h2>
         </div>
@@ -146,7 +146,7 @@
         </a>
     </div>
 
-    <div class="sidebar bg-success">
+    <div class="sidebar" style=" background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
         <a class="dropdown-btn" id="perfiles-tooltip">
             <i class="fas fa-users me-2"></i> Perfiles
         </a>

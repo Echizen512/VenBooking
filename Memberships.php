@@ -70,18 +70,8 @@ if (!isset($_SESSION['user_id'])) {
 <title>Membresías</title>
 <link rel="stylesheet" type="text/css" href="./assets/css/all.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/lightbox.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/flexslider.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/jquery.mmenu.all.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/inner-page-style.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="./Assets/css/Prueba.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script
   src="https://www.paypal.com/sdk/js?client-id=AYDT0nwwfZO2cRUOjsktfxfczeMJftcEicBkI0LQk5DquHgx-Ydk7HbtbWUufT9iQVI65RaGvXmlg2PS"></script>
@@ -157,8 +147,8 @@ if (!isset($_SESSION['user_id'])) {
 </style>
 
 <div class="container py-3">
-  <div class="card shadow-lg border-success">
-    <div class="card-header bg-success text-white text-center">
+  <div class="card shadow-lg border-success" style="border-radius: 20px;">
+    <div class="card-header text-white text-center" style="border-radius: 20px 20px 0 0; background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
       <h1 class="display-4 fw-normal">Membresías</h1>
     </div>
     <div class="card-body">
@@ -203,9 +193,9 @@ if (!isset($_SESSION['user_id'])) {
 
         <div class="col">
           <div class="card mb-4 rounded-3 shadow-sm plan-card">
-            <div class="card-header py-3 bg-success text-white">
+            <div class="card-header py-3 bg-warning text-white">
               <h4 class="my-0 fw-normal" style="font-size: 40px;">
-                <i class="fas fa-crown text-warning"></i> Oro
+                <i class="fas fa-crown text-white"></i> Oro
               </h4>
             </div>
             <div class="card-body">

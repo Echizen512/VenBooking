@@ -36,6 +36,8 @@
             transition: width 0.3s;
             overflow-x: hidden;
             padding-top: 20px;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%); 
+            box-shadow: 0 2px 10px rgba(5, 150, 105, 0.1); 
         }
         .sidebar a {
             padding: 10px 10px 10px 20px;
@@ -67,6 +69,8 @@
             top: 0;
             width: 100%;
             z-index: 1000;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%); 
+            box-shadow: 0 2px 10px rgba(5, 150, 105, 0.1); 
         }
         .logout-btn {
             background-color: transparent;
@@ -135,18 +139,18 @@
 </head>
 <body>
 
-    <div class="header bg-success">
+    <div class="header">
         <div>
             <h2 style="font-size: 16px;">VenBooking - Gestión de Posadas</h2>
         </div>
         <a href="../Includes/logout.php">
             <button class="logout-btn">
-                <i class="fas fa-sign-out-alt text-danger"></i> Cerrar Sesión
+                <i class="fas fa-sign-out-alt text-white"></i> Cerrar Sesión
             </button>
         </a>
     </div>
 
-    <div class="sidebar bg-success">
+    <div class="sidebar">
         <a class="dropdown-btn" id="perfiles-tooltip">
             <i class="fas fa-users me-2"></i> Perfil
         </a>

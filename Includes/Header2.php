@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/lightbox.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/flexslider.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/jquery.rateyo.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/inner-page-style.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/newstyles.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

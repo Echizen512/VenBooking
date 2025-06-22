@@ -67,112 +67,122 @@ while ($row = $result_vehiculos->fetch_assoc()) {
 </head>
 
 <style>
-    .btn {
-        max-width: 40%;
-        border-radius: 40px;
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* Animación para la carga de la página */
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
+    :root {
+        --main-bg: #f4f6f9;
+        --card-bg: #ffffff;
+        --primary-color: #3b82f6;
+        --secondary-color: #6b7280;
+        --accent-color: #10b981;
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        --radius: 1.25rem;
     }
 
     body {
-        animation: fadeIn 2s ease-in-out;
+        background-color: var(--main-bg);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    .profile-card {
+        max-width: 500px;
+        margin: 2rem auto;
+        background-color: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 2.5rem 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+        transition: transform 0.3s ease;
+    }
 
-    .hidden {
-        display: none;
+    .profile-card:hover {
+        transform: scale(1.01);
+    }
+
+    .profile-card img {
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        border: 4px solid var(--primary-color);
+    }
+
+    .profile-card h5 {
+        font-weight: 600;
+        color: var(--secondary-color);
+    }
+
+    .profile-card p {
+        font-size: 0.95rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-card .form-control {
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #ddd;
+        box-shadow: none;
+        transition: border-color 0.3s;
+    }
+
+    .profile-card .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.15rem rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-custom {
+        width: 100%;
+        border-radius: 2rem;
+        background: var(--primary-color);
+        border: none;
+        color: white;
+        transition: background 0.3s;
+    }
+
+    .btn-custom:hover {
+        background: var(--accent-color);
     }
 </style>
 
-<div class="container" style="margin-top: 70px;">
-    <div class="profile-container">
-        <div class="profile-left">
-            <div class="profile-image-container text-center">
-                <img src="<?php echo $profile_image_url ?? '../Assets/img/default-profile.png'; ?>" alt="Foto de Perfil"
-                    class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
-            </div>
-            <div class="profile-info text-center mt-3">
-                <h5>
-                    <i class="fas fa-id-badge text-secondary me-2"></i>
-                    <?php echo $first_name . ' ' . $last_name; ?>
-                </h5>
-                <p class="text-muted mt-2">
-                    <i class="fas fa-star text-warning me-2"></i>
-                    <?php
-                    if ($membership_type == 'basic') {
-                        echo '<span style="color: #cd7f32;">Básico</span>';
-                    } elseif ($membership_type == 'silver') {
-                        echo '<span style="color: silver;">Plata</span>';
-                    } elseif ($membership_type == 'gold') {
-                        echo '<span style="color: gold;">Oro</span>';
-                    } else {
-                        echo 'Membresía no definida';
-                    }
-                    ?>
-                </p>
-            </div>
-        </div>
 
-        <div class="profile-form">
-            <form action="update_profile.php" method="POST">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="first_name" class="form-label">
-                            <i class="fas fa-user text-primary me-2"></i>Nombre
-                        </label>
-                        <input type="text" name="first_name" id="first_name" class="form-control"
-                            value="<?php echo $first_name; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="last_name" class="form-label">
-                            <i class="fas fa-user text-primary me-2"></i>Apellido
-                        </label>
-                        <input type="text" name="last_name" id="last_name" class="form-control"
-                            value="<?php echo $last_name; ?>" required>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <label for="email" class="form-label">
-                        <i class="fas fa-envelope text-warning me-2"></i>Correo Electrónico
-                    </label>
-                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $email ?? ''; ?>"
-                        required>
-                </div>
-                <div class="mt-3">
-                    <label for="password" class="form-label">
-                        <i class="fas fa-lock text-secondary me-2"></i>Contraseña (Opcional)
-                    </label>
-                    <input type="password" name="password" id="password" class="form-control">
-                </div>
-                <div class="mt-3">
-                    <label for="profile_image_url" class="form-label">
-                        <i class="fas fa-image text-primary me-2"></i>URL de Imagen de Perfil
-                    </label>
-                    <input type="text" name="profile_image_url" id="profile_image_url" class="form-control"
-                        value="<?php echo $profile_image_url; ?>">
-                </div>
-                <div class="mt-3">
-                    <label for="banner_image_url" class="form-label">
-                        <i class="fas fa-image text-danger me-2"></i>URL de Banner
-                    </label>
-                    <input type="text" name="banner_image_url" id="banner_image_url" class="form-control"
-                        value="<?php echo $banner_image_url ?? ''; ?>">
-                </div>
-                <div class="mt-4 text-center">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-2"></i>Guardar Cambios
-                    </button>
-                </div>
-            </form>
-        </div>
+<div class="container mt-5">
+    <div class="profile-card">
+        <img src="<?php echo $profile_image_url ?? '../Assets/img/default-profile.png'; ?>" alt="Foto de Perfil">
+        <h5>
+            <i class="fas fa-id-badge text-secondary me-2"></i>
+            <?php echo $first_name . ' ' . $last_name; ?>
+        </h5>
+        <p class="text-muted">
+            <i class="fas fa-star text-warning me-2"></i>
+            <?php
+            if ($membership_type == 'basic') {
+                echo '<span style="color: #cd7f32;">Básico</span>';
+            } elseif ($membership_type == 'silver') {
+                echo '<span style="color: silver;">Plata</span>';
+            } elseif ($membership_type == 'gold') {
+                echo '<span style="color: gold;">Oro</span>';
+            } else {
+                echo 'Membresía no definida';
+            }
+            ?>
+        </p>
 
+        <form action="update_profile.php" method="POST">
+            <input type="text" name="first_name" class="form-control" placeholder="Nombre" value="<?php echo $first_name; ?>" required>
+            <input type="text" name="last_name" class="form-control" placeholder="Apellido" value="<?php echo $last_name; ?>" required>
+            <input type="email" name="email" class="form-control" placeholder="Correo Electrónico" value="<?php echo $email ?? ''; ?>" required>
+            <input type="password" name="password" class="form-control" placeholder="Contraseña (opcional)">
+            <input type="text" name="profile_image_url" class="form-control" placeholder="URL de Imagen de Perfil" value="<?php echo $profile_image_url; ?>">
+            <input type="text" name="banner_image_url" class="form-control" placeholder="URL de Banner" value="<?php echo $banner_image_url ?? ''; ?>">
+            <button type="submit" class="btn btn-primary btn-custom mt-3">
+                <i class="fas fa-save me-2"></i>Guardar Cambios
+            </button>
+        </form>
     </div>
+</div>
