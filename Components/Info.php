@@ -27,7 +27,7 @@
                 <div class="hero-text">
 
 
-                    <h1 class="hero-title">
+                    <h1 class="hero-title text-white">
                         Descubre Venezuela como nunca antes
                     </h1>
 

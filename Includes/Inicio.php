@@ -156,6 +156,10 @@ body {
     animation-delay: 1.6s;
 }
 
+.chart-container:nth-child(4) {
+    animation-delay: 1.6s;
+}
+
 @keyframes growIn {
     from {
         opacity: 0;
@@ -220,8 +224,72 @@ body {
                 <div class="chart-title"><i class="fas fa-car text-danger me-2"></i>Vehículos por Posada</div>
                 <canvas id="vehiculosChart"></canvas>
             </div>
+            <div class="chart-container" style="margin: 15px;">
+  <div class="chart-title">
+    <i class="fas fa-dollar-sign text-success me-2"></i>Datos del Dólar
+  </div>
 
-        </div>
+      <h5 class="card-title text-success mb-3 mt-5">
+        <i class="fas fa-money-bill-wave me-2"></i>Tasa Oficial
+      </h5>
+      <ul class="list-unstyled mb-0">
+        <?php
+        $url = "https://ve.dolarapi.com/v1/dolares";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response !== false) {
+          $data = json_decode($response, true);
+          if ($data !== null) {
+            echo "<li class='mb-2'><i class='fas fa-university text-primary me-2'></i><strong>Fuente:</strong> " . $data[0]['nombre'] . " (BCV)</li>";
+            echo "<li class='mb-2'><i class='fas fa-chart-line text-info me-2'></i><strong>Precio:</strong> " . $data[0]['promedio'] . " BS</li>";
+            echo "<li><i class='fas fa-calendar-day text-muted me-2'></i><strong>Fecha:</strong> Hoy</li>";
+          } else {
+            echo "<li class='text-danger'>Error al convertir la respuesta JSON.</li>";
+          }
+        } else {
+          echo "<li class='text-danger'>Error al obtener los datos de la API.</li>";
+        }
+        ?>
+      </ul>
+    </div>
+  </div>
+
+<style>
+  .dolar-card {
+
+    border-radius: 12px;
+
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .dolar-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .dolar-card .card-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+
+  .dolar-card ul li {
+    font-size: 0.95rem;
+    color: #333;
+  }
+
+  .dolar-card i {
+    width: 20px;
+    text-align: center;
+  }
+</style>
+
+
+
     </div>
 </div>
 </div>

@@ -469,20 +469,18 @@ body {
 
             echo '
             <div class="col-sm-12 col-md-6 col-lg-3 grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
-                <div class="shadow-sm border-0 rounded-4 custom-card" style="height: 550px;">
+                <div class="shadow-sm border-0 rounded-4 custom-card" style="height: 460px;">
                     <div class="img-wrap">
                         <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid rounded-top">
                     </div>
                     <div class="card-body py-3 px-4 bg-light">
-                        <h5 class="card-title fw-semibold text-success mb-2">
+                        <h5 class="card-title fw-semibold text-success mb-1" style="font-size: 0.9rem;">
                             <i class="fas fa-bed me-2"></i>' . $row['inn_name'] . '
                         </h5>
-                        <p class="card-text small text-muted">
-                            <i class="fas fa-info-circle me-1"></i>' . $row['description'] . '
-                        </p>
+                        
                         <div class="d-flex justify-content-between text-muted small mt-3">
                             <span><i class="fas fa-tag text-primary me-1"></i>' . $row['state_name'] . '</span>
-                            <span><i class="fas fa-map-marker-alt text-danger me-1"></i>' . $row['municipality_name'] . '</span>
+                           
                             <span><i class="fas fa-star text-warning me-1"></i>' . ucfirst($row['quality']) . '</span>
                         </div>
                         <hr>

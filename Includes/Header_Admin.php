@@ -140,7 +140,7 @@
             <h2 style="font-size: 16px;">VenBooking - Gestión de Posadas</h2>
         </div>
         <a href="logout.php">
-            <button class="logout-btn">
+            <button class="logout-btn"  id="logout-btn">
                 <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </button>
         </a>
@@ -193,44 +193,33 @@
             <i class="fas fa-file-pdf me-2"></i> Reportes PDF
         </a>
 
-        <div class="dolar-section">
-            <h5>Datos del Dólar</h5>
-            <ul class="list-unstyled mt-3">
-                <?php
-                $url = "https://ve.dolarapi.com/v1/dolares";
-
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    "Content-Type: application/json"
-                ]);
-
-                $response = curl_exec($ch);
-                curl_close($ch);
-
-                if ($response !== false) {
-                    $data = json_decode($response, true);
-
-                    if ($data !== null) {
-                        echo "<li><i class='fas fa-dollar-sign'></i> Dólar: " . $data[0]['nombre'] . " (BCV)</li>";
-                        echo "<li><i class='fas fa-chart-line'></i> Precio: " . $data[0]['promedio'] . " BS</li>";
-                        echo "<li><i class='fas fa-calendar'></i> Fecha: Hoy" . "</li>";
-                    } else {
-                        echo "<li>Error al convertir la respuesta JSON.</li>";
-                    }
-                } else {
-                    echo "<li>Error al obtener los datos de la API.</li>";
-                }
-                ?>
-            </ul>
-        </div>
+       
     </div>
 
     <script src="../Assets/js/jquery-3.6.0.min.js"></script>
     <script src="../Assets/js/bootstrap.bundle.min.js"></script>
     <script src="../Assets/js/jquery.dataTables.min.js"></script>
     <script src="../Assets/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+    document.getElementById('logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Estás a punto de cerrar sesión",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#10b981',
+            cancelButtonColor: '#D2D2D2',
+            confirmButtonText: 'Sí',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = './logout.php';
+            }
+        })
+    });
+    </script>
 
     <script>
         var dropdown = document.getElementsByClassName("dropdown-btn");

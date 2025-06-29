@@ -37,9 +37,7 @@
                 <div class="header-content">
                     <!-- Logo -->
                     <div class="logo-section">
-                        <div class="logo-icon">
-                            <i class="fas fa-bed"></i>
-                        </div>
+                            <img src="./logo.png" alt="logo" style="width: 50px; height: 70px; object-fit: cover;">
                         <div class="logo-text">
                             <h1 class="brand-name">VenBooking</h1>
                             <p class="brand-tagline">Tu destino perfecto</p>
