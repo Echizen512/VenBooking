@@ -1,334 +1,324 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posada</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<body>
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <link href="blog.css" rel="stylesheet">
+
+    <?php include './Includes/Header.php'; ?>
+
 
     <style>
-        .main-content {
-            flex: 1;
-            margin-right: 20px;
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+            font-size: 3.5rem;
         }
-
-        .sidebar {
-            width: 350px;
-            padding: 20px;
-            position: sticky;
-            top: 20px;
-            height: 100%;
-            overflow-y: auto;
-            color: black;
-        }
-
-        .sidebar h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #f8f9fa;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #adb5bd;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        .sidebar ul li a:hover {
-            color: #ffc107;
-        }
-
-        .recommendation-card {
-            background-color: #fff;
-            color: white;
-            border: 1px solid #cccccc;
-            /* Borde delgado de color negro */
-            margin-bottom: 1rem;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-
-
-        .recommendation-card:hover {
-            transform: scale(1.02);
-        }
-
-        .recommendation-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .recommendation-card .card-body {
-            padding: 10px;
-        }
-
-        .recommendation-card .card-title {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .recommendation-card .card-text {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: #333;
-        }
-
-        .card-text {
-            font-size: 1rem;
-            color: #666;
-        }
-
-
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-
+    }
     </style>
-</head>
-
-<body>
-<?php include './Includes/Header.php'; ?>
-<div class="page-content" itemscope itemtype="http://schema.org/Blog">
-    <div class="container">
-        <article class="page-article" itemprop="blogPost">
-            <?php
-            include './config/db.php';
-
-            if (isset($_GET['inn_id']) && !empty($_GET['inn_id'])) {
-                $inn_id = $_GET['inn_id'];
-
-                // Consulta para obtener la información de la posada específica
-                $sql_inn_detail = "SELECT inns.id, inns.name AS inn_name, inns.description, inns.email, inns.phone, 
-                                           states.name AS state_name, municipalities.name AS municipality_name, 
-                                           parishes.name AS parish_name, categories.name AS category_name,
-                                           inns.image_url AS inn_image_url
-                                    FROM inns
-                                    LEFT JOIN states ON inns.state_id = states.id
-                                    LEFT JOIN municipalities ON inns.municipality_id = municipalities.id
-                                    LEFT JOIN parishes ON inns.parish_id = parishes.id
-                                    LEFT JOIN categories ON inns.category_id = categories.id
-                                    WHERE inns.id = $inn_id";
-
-                $result_inn_detail = $conn->query($sql_inn_detail);
-
-                if ($result_inn_detail->num_rows > 0) {
-                    $row = $result_inn_detail->fetch_assoc(); // Obtener la fila de resultados
-                    // Mostrar la información de la posada
-                    echo '<div class="card mb-3" style="border-radius: 20px;">';
-                    echo '<div class="card-body bg-success text-white" style="border-radius: 20px;">';
-                    echo '<h2 class="text-center" style="font-size: 24px;"><i class="fas fa-hotel"></i> ' . $row['inn_name'] . '</h2>';
-                    echo '</div>';
-                    echo '</div>';
-
-                    ?>
-                    <div class="card mb-3" style="border-radius: 20px;">
-                        <img src="<?php echo $row['inn_image_url']; ?>" class="card-img-top" alt="Posada Image" style="margin-top: 0px; margin-bottom: 0px; border-radius: 20px; height: 300px;">
-                        <div class="card-body">
-                            <p class="card-text" style="font-size: 18px"><i class="fas fa-info-circle text-primary"></i> <?php echo $row['description']; ?></p>
-                            <ul class="list-unstyled">
-                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-envelope text-warning"></i> <span>Email:</span> <?php echo $row['email']; ?></li>
-                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-phone text-primary"></i> <span>Teléfono:</span> <?php echo $row['phone']; ?></li>
-                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-map-marker-alt text-danger"></i> <span>Ubicación:</span> <?php echo $row['state_name'] . ', ' . $row['municipality_name'] . ', ' . $row['parish_name']; ?></li>
-                                <li style="font-size: 14px" class="ml-3"><i class="fas fa-list text-primary"></i> <span>Categoría:</span> <?php echo $row['category_name']; ?></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <?php
-                    // Consulta SQL para obtener los vehículos de la posada específica
-                    $sql_vehicles = "SELECT vehicles.id, vehicles.type, vehicles.brand, vehicles.description, 
-                                                 vehicles.price, vehicles.capacity, vehicles.year, vehicles.model, vehicles.registration_plate, 
-                                                 vehicles.status, vehicles.image_url, vehicles.image_url2, vehicles.image_url3, vehicles.image_url4, vehicles.image_url5
-                                          FROM vehicles
-                                          WHERE vehicles.inn_id = $inn_id";
-
-                    $result_vehicles = $conn->query($sql_vehicles);
-
-                    if ($result_vehicles->num_rows > 0) {
-                        echo '<div class="card mb-3" style="border-radius: 20px;">';
-                        echo '<div class="card-body bg-danger" style="border-radius: 20px;">';
-                        echo '<h3 class="text-center text-white" style="font-size: 24px;" class="card-title"><i class="fas fa-car"></i> Vehículos disponibles</h3>';
-                        echo '</div>';
-                        echo '</div>';
-
-                        echo '<div class="row">';
-                        while ($vehicle = $result_vehicles->fetch_assoc()) {
-                            echo '<div class="col-md-6 mb-4">';
-                            echo '<div class="card shadow-sm" style="border-radius: 20px;">';
-                            // Carousel para imágenes de vehículo
-                            echo '<div id="vehicleCarousel' . $vehicle['id'] . '" class="carousel slide" data-bs-ride="carousel">';
-                            echo '<div class="carousel-inner">';
-                            $images = ['image_url', 'image_url2', 'image_url3', 'image_url4', 'image_url5'];
-                            $active = true;
-                            foreach ($images as $img_field) {
-                                if (!empty($vehicle[$img_field])) {
-                                    echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
-                                    echo '<img src="' . $vehicle[$img_field] . '" class="d-block w-100" alt="Imagen de Vehículo" style="height: 200px; object-fit: cover; margin-top: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;">';
-                                    echo '</div>';
-                                    $active = false; // Solo el primero es activo
-                                }
-                            }
-                            echo '</div>'; // Cierre de carousel-inner
-                            // Botones de control del carousel
-                            echo '<button class="carousel-control-prev" type="button" data-bs-target="#vehicleCarousel' . $vehicle['id'] . '" data-bs-slide="prev">';
-                            echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-                            echo '<span class="visually-hidden">Anterior</span>';
-                            echo '</button>';
-                            echo '<button class="carousel-control-next" type="button" data-bs-target="#vehicleCarousel' . $vehicle['id'] . '" data-bs-slide="next">';
-                            echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-                            echo '<span class="visually-hidden">Siguiente</span>';
-                            echo '</button>';
-                            echo '</div>'; // Cierre de carousel
-
-                            echo '<div class="card-body">';
-                            echo '<h5 class="card-title" style="font-size: 18px"><i class="fas fa-car text-danger"></i> ' . $vehicle['brand'] . ' ' . $vehicle['model'] . '</h5>';
-                            echo '<p class="card-text" style="font-size: 16px"><i class="fas fa-info-circle text-primary"></i> ' . $vehicle['description'] . '</p>';
-                            echo '<ul class="list-unstyled">';
-                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-calendar-alt text-primary"></i> <span>Año:</span> ' . $vehicle['year'] . '</li>';
-                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-users text-danger"></i> <span>Capacidad:</span> ' . $vehicle['capacity'] . '</li>';
-                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-dollar-sign text-success"></i> <span>Precio:</span> ' . $vehicle['price'] . '</li>';
-                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-id-card text-warning"></i> <span>Placa:</span> ' . $vehicle['registration_plate'] . '</li>';
-                            echo '</ul>';
-                            echo '</div>'; // Cierre de .card-body
-                            echo '</div>'; // Cierre de .card
-                            echo '</div>'; // Cierre de .col-md-6
-                        }
-                        echo '</div>'; // Cierre de .row
-                    }
-
-                    // Consulta SQL para obtener las habitaciones de la posada específica
-                    $sql_rooms = "SELECT rooms.id, rooms.room_number, rooms.type, rooms.quality, rooms.image_url, rooms.image_url2, rooms.image_url3, rooms.image_url4, rooms.image_url5, rooms.description, 
-                                             rooms.price, rooms.capacity
-                                  FROM rooms
-                                  WHERE rooms.inn_id = $inn_id";
-
-                    $result_rooms = $conn->query($sql_rooms);
-
-                    if ($result_rooms->num_rows > 0) {
-                        echo '<div class="card mb-3" style="border-radius: 20px;">';
-                        echo '<div class="card-body bg-primary" style="border-radius: 20px;">';
-                        echo '<h3 class="text-center text-white" style="font-size: 24px;" class="card-title"><i class="fas fa-bed"></i> Habitaciones disponibles</h3>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '<div class="row">';
-                        while ($room = $result_rooms->fetch_assoc()) {
-                            echo '<div class="col-md-6 mb-4" style="margin-bottom: 20px;">';
-                            echo '<div class="card shadow-sm mb-4" style="border-radius: 20px;">';
-                            // Carousel para imágenes de habitación
-                            echo '<div id="roomCarousel' . $room['id'] . '" class="carousel slide" data-bs-ride="carousel">';
-                            echo '<div class="carousel-inner">';
-                            $images = ['image_url', 'image_url2', 'image_url3', 'image_url4', 'image_url5'];
-                            $active = true;
-                            foreach ($images as $img_field) {
-                                if (!empty($room[$img_field])) {
-                                    echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
-                                    echo '<img src="' . $room[$img_field] . '" class="d-block w-100" alt="Imagen de Habitación" style="height: 200px; object-fit: cover; margin-top: 0px; border-top-left-radius: 20px; border-top-right-radius: 20px;">';
-                                    echo '</div>';
-                                    $active = false; // Solo el primero es activo
-                                }
-                            }
-                            echo '</div>'; // Cierre de carousel-inner
-                            // Botones de control del carousel
-                            echo '<button class="carousel-control-prev" type="button" data-bs-target="#roomCarousel' . $room['id'] . '" data-bs-slide="prev">';
-                            echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
-                            echo '<span class="visually-hidden">Anterior</span>';
-                            echo '</button>';
-                            echo '<button class="carousel-control-next" type="button" data-bs-target="#roomCarousel' . $room['id'] . '" data-bs-slide="next">';
-                            echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
-                            echo '<span class="visually-hidden">Siguiente</span>';
-                            echo '</button>';
-                            echo '</div>'; // Cierre de carousel
-
-                            echo '<div class="card-body">';
-                            echo '<h5 class="card-title" style="font-size: 18px"><i class="fas fa-bed text-success"></i> Habitación ' . $room['room_number'] . '</h5>';
-                            echo '<p class="card-text" style="font-size: 16px"><i class="fas fa-info-circle  text-primary"></i> ' . $room['description'] . '</p>';
-                            echo '<ul class="list-unstyled">';
-                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-users text-danger"></i> <span>Capacidad:</span> ' . $room['capacity'] . '</li>';
-                            echo '<li style="font-size: 14px" class="ml-3"><i class="fas fa-dollar-sign text-success"></i> <span>Precio:</span> ' . $room['price'] . '</li>';
-                            echo '</ul>';
-                            echo '</div>'; // Cierre de .card-body
-                            echo '</div>'; // Cierre de .card
-                            echo '</div>'; // Cierre de .col-md-6
-                        }
-                        echo '</div>'; // Cierre de .row
-                    }
-                } else {
-                    echo '<div class="alert alert-danger">No se encontró la posada.</div>';
-                }
-            } else {
-                echo '<div class="alert alert-danger">ID de posada no válido.</div>';
-            }
-            ?>
-        </article>
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
-            <aside class="sidebar" itemprop="sidebar">
-                <div class="card-body bg-success text-white p-3 text-center" style="font-size: 24px; border-radius: 20px;">
-                    <h3 style="color: white;">
-                        <i class="fas fa-star text-warning"></i> Posadas Recomendadas
-                    </h3>
-                </div><br>
-                <?php
-                include './config/db.php';
-                $sql_random_inns = "SELECT id, name, image_url, description FROM inns ORDER BY RAND() LIMIT 3";
-                $result_random_inns = $conn->query($sql_random_inns);
-                if ($result_random_inns->num_rows > 0) {
-                    while ($row = $result_random_inns->fetch_assoc()) {
-                        echo '<div class="recommendation-card">';
-                        echo '<img src="' . $row['image_url'] . '" alt="Posada Image">';
-                        echo '<div class="card-body">';
-                        echo '<h5 class="card-title" style="font-size: 14px"><i class="fas fa-hotel text-success"></i> ' . $row['name'] . '</h5>';
-                        echo '<p class="card-text" style="font-size: 12px"><i class="fas fa-info-circle  text-primary"></i> ' . substr($row['description'], 0, 70) . '...</p>';
-                        echo '<a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success" style="font-size: 14px; color: white; border-radius: 30px; "><i class="fas fa-calendar-check" style="margin-right: 8px;"></i>¡Ver Detalles!</a>';
+    <main class="container">
 
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                }
-                $conn->close();
-                ?>
-            </aside>
+        <?php
+include './config/db.php';
+
+if (isset($_GET['inn_id']) && !empty($_GET['inn_id'])) {
+    $inn_id = $_GET['inn_id'];
+
+    $sql_inn_detail = "SELECT inns.id, inns.name AS inn_name, inns.description, inns.email, inns.phone, 
+                               states.name AS state_name, municipalities.name AS municipality_name, 
+                               parishes.name AS parish_name, categories.name AS category_name,
+                               inns.image_url AS inn_image_url
+                        FROM inns
+                        LEFT JOIN states ON inns.state_id = states.id
+                        LEFT JOIN municipalities ON inns.municipality_id = municipalities.id
+                        LEFT JOIN parishes ON inns.parish_id = parishes.id
+                        LEFT JOIN categories ON inns.category_id = categories.id
+                        WHERE inns.id = $inn_id";
+
+    $result_inn_detail = $conn->query($sql_inn_detail);
+
+    if ($result_inn_detail->num_rows > 0) {
+        $row = $result_inn_detail->fetch_assoc();
+        ?>
+
+        <div class="p-4 p-md-5 mt-4 mb-4 text-white rounded bg-dark"
+            style="background-image: url('<?php echo $row['inn_image_url']; ?>'); background-size: cover; background-position: center;">
+            <div class="col-md-6 px-0"
+                style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px;">
+                <h1 class="display-4 fst-italic text-center"><?php echo htmlspecialchars($row['inn_name']); ?></h1>
+                <p class="lead my-3 text-center"><?php echo nl2br(htmlspecialchars($row['description'])); ?></p>
+                <p class="lead mb-0">
+                    <a href="mailto:<?php echo $row['email']; ?>" class="text-white fw-bold p-4">Contáctanos</a>
+                </p>
+                <small class="d-block mt-3 mx-4">
+                    📍
+                    <?php echo $row['parish_name'] . ', ' . $row['municipality_name'] . ', ' . $row['state_name']; ?><br>
+                    📞 <?php echo $row['phone']; ?> | 🏷️ <?php echo $row['category_name']; ?>
+                </small>
+            </div>
         </div>
+
+        <?php
+    } else {
+        echo '<div class="alert alert-warning">No se encontró información de la posada.</div>';
+    }
+}
+?>
+
+
+
+        <div class="row g-5">
+            <div class="col-md-8">
+
+                <?php
+// Consulta SQL para obtener las habitaciones de la posada específica
+$sql_rooms = "SELECT rooms.id, rooms.room_number, rooms.type, rooms.quality, rooms.image_url, rooms.image_url2, rooms.image_url3, rooms.image_url4, rooms.image_url5, rooms.description, 
+                     rooms.price, rooms.capacity
+              FROM rooms
+              WHERE rooms.inn_id = $inn_id";
+
+$result_rooms = $conn->query($sql_rooms);
+
+if ($result_rooms->num_rows > 0) {
+    echo '<h3 class="pb-4 mb-4 fst-italic border-bottom"><i class="fas fa-bed text-primary"></i> Habitaciones disponibles</h3>';
+    echo '<div class="row mb-2">';
+
+    $count = 0;
+    while ($room = $result_rooms->fetch_assoc()) {
+        // Abrir nueva fila cada 2 habitaciones
+        if ($count % 2 === 0 && $count !== 0) {
+            echo '</div><div class="row mb-2">';
+        }
+
+        echo '<div class="col-md-6">';
+        echo '<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm" style="min-height: 270px;">';
+
+
+        // Columna de texto
+        echo '<div class="col p-3 d-flex flex-column position-static">';
+        echo '<strong class="d-inline-block mb-2 text-success small">Capacidad: ' . $room['capacity'] . '</strong>';
+        echo '<h5 class="mb-1 fs-6">Hab. ' . $room['room_number'] . ' - ' . ucfirst($room['type']) . '</h5>';
+        echo '<div class="mb-1 text-muted small">$. ' . number_format($room['price'], 2, ',', '.') . '</div>';
+        $short_description = mb_strimwidth($room['description'], 0, 90, '...');
+        echo '<p class="card-text mb-auto small">' . htmlspecialchars($short_description) . '</p>';
+        echo '</div>';
+
+        // Columna de imagen
+        echo '<div class="col-auto d-none d-lg-block">';
+        $thumbnail = !empty($room['image_url']) ? $room['image_url'] : 'https://via.placeholder.com/200x250?text=Sin+imagen';
+        echo '<img src="' . $thumbnail . '" width="200" height="270" style="object-fit: cover;" alt="Imagen de habitación">';
+        echo '</div>';
+
+        echo '</div>'; // cierre de .row
+        echo '</div>'; // cierre de .col-md-6
+
+        // Modal con carrusel de imágenes
+        echo '<div class="modal fade" id="roomCarousel' . $room['id'] . '" tabindex="-1" aria-hidden="true">';
+        echo '<div class="modal-dialog modal-lg modal-dialog-centered">';
+        echo '<div class="modal-content">';
+        echo '<div class="modal-header">';
+        echo '<h5 class="modal-title">Imágenes de Habitación ' . $room['room_number'] . '</h5>';
+        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>';
+        echo '</div>';
+        echo '<div class="modal-body p-0">';
+        echo '<div id="carouselInner' . $room['id'] . '" class="carousel slide" data-bs-ride="carousel">';
+        echo '<div class="carousel-inner">';
+        $images = ['image_url', 'image_url2', 'image_url3', 'image_url4', 'image_url5'];
+        $active = true;
+        foreach ($images as $img_field) {
+            if (!empty($room[$img_field])) {
+                echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
+                echo '<img src="' . $room[$img_field] . '" class="d-block w-100" style="height: 500px; object-fit: cover;" alt="Imagen de habitación">';
+                echo '</div>';
+                $active = false;
+            }
+        }
+        echo '</div>';
+        echo '<button class="carousel-control-prev" type="button" data-bs-target="#carouselInner' . $room['id'] . '" data-bs-slide="prev">';
+        echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+        echo '<span class="visually-hidden">Anterior</span>';
+        echo '</button>';
+        echo '<button class="carousel-control-next" type="button" data-bs-target="#carouselInner' . $room['id'] . '" data-bs-slide="next">';
+        echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+        echo '<span class="visually-hidden">Siguiente</span>';
+        echo '</button>';
+        echo '</div>'; // cierre de carousel
+        echo '</div>'; // cierre de modal-body
+        echo '</div>'; // cierre de modal-content
+        echo '</div>'; // cierre de modal-dialog
+        echo '</div>'; // cierre de modal
+
+        $count++;
+    }
+
+    echo '</div>'; // cierre de última fila
+}
+?>
+
+<?php
+// Consulta SQL para obtener los vehículos de la posada específica
+$sql_vehicles = "SELECT vehicles.id, vehicles.type, vehicles.brand, vehicles.description, 
+                         vehicles.price, vehicles.capacity, vehicles.year, vehicles.model, vehicles.registration_plate, 
+                         vehicles.status, vehicles.image_url, vehicles.image_url2, vehicles.image_url3, vehicles.image_url4, vehicles.image_url5
+                  FROM vehicles
+                  WHERE vehicles.inn_id = $inn_id";
+
+$result_vehicles = $conn->query($sql_vehicles);
+
+if ($result_vehicles->num_rows > 0) {
+    echo '<h3 class="pb-4 mb-4 fst-italic border-bottom"><i class="fas fa-car text-danger"></i> Vehículos disponibles</h3>';
+    echo '<div class="row mb-2">';
+
+    $count = 0;
+    while ($vehicle = $result_vehicles->fetch_assoc()) {
+        if ($count % 2 === 0 && $count !== 0) {
+            echo '</div><div class="row mb-2">';
+        }
+
+        echo '<div class="col-md-6">';
+        echo '<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm" style="min-height: 320px;">';
+
+        // Columna de texto
+        echo '<div class="col p-3 d-flex flex-column position-static">';
+        echo '<strong class="d-inline-block mb-2 text-danger small">Capacidad: ' . $vehicle['capacity'] . '</strong>';
+        echo '<h5 class="mb-1 fs-6">' . $vehicle['brand'] . ' ' . $vehicle['model'] . ' (' . $vehicle['year'] . ')</h5>';
+        echo '<div class="mb-1 text-muted small">Bs. ' . number_format($vehicle['price'], 2, ',', '.') . '</div>';
+        $short_desc = mb_strimwidth($vehicle['description'], 0, 90, '...');
+        echo '<p class="card-text mb-auto small">' . htmlspecialchars($short_desc) . '</p>';
+        echo '</div>';
+
+        // Columna de imagen
+        echo '<div class="col-auto d-none d-lg-block">';
+        $thumb = !empty($vehicle['image_url']) ? $vehicle['image_url'] : 'https://via.placeholder.com/200x320?text=Sin+imagen';
+        echo '<img src="' . $thumb . '" width="200" height="320" style="object-fit: cover;" alt="Imagen de vehículo">';
+        echo '</div>';
+
+        echo '</div>'; // .row
+        echo '</div>'; // .col-md-6
+
+        // Modal con carrusel
+        echo '<div class="modal fade" id="vehicleCarousel' . $vehicle['id'] . '" tabindex="-1" aria-hidden="true">';
+        echo '<div class="modal-dialog modal-lg modal-dialog-centered">';
+        echo '<div class="modal-content">';
+        echo '<div class="modal-header">';
+        echo '<h5 class="modal-title">Imágenes de ' . $vehicle['brand'] . ' ' . $vehicle['model'] . '</h5>';
+        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>';
+        echo '</div>';
+        echo '<div class="modal-body p-0">';
+        echo '<div id="carouselVehicle' . $vehicle['id'] . '" class="carousel slide" data-bs-ride="carousel">';
+        echo '<div class="carousel-inner">';
+        $images = ['image_url', 'image_url2', 'image_url3', 'image_url4', 'image_url5'];
+        $active = true;
+        foreach ($images as $img_field) {
+            if (!empty($vehicle[$img_field])) {
+                echo '<div class="carousel-item ' . ($active ? 'active' : '') . '">';
+                echo '<img src="' . $vehicle[$img_field] . '" class="d-block w-100" style="height: 500px; object-fit: cover;" alt="Imagen de vehículo">';
+                echo '</div>';
+                $active = false;
+            }
+        }
+        echo '</div>';
+        echo '<button class="carousel-control-prev" type="button" data-bs-target="#carouselVehicle' . $vehicle['id'] . '" data-bs-slide="prev">';
+        echo '<span class="carousel-control-prev-icon" aria-hidden="true"></span>';
+        echo '<span class="visually-hidden">Anterior</span>';
+        echo '</button>';
+        echo '<button class="carousel-control-next" type="button" data-bs-target="#carouselVehicle' . $vehicle['id'] . '" data-bs-slide="next">';
+        echo '<span class="carousel-control-next-icon" aria-hidden="true"></span>';
+        echo '<span class="visually-hidden">Siguiente</span>';
+        echo '</button>';
+        echo '</div>'; // carousel
+        echo '</div>'; // modal-body
+        echo '</div>'; // modal-content
+        echo '</div>'; // modal-dialog
+        echo '</div>'; // modal
+
+        $count++;
+    }
+
+    echo '</div>'; // última fila
+}
+?>
+
+
+        
+                <nav class="blog-pagination" aria-label="Pagination">
+                                    <a href="reservation.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-success"
+                    style="color: white; font-size: 14px; padding: 5px 15px; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
+                    <i class="fas fa-calendar-check" style="margin-right: 5px; font-size: 16px;"></i> ¡Reservar
+                    Habitación!
+                </a>
+
+                <!-- Botón de Guardar Posada -->
+                <a href="save_inn.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-danger"
+                    style="color: white; font-size: 14px; padding: 5px 15px; margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
+                    <i class="fas fa-heart" style="margin-right: 5px; font-size: 16px;"></i> ¡Guardar Posada!
+                </a>
+                </nav>
+
+            </div>
+
+
+<div class="col-md-4">
+  <div class="position-sticky" style="top: 2rem;">
+    
+    <div class="card-body text-white p-3 text-center rounded mb-3" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);>
+      <h4 class="fst-italic mb-0">
+        <i class="fas fa-star text-warning"></i> Posadas Recomendadas
+      </h4>
     </div>
 
     <?php
+    include './config/db.php';
+    $sql_random_inns = "SELECT id, name, image_url, description FROM inns ORDER BY RAND() LIMIT 3";
+    $result_random_inns = $conn->query($sql_random_inns);
+
+    if ($result_random_inns->num_rows > 0) {
+        while ($row = $result_random_inns->fetch_assoc()) {
+            echo '<div class="row g-0 border rounded overflow-hidden flex-md-row mb-3 shadow-sm position-relative" style="min-height: 140px;">';
+
+            // Columna de texto
+            echo '<div class="col p-3 d-flex flex-column position-static">';
+            echo '<h6 class="mb-1 fs-6"><i class="fas fa-hotel text-success"></i> ' . htmlspecialchars($row['name']) . '</h6>';
+            $short_desc = mb_strimwidth($row['description'], 0, 90, '...');
+            echo '<p class="mb-2 small">' . htmlspecialchars($short_desc) . '</p>';
+            echo '<a href="Inn.php?inn_id=' . $row['id'] . '" class="stretched-link text-success fw-bold small">Ver detalles</a>';
+            echo '</div>';
+
+            // Columna de imagen
+            echo '<div class="col-auto d-none d-lg-block">';
+            $thumb = !empty($row['image_url']) ? $row['image_url'] : 'https://via.placeholder.com/120x140?text=Sin+imagen';
+            echo '<img src="' . $thumb . '" width="120" height="140" style="object-fit: cover;" alt="Imagen de posada">';
+            echo '</div>';
+
+            echo '</div>'; // .row
+        }
+    }
+    $conn->close();
+    ?>
+    
+   
+
+   
+  </div>
+</div>
+
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+        <?php
     include './config/db.php';
 
     if (isset($_GET['inn_id']) && !empty($_GET['inn_id'])) {
@@ -340,35 +330,7 @@
     ?>
 
 
-<style>
-    
-</style>
-
-<div class="card mb-3" style="border: none; box-shadow: none;">
-    <div class="card-body text-center" style="padding: 1rem;">
-        <?php if ($inn_id): ?>
-            <!-- Botón de Reservar -->
-            <a href="reservation.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-success"
-                style="color: white; font-size: 14px; padding: 5px 15px; margin-right: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
-                <i class="fas fa-calendar-check" style="margin-right: 5px; font-size: 16px;"></i> ¡Reservar Habitación!
-            </a>
-
-            <!-- Botón de Guardar Posada -->
-            <a href="save_inn.php?inn_id=<?php echo $inn_id; ?>" class="btn btn-danger"
-                style="color: white; font-size: 14px; padding: 5px 15px; margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold;">
-                <i class="fas fa-heart" style="margin-right: 5px; font-size: 16px;"></i> ¡Guardar Posada!
-            </a>
-        <?php else: ?>
-            <p class="text-danger" style="font-size: 14px;">ID de la posada no está disponible.</p>
-        <?php endif; ?>
-    </div>
-</div>
-
-
-
-
-
-    <?php include './Includes/Footer.php'; ?>
+        <?php include './Includes/Footer.php'; ?>
 </body>
 
 </html>

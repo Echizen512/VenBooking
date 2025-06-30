@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-12 mb-6 mb-md-0">
                 <h5 class="text-uppercase text-center" style="font-size: 26px; font-weight: bold; letter-spacing: 1px;">
-                    <i class="fa-solid fa-info me-4 text-warning"></i>Acerca de VenBooking
+                    Acerca de VenBooking
                 </h5>
                 <p class="text-justify mt-3" style="font-size: 18px; line-height: 1.6; padding: 10px; margin: 10px;">
                     VenBooking es tu plataforma de confianza para reservar las mejores posadas en toda Venezuela.
@@ -19,9 +19,9 @@
                 </h5>
                 <ul class="list-unstyled mt-3">
                     <li><a href="#!" class="text-white"
-                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-user me-3"></i>Perfil</a></li>
+                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-user me-3"></i>Términos y Condiciones</a></li>
                     <li><a href="#!" class="text-white"
-                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-comments me-3"></i>Chat</a></li>
+                            style="font-size: 18px; text-decoration: none; margin: 10px;"><i class="fas fa-comments me-3"></i>FAQ</a></li>
                 </ul>
             </div>
 
