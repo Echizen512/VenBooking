@@ -45,7 +45,7 @@ $stmt_favorite_inns_count->execute();
 $result_favorite_inns_count = $stmt_favorite_inns_count->get_result();
 $favorite_inns_count = $result_favorite_inns_count->fetch_assoc()['favorite_inns_count'];
 
-$sql_favorite_inns = "SELECT uf.id, i.name AS inn_name, i.description, i.image_url, c.name AS category_name 
+$sql_favorite_inns = "SELECT uf.id, i.id AS inn_id, i.name AS inn_name, i.description, i.image_url, c.name AS category_name
                     FROM user_favorite_inns uf 
                     JOIN inns i ON uf.inn_id = i.id 
                     LEFT JOIN categories c ON i.category_id = c.id 
@@ -178,7 +178,7 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                                 <td class="text-center" style="font-size: 14px;">
                                     <?php echo htmlspecialchars($row['category_name']); ?></td>
                                 <td class="text-center" style="font-size: 14px;">
-                                    <a href="inn.php?inn_id=<?php echo $row['id']; ?>"
+                                    <a href="inn.php?inn_id=<?php echo $row['inn_id']; ?>"
                                         class="btn btn-outline-success mt-3"
                                         style="font-size: 14px; border-radius: 20px; width: 50%;">
                                         <i class="fas fa-link me-2"></i> ¡Ver Detalles!
@@ -281,21 +281,21 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                             </td>
                             <td class="text-center" style="font-size: 14px;">
                                 <a href="chat.php?user_id=<?php echo htmlspecialchars($row['inn_owner_id']); ?>"
-                                    class="btn btn-outline-primary text-primary"
+                                    class="btn btn-outline-primary"
                                     style="font-size: 14px; border-radius: 20px; width: 50%; margin-left: 70px;">
                                     <i class="fas fa-comments mr-2"></i> Contactar
                                 </a>
                             </td>
                             <td class="text-center" style="font-size: 14px;">
-                                <a href="generate_pdf_report.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>"
-                                    class="btn btn-outline-success text-success"
+                                <a href="./Assets/PDF/Invoices.php?reservation_id=<?php echo htmlspecialchars($row['id']); ?>"
+                                    class="btn btn-outline-success"
                                     style="font-size: 14px; border-radius: 20px; width: 60%;">
                                     <i class="fas fa-file-pdf me-2"></i> Ver Factura
                                 </a>
                             </td>
                             <td class="text-center align-middle" style="vertical-align: middle;">
                                 <?php if (!$has_review) { ?>
-                                <form action="submit_review.php" method="POST"
+                                <form action="./PHP/submit-review.php" method="POST"
                                     style="display: inline-block; text-align: center;">
                                     <input type="hidden" name="reservation_id"
                                         value="<?php echo htmlspecialchars($row['id']); ?>">
@@ -318,7 +318,7 @@ $result_favorite_inns = $stmt_favorite_inns->get_result();
                                     </button>
                                 </form>
                                 <?php } else { ?>
-                                <span class="badge badge-success"
+                                <span class="badge badge-success text-success"
                                     style="font-size: 14px; padding: 10px; border-radius: 20px;">
                                     <i class="fas fa-check-circle"></i> Valoración registrada
                                 </span>

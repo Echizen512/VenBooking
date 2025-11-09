@@ -133,13 +133,13 @@ $conn->close();
                                         <a href='../chat.php?user_id={$row['user_id']}' class='btn btn-primary' style='color: white;'>Contactar</a></td>
                                         <td class='text-center'>
                                             <div class='text-center'>
-                                            <form action='update_reservation_status.php' method='POST' class='d-inline'>
+                                            <form action='../PHP/update-reservation-status.php' method='POST' class='d-inline'>
                                                 <input type='hidden' name='id' value='{$row['id']}' />
                                                 <button type='submit' name='action' value='confirm' style='border: none; background-color: #28a745; color: white; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; margin-right: 5px;'>
                                                     <i class='fas fa-check'></i>
                                                 </button>
                                             </form>
-                                            <form action='update_reservation_status.php' method='POST' class='d-inline'>
+                                            <form action='../PHP/update-reservation-status.php' method='POST' class='d-inline'>
                                                 <input type='hidden' name='id' value='{$row['id']}' />
                                                 <button type='submit' name='action' value='cancel' style='border: none; background-color: #dc3545; color: white; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px;'>
                                                     <i class='fas fa-times'></i>

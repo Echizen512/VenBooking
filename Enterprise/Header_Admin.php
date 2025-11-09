@@ -155,7 +155,7 @@
             <i class="fas fa-users me-2"></i> Perfil
         </a>
         <div class="dropdown-container">
-            <a href="./Perfil.php" id="perfil-tooltip">
+            <a href="./Profile.php" id="perfil-tooltip">
                 <i class="fas fa-user me-2"></i> Mi Perfil
             </a>
             <a href="./inns.php" id="posadas-tooltip">

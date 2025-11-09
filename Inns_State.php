@@ -1,32 +1,4 @@
-<?php
-session_start();
-include './config/db.php';
-if (isset($_SESSION['user_id'])) {
-    include './Includes/Header.php';
-} else {
-    include './Includes/Header2.php';
-}
-// Verificar si se ha enviado un estado en la URL
-$state_id = isset($_GET['state']) ? $_GET['state'] : '';
-
-// Consulta para obtener las posadas, filtrando por estado si se proporciona uno
-$sql_inns = "SELECT i.id, i.name AS inn_name, i.description, i.image_url, i.email, i.phone, 
-                   s.name AS state_name, m.name AS municipality_name, p.name AS parish_name, i.category_id, 
-                   i.quality
-            FROM inns i
-            LEFT JOIN states s ON i.state_id = s.id
-            LEFT JOIN municipalities m ON i.municipality_id = m.id
-            LEFT JOIN parishes p ON i.parish_id = p.id";
-if ($state_id && $state_id != 'all') {
-    $sql_inns .= " WHERE i.state_id = '$state_id'";
-}
-
-// Verificar si la consulta de las posadas se ejecutó correctamente
-$result_inns = $conn->query($sql_inns);
-if (!$result_inns) {
-    die("Error en la consulta de posadas: " . $conn->error);
-}
-?>
+<?php include '../PHP/Inns_State.php' ?>
 
 <!DOCTYPE html>
 <html>
@@ -34,40 +6,8 @@ if (!$result_inns) {
 <head>
     <title>Posadas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Assets/css/Prueba.css">
+    <link rel="stylesheet" href="./Assets/css/Style-InnState.css">
 </head>
-
-<style>
-    /* Estilos previos */
-
-    .filter-btn {
-        height: 50px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        /* Espacio entre botones */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    #filters {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .filter-btn {
-        width: 22%;
-        margin-bottom: 10px;
-    }
-
-    .filter-ubicacion button,
-    .filter-quality button {
-        margin-bottom: 10px;
-    }
-</style>
 
 <body>
     <section class="course-listing-page">
@@ -75,27 +15,26 @@ if (!$result_inns) {
             <div class="card shadow-sm" style="padding: 20px">
                 <div class="card-body">
                     <div id="filters" class="button-group">
-                        <button class="btn btn-success filter-btn" data-filter="*" style="color: white;">
-                            <i class="fas fa-th" style="margin-right: 8px;"></i> Todos
+                        <button class="btn btn-success filter-btn" data-filter="*">
+                            <i class="fas fa-t me-2"></i> Todos
                         </button>
-                        <button class="btn btn-success filter-btn" data-filter=".montaña" style="color: white;">
-                            <i class="fas fa-mountain" style="margin-right: 8px;"></i> Montaña
+                        <button class="btn btn-success filter-btn" data-filter=".montaña">
+                            <i class="fas fa-mountain me-2"></i> Montaña
                         </button>
-                        <button class="btn btn-success filter-btn" data-filter=".playa" style="color: white;">
-                            <i class="fas fa-umbrella-beach" style="margin-right: 8px;"></i> Playa
+                        <button class="btn btn-success filter-btn" data-filter=".playa">
+                            <i class="fas fa-umbrella-beach me-2"></i> Playa
                         </button>
-                        <button class="btn btn-success filter-btn" data-filter=".ciudad" style="color: white;">
-                            <i class="fas fa-city" style="margin-right: 8px;"></i> Ciudad
+                        <button class="btn btn-success filter-btn" data-filter=".ciudad">
+                            <i class="fas fa-city me-2"></i> Ciudad
                         </button>
-                        <!-- Filtro de calidad -->
-                        <button class="btn btn-info filter-btn" data-filter=".alta" style="color: white;">
-                            <i class="fas fa-star" style="margin-right: 8px;"></i> Alta
+                        <button class="btn btn-info filter-btn" data-filter=".alta">
+                            <i class="fas fa-star me-2"></i> Alta
                         </button>
-                        <button class="btn btn-warning filter-btn" data-filter=".media" style="color: white;">
-                            <i class="fas fa-star-half-alt" style="margin-right: 8px;"></i> Media
+                        <button class="btn btn-warning filter-btn" data-filter=".media">
+                            <i class="fas fa-star-half-alt me-2"></i> Media
                         </button>
-                        <button class="btn btn-secondary filter-btn" data-filter=".baja" style="color: white;">
-                            <i class="fas fa-star-of-david" style="margin-right: 8px;"></i> Baja
+                        <button class="btn btn-secondary filter-btn" data-filter=".baja">
+                            <i class="fas fa-star-of-david me-2"></i> Baja
                         </button>
                     </div>
                 </div>
@@ -118,9 +57,7 @@ if (!$result_inns) {
                                 break;
                         }
 
-                        // Añadir clase de calidad
                         $quality_class = strtolower($row['quality']);
-
                         echo '
                         <div class="grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
                             <div class="custom-card" style="height: 450px;">
@@ -137,7 +74,6 @@ if (!$result_inns) {
                                     </div>
                                     <br>';
                         
-                        // Mostrar botón basado en la sesión
                         if (isset($_SESSION['user_id'])) {
                             echo '
                                 <a href="Inn.php?inn_id=' . $row['id'] . '" class="btn btn-success text-white">

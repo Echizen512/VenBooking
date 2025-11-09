@@ -74,7 +74,7 @@ body {
                         <h3 class="mb-0"><i class="fas fa-file-alt me-2"></i>Generador de Reportes PDF</h3>
                     </div>
                     <div class="card-body p-4">
-                        <form action="generate_pdf.php" method="post">
+                        <form action="../Assets/PDF/Reports.php" method="post">
                             <div class="mb-4">
                                 <label for="inns" class="form-label"><i
                                         class="fas fa-hotel me-2 text-secondary"></i>Selecciona la Posada</label>

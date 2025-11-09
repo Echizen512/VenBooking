@@ -240,11 +240,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.capture().then(function (details) {
         const membershipType = 'basic'; 
         const amount = '50.00'; 
-        window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
+        window.location.href = `./PHP/process-paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
     onError: function (err) {
-      window.location.href = 'process_paypal.php?membership_type=basic&payment_status=failed';
+      window.location.href = './PHP/process-paypal.php?membership_type=basic&payment_status=failed';
     }
   }).render('#paypal-button-container-basic');
 
@@ -268,11 +268,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.capture().then(function (details) {
         const membershipType = 'silver'; 
         const amount = '75.00'; 
-        window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
+        window.location.href = `./PHP/process-paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
     onError: function (err) {
-      window.location.href = 'process_paypal.php?membership=silver&payment_status=failed';
+      window.location.href = './PHP/process-paypal.php?membership=silver&payment_status=failed';
     }
   }).render('#paypal-button-container-silver');
 
@@ -297,11 +297,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return actions.order.capture().then(function (details) {
         const membershipType = 'gold'; 
         const amount = '100.00'; 
-        window.location.href = `process_paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
+        window.location.href = `./PHP/process-paypal.php?membership_type=${membershipType}&amount=${amount}&payment_status=completed&order_id=` + data.orderID;
       });
     },
     onError: function (err) {
-      window.location.href = 'process_paypal.php?membership=gold&payment_status=failed';
+      window.location.href = './PHP/process-paypal.php?membership=gold&payment_status=failed';
     }
   }).render('#paypal-button-container-gold');
 });

@@ -350,7 +350,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     if (room_id && startDate && endDate) {
                         $.ajax({
-                            url: 'get_room_price.php',
+                            url: './PHP/get-price.php',
                             type: 'GET',
                             data: {
                                 room_id: room_id,
@@ -383,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 function loadPaymentInfo(paymentMethod) {
                     var innId = "<?php echo htmlspecialchars($inn_id); ?>";
                     $.ajax({
-                        url: './Includes/get_payment_info.php',
+                        url: './PHP/get-payment-info.php',
                         type: 'GET',
                         data: {
                             payment_method: paymentMethod,

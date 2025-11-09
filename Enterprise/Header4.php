@@ -12,7 +12,6 @@
     <link rel="stylesheet" type="text/css" href="../assets/css/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/jquery.rateyo.css" />
-    <link rel="stylesheet" type="text/css" href="../assets/css/jquery.mmenu.all.css" />
     <link rel="stylesheet" type="text/css" href="../assets/css/inner-page-style.css">
     <link rel="stylesheet" type="text/css" href="../style.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">

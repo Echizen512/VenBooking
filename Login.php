@@ -74,15 +74,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Registro
+
     if (isset($_POST['register'])) {
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
         $email = $_POST['email'];
         $profile_type = $_POST['profile_type'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-        // Verificar si el correo ya está registrado
         $check_email_sql = "SELECT id FROM Profile WHERE email = ?";
         if ($stmt = $conn->prepare($check_email_sql)) {
             $stmt->bind_param("s", $email);
@@ -100,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     });
                 </script>";
             } else {
-                // Insertar nuevo usuario
+
                 $insert_sql = "INSERT INTO Profile (first_name, last_name, email, profile_type, password, registration_date) 
                                VALUES (?, ?, ?, ?, ?, NOW())";
 

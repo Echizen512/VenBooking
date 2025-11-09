@@ -117,7 +117,7 @@
             <a href="#" class="category-toggle"><i class="fas fa-file-alt icon"></i> Administración</a>
             <div class="submenu">
                 <a href="./report.php">Reportes</a>
-                <a href="./audit_log.php">Auditoría</a>
+                <a href="./audit_log.php">Bitacora</a>
                 <a href="./admin-backup.php">Respaldo</a>
             </div>
         </div>

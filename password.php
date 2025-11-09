@@ -71,7 +71,7 @@
     const email = $('#email').val();
 
     $.ajax({
-        url: 'backend.php',
+        url: './PHP/password.php',
         method: 'POST',
         data: { recover: true, email: email },
         dataType: 'json',
@@ -92,7 +92,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: 'backend.php',
+                            url: '/PHP/password.php',
                             method: 'POST',
                             data: { new_password: result.value, user_id: response.user_id },
                             dataType: 'json',
@@ -103,7 +103,6 @@
                                         title: 'Listo',
                                         text: updateResponse.message
                                     }).then(() => {
-                                        // Redirigir al login.php
                                         window.location.href = updateResponse.redirect;
                                     });
                                 } else {

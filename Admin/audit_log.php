@@ -24,7 +24,7 @@ if (!isset($_SESSION["user_id"])) {
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
-        <h2 class="card-title text-center"><i class="fas fa-file-alt"></i> Auditoría</h2>
+        <h2 class="card-title text-center"><i class="fas fa-file-alt"></i> Bitacora</h2>
             <div class="table-container">
                 <table id="auditTable" class="table table-striped table-bordered">
                     <thead>

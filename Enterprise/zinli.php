@@ -1,69 +1,4 @@
-<?php
-include '../config/db.php';
-
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
-    exit();
-}
-
-$user_id = $_SESSION['user_id'];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'create') {
-    $inn_id = $_POST['inn_id'];
-    $email = $_POST['email'];
-
-    // Verificar si ya existe una transferencia Zinli registrada para la misma posada y correo
-    $check_sql = "SELECT * FROM zinli_transfer_info WHERE inn_id = ? AND email = ?";
-    $stmt_check = $conn->prepare($check_sql);
-    $stmt_check->bind_param("is", $inn_id, $email);
-    $stmt_check->execute();
-    $result_check = $stmt_check->get_result();
-
-    if ($result_check->num_rows > 0) {
-        $message = "Ya existe una transferencia Zinli registrada para esta posada y correo electrónico.";
-    } else {
-        // Insertar nueva transferencia Zinli
-        $sql = "INSERT INTO zinli_transfer_info (inn_id, email) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("is", $inn_id, $email);
-
-        if ($stmt->execute()) {
-            $message = "Transferencia Zinli agregada exitosamente.";
-        } else {
-            $message = "Error al agregar la transferencia Zinli: " . $conn->error;
-        }
-    }
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'update') {
-    $id = $_POST['id'];
-    $email = $_POST['email'];
-
-    // Actualizar transferencia Zinli
-    $sql = "UPDATE zinli_transfer_info SET email = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $email, $id);
-
-    if ($stmt->execute()) {
-        $message = "Transferencia Zinli actualizada exitosamente.";
-    } else {
-        $message = "Error al actualizar la transferencia Zinli: " . $conn->error;
-    }
-}
-
-// Obtener las transferencias de Zinli para el usuario actual
-$sql = "SELECT zinli_transfer_info.id, zinli_transfer_info.email, inns.name AS inn_name 
-        FROM zinli_transfer_info
-        LEFT JOIN inns ON zinli_transfer_info.inn_id = inns.id
-        WHERE inns.user_id = ?";
-
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-?>
+<?php include '../PHP/get-Zinli.php'; ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -71,66 +6,15 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transferencias Zinli</title>
+    <title>Zinli</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="../Assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./CRUD.css">
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="./assets/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
-    
-    <style>
-        .tippy-box[data-theme='custom'] {
-            background-color:rgb(25, 135, 84);
-            color: white;
-            border-radius: 10px;
-            font-size: 18px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-        }
-
-        .tippy-box[data-theme='custom'][data-placement^='bottom'] {
-            transform-origin: top;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
-<style>
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .fadeIn {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .slideInUp {
-            animation: slideInUp 1s ease-in-out;
-        }
-    </style>
-
 <body>
 
     <?php include './Header_Admin.php'; ?>
@@ -180,67 +64,7 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <!-- Modal para Agregar Transferencia Zinli -->
-    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-success">
-                    <h5 class="modal-title" id="createModalLabel" style="color: white;">Agregar Zinli</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="createForm" method="POST">
-                        <input type="hidden" name="action" value="create">
-                        <div class="form-group">
-                            <label for="inn_id">Posada</label>
-                            <select name="inn_id" id="inn_id" class="form-control" required>
-                                <?php
-                                $sql_inns = "SELECT id, name FROM inns WHERE user_id = ?";
-                                $stmt_inns = $conn->prepare($sql_inns);
-                                $stmt_inns->bind_param("i", $user_id);
-                                $stmt_inns->execute();
-                                $result_inns = $stmt_inns->get_result();
-
-                                while ($row_inn = $result_inns->fetch_assoc()) {
-                                    echo "<option value='{$row_inn['id']}'>{$row_inn['name']}</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Correo Electrónico</label>
-                            <input type="email" name="email" id="email" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-success mt-3" style="width: 100%;">Crear Transferencia</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para Editar Transferencia Zinli -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-success">
-                    <h5 class="modal-title" id="editModalLabel" style="color: white;">Editar Transferencia Zinli</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editForm" method="POST">
-                        <input type="hidden" name="action" value="update">
-                        <input type="hidden" name="id" id="edit_id">
-                        <div class="form-group">
-                            <label for="edit_email">Correo Electrónico</label>
-                            <input type="email" name="email" id="edit_email" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-success mt-3" style="width: 100%;">Actualizar Transferencia</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <?php include '../Includes/Modal-Zinli.php'; ?>
     <br><br>
 
     <script>

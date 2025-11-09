@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 
-<?php include "./head.php"; ?>
+<?php include "./Includes/Head.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,7 +86,6 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
     <script src="./Assets/js/chat.js"></script>
-
     <?php include "./Includes/Footer.php"; ?>
 
 </body>
