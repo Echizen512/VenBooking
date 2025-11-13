@@ -67,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<title>Membresías</title>
+<title>VenBooking</title>
 <link rel="stylesheet" type="text/css" href="./assets/css/all.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/all.min.css">
     <link href="css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="./Assets/css/responsive.css" rel="stylesheet">
   <link rel="stylesheet" href="./Assets/css/prueba2.css">
-  <title>Chat</title>
+  <title>VenBooking</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
 </head>

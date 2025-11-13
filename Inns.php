@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Posadas</title>
+    <title>VenBooking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./Assets/css/Prueba.css">
     <link rel="stylesheet" href="./Assets/css/Style-Inns.css">
@@ -70,7 +70,9 @@
             <div class="col-sm-12 col-md-6 col-lg-3 grid-item ' . $category_class . ' ' . $quality_class . '" data-category=".' . $category_class . ' ' . $quality_class . '">
                 <div class="shadow-sm border-0 rounded-4 custom-card" style="height: 460px;">
                     <div class="img-wrap">
-                        <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" class="img-fluid rounded-top">
+                        <div style="height:220px; overflow:hidden; border-top-left-radius: .75rem; border-top-right-radius: .75rem;">
+                            <img src="' . $row['image_url'] . '" alt="Posada ' . $row['inn_name'] . '" style="width:100%; height:100%; object-fit:cover; display:block;">
+                        </div>
                     </div>
                     <div class="card-body py-3 px-4 bg-light">
                         <h5 class="card-title fw-semibold text-success mb-1" style="font-size: 0.9rem;">

@@ -16,19 +16,15 @@
 
 <body>
     <header class="site-header">
-        <!-- Top Header -->
         <div class="top-header">
             <div class="container">
                 <div class="top-header-content">
-                    <!-- Support Email -->
                     <div class="support-info">
                         <i class="fas fa-envelope support-icon"></i>
                         <a href="mailto:venbooking@gmail.com" class="support-email">
                             Soporte Técnico: venbooking@gmail.com
                         </a>
                     </div>
-
-                    <!-- Login Button -->
                     <a href="./login.php" class="login-btn p-2">
                         <i class="fas fa-sign-in-alt"></i>
                         <span style="font-size: 14px">Iniciar Sesión</span>
@@ -36,14 +32,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- Main Header -->
         <div class="main-header">
             <div class="container">
                 <div class="header-content">
-                    <!-- Logo -->
                     <div class="logo-section">
-                            <img src="./logo.png" alt="logo" style="width: 50px; height: 70px; object-fit: cover;">
+                            <img src="./Assets/Images/logo.png" alt="logo" style="width: 50px; height: 70px; object-fit: cover;">
                         <div class="logo-text">
                             <h1 class="brand-name">VenBooking</h1>
                             <p class="brand-tagline">Tu destino perfecto</p>

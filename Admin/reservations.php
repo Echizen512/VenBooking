@@ -14,7 +14,7 @@ if (!isset($_SESSION["user_id"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservaciones</title>
+    <title>VenBooking</title>
     <link rel="stylesheet" href="./Assets/CSS/audit_log.css">
     <link rel="stylesheet" href="./Assets/CSS/CRUD.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">

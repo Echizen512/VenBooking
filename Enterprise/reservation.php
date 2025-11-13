@@ -45,7 +45,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Reservaciones</title>
+    <title>VenBooking</title>
     <link rel="stylesheet" href="../Assets/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../Assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -97,9 +97,9 @@ $conn->close();
                             <tr>
                                 <th class="text-center"><i class="fas fa-user"></i> Cliente</th>
                                 <th class="text-center"><i class="fas fa-envelope"></i> Correo</th>
-                                <th class="text-center"><i class="fas fa-building"></i> Posada</th>
+                                <th class="text-center" style="min-width: 200px; white-space: nowrap;"><i class="fas fa-building"></i> Posada</th>
                                 <th class="text-center"><i class="fas fa-bed"></i> Habitación</th> <!-- Nueva columna para room_number -->
-                                <th class="text-center"><i class="fas fa-calendar-alt"></i> Fecha</th>
+                                <th class="text-center" style="min-width: 200px; white-space: nowrap;"><i class="fas fa-calendar-alt"></i> Fecha</th>
                                 <th class="text-center"><i class="fas fa-info-circle"></i> Estado</th>
                                 <th class="text-center"><i class="fas fa-file-alt"></i> Referencia</th>
                                 <th class="text-center"><i class="fas fa-file-alt"></i> Contacto</th>
@@ -121,6 +121,9 @@ $conn->close();
                                         $statusColor = 'red';
                                     }
 
+                                    // obtener los últimos 4 caracteres de codigo_referencia de forma segura
+                                    $refLast4 = isset($row['codigo_referencia']) ? substr($row['codigo_referencia'], -4) : '';
+
                                     echo "<tr>
                                         <td class='text-center'>{$row['user_name']}</td>
                                         <td class='text-center'>{$row['user_email']}</td>
@@ -128,9 +131,10 @@ $conn->close();
                                         <td class='text-center'>{$row['room_number']}</td> <!-- Mostrar room_number -->
                                         <td class='text-center'>{$startDateFormatted} - {$endDateFormatted}</td>
                                         <td style='color: {$statusColor};'>{$row['status']}</td>
-                                        <td class='text-center'>{$row['codigo_referencia']}</td>
+                                        <td class='text-center'>{$refLast4}</td>
+
                                         <td class='text-center'>
-                                        <a href='../chat.php?user_id={$row['user_id']}' class='btn btn-primary' style='color: white;'>Contactar</a></td>
+                                        <a href='../chat.php?user_id={$row['user_id']}' class='btn btn-primary' style='color: white;'><i class='fas fa-comments'></i></a></td>
                                         <td class='text-center'>
                                             <div class='text-center'>
                                             <form action='../PHP/update-reservation-status.php' method='POST' class='d-inline'>
